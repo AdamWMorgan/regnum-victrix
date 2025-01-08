@@ -13,6 +13,14 @@ config_version=5
 config/name="Regnum Victrix"
 config/features=PackedStringArray("4.3", "Forward Plus")
 
+[display]
+
+window/size/viewport_width=640
+window/size/viewport_height=360
+window/stretch/mode="viewport"
+window/stretch/aspect="keep_height"
+window/stretch/scale_mode="integer"
+
 [dotnet]
 
 project/assembly_name="Regnum Victrix"
