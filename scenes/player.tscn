@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://cmilcec7mosay"]
+
+[ext_resource type="Script" path="res://scripts/Player.cs" id="1_ewjmd"]
+[ext_resource type="Texture2D" uid="uid://crg8otq1p7xpj" path="res://game/assets/characters/Roman characters.png" id="1_hhfyj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j0pls"]
+atlas = ExtResource("1_hhfyj")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3bocj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j0pls")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_apauy"]
+radius = 6.0
+height = 22.3
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_ewjmd")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_3bocj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 4)
+shape = SubResource("CapsuleShape2D_apauy")
+one_way_collision_margin = 0.0
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
