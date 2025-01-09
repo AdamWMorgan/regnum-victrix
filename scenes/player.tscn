@@ -1,20 +1,55 @@
-[gd_scene load_steps=6 format=3 uid="uid://cmilcec7mosay"]
+[gd_scene load_steps=11 format=3 uid="uid://cmilcec7mosay"]
 
 [ext_resource type="Script" path="res://scripts/Player.cs" id="1_ewjmd"]
-[ext_resource type="Texture2D" uid="uid://crg8otq1p7xpj" path="res://game/assets/characters/Roman characters.png" id="1_hhfyj"]
+[ext_resource type="Texture2D" uid="uid://b8b5ai0rjq1a0" path="res://game/assets/characters/Soldier.png" id="2_1t0wy"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_j0pls"]
-atlas = ExtResource("1_hhfyj")
-region = Rect2(64, 32, 32, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_shjr1"]
+atlas = ExtResource("2_1t0wy")
+region = Rect2(0, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qkxag"]
+atlas = ExtResource("2_1t0wy")
+region = Rect2(100, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_glt6n"]
+atlas = ExtResource("2_1t0wy")
+region = Rect2(200, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jyym4"]
+atlas = ExtResource("2_1t0wy")
+region = Rect2(300, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_57vab"]
+atlas = ExtResource("2_1t0wy")
+region = Rect2(400, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_885pj"]
+atlas = ExtResource("2_1t0wy")
+region = Rect2(500, 0, 100, 100)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_3bocj"]
 animations = [{
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_j0pls")
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_shjr1")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_qkxag")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_glt6n")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_jyym4")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_57vab")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_885pj")
 }],
 "loop": true,
-"name": &"default",
+"name": &"idle_animation",
 "speed": 5.0
 }]
 
@@ -27,6 +62,8 @@ script = ExtResource("1_ewjmd")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_3bocj")
+animation = &"idle_animation"
+autoplay = "idle_animation"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 4)

@@ -6,6 +6,13 @@ public partial class Player : CharacterBody2D
 	public const float SPEED = 300.0f;
 	public const float DECELERATION = 5000.0f; // Deceleration speed when no input is detected
 
+	private AnimatedSprite2D sprite;
+	
+	public override void _Ready(){
+		sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");	
+	}
+	
+	
 	public override void _PhysicsProcess(double delta)
 	{
 		Vector2 velocity = Velocity;
@@ -17,6 +24,10 @@ public partial class Player : CharacterBody2D
 		if (direction != Vector2.Zero)
 		{
 			velocity = direction * SPEED;
+			
+			if(direction.X != 0){
+				sprite.Scale = new Vector2(Mathf.Sign(direction.X), sprite.Scale.Y);
+			}
 		}
 		else
 		{
