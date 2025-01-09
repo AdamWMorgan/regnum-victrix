@@ -18,7 +18,7 @@ public partial class Player : CharacterBody2D
 
 		// Get the input direction
 		Vector2 direction = Input.GetVector("left", "right", "up", "down");
-
+			
 		// Apply movement if input is detected
 		if (direction != Vector2.Zero)
 		{
@@ -34,6 +34,18 @@ public partial class Player : CharacterBody2D
 			velocity.X = Mathf.MoveToward(velocity.X, 0, DECELERATION * (float)delta);
 			velocity.Y = Mathf.MoveToward(velocity.Y, 0, DECELERATION * (float)delta);
 		}
+		
+		if(Input.IsActionJustPressed("attack")){
+			if(!sprite.IsPlaying() || sprite.Animation != "attack_animation"){
+				sprite.Play("attack_animation");
+			}
+		}
+		
+		if (sprite.Animation == "attack_animation" && !sprite.IsPlaying())
+		{
+			sprite.Play("idle_animation");
+		}
+		
 
 		// Update velocity and move the character
 		Velocity = velocity;
