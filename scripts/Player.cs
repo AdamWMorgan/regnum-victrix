@@ -3,7 +3,7 @@ using System;
 
 public partial class Player : CharacterBody2D
 {
-	public const float SPEED = 300.0f;
+	public const float SPEED = 100.0f;
 	public const float DECELERATION = 5000.0f; // Deceleration speed when no input is detected
 
 	private AnimatedSprite2D sprite;
@@ -11,7 +11,6 @@ public partial class Player : CharacterBody2D
 	public override void _Ready(){
 		sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");	
 	}
-	
 	
 	public override void _PhysicsProcess(double delta)
 	{
