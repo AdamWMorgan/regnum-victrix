@@ -8,11 +8,14 @@ public partial class Spawner : Node2D
 	[Export] public int SpawnCount { get; set; } = 5;
 	[Export] public Rect2 SpawnArea { get; set; } = new Rect2(Vector2.Zero, new Vector2(400, 400));
 	[Export] public float MinSpawnDistance {get; set;} = 400f;
+	
+	public AnimatedSprite2D Player { get; set; }
 
 	private List<Vector2> _spawnedPositions = new List<Vector2>();
 
 	public override void _Ready()
 	{
+		Player = GetNode<AnimatedSprite2D>("/root/Main/Player/PlayerSprite");
 		SpawnEnemies();
 	}
 
@@ -36,8 +39,10 @@ public partial class Spawner : Node2D
 				attempt++;
 			} while(IsTooClose(spawnPosition) && attempt < maxAttempt);
 			enemy.Position = spawnPosition;
-
+			
 			_spawnedPositions.Add(spawnPosition);
+			
+			enemy.Initialize(Player);
 			
 			// Add the enemy to the scene
 			AddChild(enemy);
