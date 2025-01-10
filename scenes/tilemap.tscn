@@ -21,6 +21,5 @@ position = Vector2(43, 16)
 position = Vector2(185, 109)
 script = ExtResource("4_3agec")
 EnemyScene = ExtResource("3_nxeek")
-SpawnCount = 8
 
 [node name="Node2D" parent="EnemySpawner" instance=ExtResource("3_nxeek")]
