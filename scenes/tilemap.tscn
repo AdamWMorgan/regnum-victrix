@@ -1,62 +1,9 @@
-[gd_scene load_steps=12 format=4 uid="uid://ddgpd7ae3v778"]
+[gd_scene load_steps=5 format=4 uid="uid://ddgpd7ae3v778"]
 
 [ext_resource type="TileSet" uid="uid://bon0tuqm31npn" path="res://Tilesets/game_tile_set.tres" id="1_tjwv8"]
 [ext_resource type="PackedScene" uid="uid://cb0rtekr02b04" path="res://scenes/player.tscn" id="2_i68oy"]
-[ext_resource type="Texture2D" uid="uid://b0xjjq5gasjkp" path="res://game/assets/characters/Orc.png" id="3_vpemv"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_33ah2"]
-atlas = ExtResource("3_vpemv")
-region = Rect2(0, 0, 100, 100)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_el0sn"]
-atlas = ExtResource("3_vpemv")
-region = Rect2(100, 0, 100, 100)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_grnt5"]
-atlas = ExtResource("3_vpemv")
-region = Rect2(200, 0, 100, 100)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fjw3b"]
-atlas = ExtResource("3_vpemv")
-region = Rect2(300, 0, 100, 100)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_p6suj"]
-atlas = ExtResource("3_vpemv")
-region = Rect2(400, 0, 100, 100)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jq8qf"]
-atlas = ExtResource("3_vpemv")
-region = Rect2(500, 0, 100, 100)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_cj0sa"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_33ah2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_el0sn")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_grnt5")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_fjw3b")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_p6suj")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jq8qf")
-}],
-"loop": true,
-"name": &"enemy_idle_animation",
-"speed": 5.0
-}]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g65ny"]
-radius = 6.0
-height = 12.0
+[ext_resource type="PackedScene" uid="uid://70osq4peljmg" path="res://scenes/enemy.tscn" id="3_nxeek"]
+[ext_resource type="Script" path="res://scripts/Spawner.cs" id="4_3agec"]
 
 [node name="Main" type="Node2D"]
 metadata/_edit_horizontal_guides_ = [200.0]
@@ -70,14 +17,10 @@ tile_set = ExtResource("1_tjwv8")
 [node name="Player" parent="." instance=ExtResource("2_i68oy")]
 position = Vector2(43, 16)
 
-[node name="Enemy" type="CharacterBody2D" parent="."]
+[node name="EnemySpawner" type="Node2D" parent="."]
+position = Vector2(185, 109)
+script = ExtResource("4_3agec")
+EnemyScene = ExtResource("3_nxeek")
+SpawnCount = 8
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Enemy"]
-position = Vector2(265, 86)
-sprite_frames = SubResource("SpriteFrames_cj0sa")
-animation = &"enemy_idle_animation"
-autoplay = "enemy_idle_animation"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy"]
-position = Vector2(266, 87)
-shape = SubResource("CapsuleShape2D_g65ny")
+[node name="Node2D" parent="EnemySpawner" instance=ExtResource("3_nxeek")]

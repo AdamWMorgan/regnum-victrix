@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://70osq4peljmg"]
+[gd_scene load_steps=10 format=3 uid="uid://70osq4peljmg"]
 
 [ext_resource type="Texture2D" uid="uid://b0xjjq5gasjkp" path="res://game/assets/characters/Orc.png" id="2_7ujai"]
 
@@ -52,6 +52,10 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_la34w"]
+radius = 5.0
+height = 16.0
+
 [node name="Node2D" type="Node2D"]
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
@@ -60,3 +64,7 @@ animations = [{
 sprite_frames = SubResource("SpriteFrames_ns7a8")
 animation = &"enemy_idle_animation"
 autoplay = "enemy_idle_animation"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+position = Vector2(1, 0)
+shape = SubResource("CapsuleShape2D_la34w")
