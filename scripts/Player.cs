@@ -9,7 +9,7 @@ public partial class Player : CharacterBody2D
 	private AnimatedSprite2D sprite;
 	
 	public override void _Ready(){
-		sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");	
+		sprite = GetNode<AnimatedSprite2D>("PlayerSprite");	
 	}
 	
 	public override void _PhysicsProcess(double delta)

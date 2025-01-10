@@ -1,6 +1,31 @@
-[gd_scene load_steps=10 format=3 uid="uid://70osq4peljmg"]
+[gd_scene load_steps=17 format=3 uid="uid://70osq4peljmg"]
 
+[ext_resource type="Script" path="res://scripts/Enemy.cs" id="1_3qkii"]
 [ext_resource type="Texture2D" uid="uid://b0xjjq5gasjkp" path="res://game/assets/characters/Orc.png" id="2_7ujai"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a5kv4"]
+atlas = ExtResource("2_7ujai")
+region = Rect2(0, 200, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a6gj1"]
+atlas = ExtResource("2_7ujai")
+region = Rect2(100, 200, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s7xvl"]
+atlas = ExtResource("2_7ujai")
+region = Rect2(200, 200, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jhwrv"]
+atlas = ExtResource("2_7ujai")
+region = Rect2(300, 200, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nvaj0"]
+atlas = ExtResource("2_7ujai")
+region = Rect2(400, 200, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ucu05"]
+atlas = ExtResource("2_7ujai")
+region = Rect2(500, 200, 100, 100)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_33ah2"]
 atlas = ExtResource("2_7ujai")
@@ -28,6 +53,29 @@ region = Rect2(500, 0, 100, 100)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ns7a8"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a5kv4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a6gj1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s7xvl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jhwrv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nvaj0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ucu05")
+}],
+"loop": true,
+"name": &"enemy_attack_animation",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_33ah2")
@@ -59,10 +107,11 @@ height = 16.0
 [node name="Node2D" type="Node2D"]
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+script = ExtResource("1_3qkii")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
 sprite_frames = SubResource("SpriteFrames_ns7a8")
-animation = &"enemy_idle_animation"
+animation = &"enemy_attack_animation"
 autoplay = "enemy_idle_animation"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
