@@ -45,7 +45,6 @@ public partial class Player : CharacterBody2D
 		{
 			sprite.Play("idle_animation");
 		}
-		
 
 		// Update velocity and move the character
 		Velocity = velocity;
