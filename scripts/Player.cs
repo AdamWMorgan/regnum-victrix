@@ -9,6 +9,7 @@ public partial class Player : CharacterBody2D
 	private AnimatedSprite2D sprite;
 	
 	public override void _Ready(){
+		AddToGroup("Player");
 		sprite = GetNode<AnimatedSprite2D>("PlayerSprite");	
 	}
 	

@@ -1,112 +1,22 @@
-[gd_scene load_steps=21 format=4 uid="uid://ddgpd7ae3v778"]
+[gd_scene load_steps=6 format=4 uid="uid://ddgpd7ae3v778"]
 
 [ext_resource type="TileSet" uid="uid://bon0tuqm31npn" path="res://Tilesets/game_tile_set.tres" id="1_tjwv8"]
 [ext_resource type="PackedScene" uid="uid://cb0rtekr02b04" path="res://scenes/player.tscn" id="2_i68oy"]
-[ext_resource type="PackedScene" uid="uid://70osq4peljmg" path="res://scenes/enemy.tscn" id="3_nxeek"]
-[ext_resource type="Texture2D" uid="uid://b0xjjq5gasjkp" path="res://game/assets/characters/Orc.png" id="3_vpemv"]
+[ext_resource type="PackedScene" uid="uid://floxwro1x75e" path="res://scenes/enemy.tscn" id="3_nxeek"]
 [ext_resource type="Script" path="res://scripts/Spawner.cs" id="4_3agec"]
-[ext_resource type="Script" path="res://scripts/Enemy.cs" id="5_uxi75"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_a5kv4"]
-atlas = ExtResource("3_vpemv")
-region = Rect2(0, 200, 100, 100)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_a6gj1"]
-atlas = ExtResource("3_vpemv")
-region = Rect2(100, 200, 100, 100)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_s7xvl"]
-atlas = ExtResource("3_vpemv")
-region = Rect2(200, 200, 100, 100)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jhwrv"]
-atlas = ExtResource("3_vpemv")
-region = Rect2(300, 200, 100, 100)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_nvaj0"]
-atlas = ExtResource("3_vpemv")
-region = Rect2(400, 200, 100, 100)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ucu05"]
-atlas = ExtResource("3_vpemv")
-region = Rect2(500, 200, 100, 100)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_33ah2"]
-atlas = ExtResource("3_vpemv")
-region = Rect2(0, 0, 100, 100)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_el0sn"]
-atlas = ExtResource("3_vpemv")
-region = Rect2(100, 0, 100, 100)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_grnt5"]
-atlas = ExtResource("3_vpemv")
-region = Rect2(200, 0, 100, 100)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fjw3b"]
-atlas = ExtResource("3_vpemv")
-region = Rect2(300, 0, 100, 100)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_p6suj"]
-atlas = ExtResource("3_vpemv")
-region = Rect2(400, 0, 100, 100)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jq8qf"]
-atlas = ExtResource("3_vpemv")
-region = Rect2(500, 0, 100, 100)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_s6hdt"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_a5kv4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_a6gj1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_s7xvl")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jhwrv")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_nvaj0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ucu05")
-}],
-"loop": true,
-"name": &"enemy_attack_animation",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_33ah2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_el0sn")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_grnt5")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_fjw3b")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_p6suj")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jq8qf")
-}],
-"loop": true,
-"name": &"enemy_idle_animation",
-"speed": 5.0
-}]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_v0tbc"]
-radius = 5.0
-height = 16.0
+[sub_resource type="PackedScene" id="PackedScene_48jla"]
+_bundled = {
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [],
+"names": PackedStringArray("Node2D", "Node2D"),
+"node_count": 1,
+"node_paths": [],
+"nodes": PackedInt32Array(-1, -1, 1, 0, -1, 0, 0),
+"variants": [],
+"version": 3
+}
 
 [node name="Main" type="Node2D"]
 metadata/_edit_horizontal_guides_ = [200.0]
@@ -118,21 +28,13 @@ tile_map_data = PackedByteArray("AAAjABwAAwACAAIAAAAjABsAAwACAAEAAAAjABoAAwACAAE
 tile_set = ExtResource("1_tjwv8")
 
 [node name="Player" parent="." instance=ExtResource("2_i68oy")]
-position = Vector2(43, 16)
+texture_filter = 1
+position = Vector2(62, 24)
 
 [node name="EnemySpawner" type="Node2D" parent="."]
 position = Vector2(185, 109)
 script = ExtResource("4_3agec")
-EnemyScene = ExtResource("3_nxeek")
+EnemyScene = SubResource("PackedScene_48jla")
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="EnemySpawner"]
-script = ExtResource("5_uxi75")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="EnemySpawner/CharacterBody2D"]
-sprite_frames = SubResource("SpriteFrames_s6hdt")
-animation = &"enemy_attack_animation"
-autoplay = "enemy_idle_animation"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemySpawner/CharacterBody2D"]
-position = Vector2(1, 0)
-shape = SubResource("CapsuleShape2D_v0tbc")
+[node name="Enemy" parent="." instance=ExtResource("3_nxeek")]
+position = Vector2(142, 24)
