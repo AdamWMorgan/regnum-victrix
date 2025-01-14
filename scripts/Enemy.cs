@@ -6,7 +6,7 @@ public partial class Enemy : CharacterBody2D
 	// Reference to the Area2D node
 	[Export] public Area2D DetectionArea;
 	public AnimatedSprite2D sprite;
-	public AnimatedSprite2D _playerSprite;	
+	public CharacterBody2D _playerSprite;	
 	public const float SPEED = 100.0f;
 	public const float DECELERATION = 5000.0f;
 
@@ -16,7 +16,7 @@ public partial class Enemy : CharacterBody2D
 		DetectionArea.BodyEntered += OnBodyEntered;
 		DetectionArea.BodyExited += OnBodyExited;
 		sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");  
-		_playerSprite = GetNode<AnimatedSprite2D>("/root/Main/Player/PlayerSprite");	  
+		_playerSprite = GetNode<CharacterBody2D>("/root/Main/Player");	  
 	}
 	
 	public override void _PhysicsProcess(double delta)
@@ -24,8 +24,8 @@ public partial class Enemy : CharacterBody2D
 		Vector2 velocity = Velocity;
 
 		Vector2 directionToPlayer = _playerSprite.Position - Position;
-				
-		if(directionToPlayer.X < 0){
+		
+		if(directionToPlayer.X > 0){
 			sprite.FlipH = false;
 		}
 		else if (directionToPlayer.X < 0){
