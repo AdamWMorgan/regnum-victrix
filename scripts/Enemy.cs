@@ -16,13 +16,22 @@ public partial class Enemy : CharacterBody2D
 		DetectionArea.BodyEntered += OnBodyEntered;
 		DetectionArea.BodyExited += OnBodyExited;
 		sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");  
-		_playerSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");	  
+		_playerSprite = GetNode<AnimatedSprite2D>("/root/Main/Player/PlayerSprite");	  
 	}
 	
 	public override void _PhysicsProcess(double delta)
 	{
 		Vector2 velocity = Velocity;
 
+		Vector2 directionToPlayer = _playerSprite.Position - Position;
+				
+		if(directionToPlayer.X < 0){
+			sprite.FlipH = false;
+		}
+		else if (directionToPlayer.X < 0){
+			sprite.FlipH = true;	
+		}
+		
 		// Update velocity and move the character
 		Velocity = velocity;
 		MoveAndSlide();
