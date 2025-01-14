@@ -5,7 +5,8 @@ public partial class Player : CharacterBody2D
 {
 	public const float SPEED = 100.0f;
 	public const float DECELERATION = 5000.0f;
-
+	public int Health { get; set; } = 100; 
+	
 	private AnimatedSprite2D sprite;
 
 	public override void _Ready()

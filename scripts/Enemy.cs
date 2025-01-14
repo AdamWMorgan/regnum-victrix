@@ -6,7 +6,7 @@ public partial class Enemy : CharacterBody2D
 	// Reference to the Area2D node
 	[Export] public Area2D DetectionArea;
 	public AnimatedSprite2D sprite;
-	public CharacterBody2D _playerSprite;	
+	public Player player;	
 	public const float SPEED = 100.0f;
 	public const float DECELERATION = 5000.0f;
 
@@ -16,14 +16,15 @@ public partial class Enemy : CharacterBody2D
 		DetectionArea.BodyEntered += OnBodyEntered;
 		DetectionArea.BodyExited += OnBodyExited;
 		sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");  
-		_playerSprite = GetNode<CharacterBody2D>("/root/Main/Player");	  
+		player = GetNode<Player>("/root/Main/Player");	  
 	}
 	
 	public override void _PhysicsProcess(double delta)
 	{
+		GD.Print(player.Health);
 		Vector2 velocity = Velocity;
 
-		Vector2 directionToPlayer = _playerSprite.Position - Position;
+		Vector2 directionToPlayer = player.Position - Position;
 		
 		if(directionToPlayer.X > 0){
 			sprite.FlipH = false;
@@ -59,10 +60,12 @@ public partial class Enemy : CharacterBody2D
 	}
 
 	// Function to handle the attack logic
-	private void AttackPlayer(Node player)
+	private void AttackPlayer(Node node)
 	{
 		GD.Print("Player is in range! Attack!");
 		sprite.Play("enemy_attack_animation");
+		player.Health -= 50;
+		GD.Print(player.Health);
 	}
 
 	private void NormalState()
