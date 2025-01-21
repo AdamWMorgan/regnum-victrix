@@ -27,6 +27,7 @@ public partial class Player : CharacterBody2D
 
 	public override void _PhysicsProcess(double delta)
 	{
+		if(playerAlive){
 		Vector2 velocity = Velocity;
 
 		// Get the input direction
@@ -68,6 +69,7 @@ public partial class Player : CharacterBody2D
 		// Update velocity and move the character
 		Velocity = velocity;
 		MoveAndSlide();
+		}
 	}
 	
 	public override void _Process(double delta){
