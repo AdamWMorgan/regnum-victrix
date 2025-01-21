@@ -57,6 +57,7 @@ public partial class Player : CharacterBody2D
 			{				
 				float directionSign = Mathf.Sign(direction.X);
 				sprite.Scale = new Vector2(directionSign, sprite.Scale.Y);
+				// TODO: Get attack working in both directions
 			}
 		}
 		else
