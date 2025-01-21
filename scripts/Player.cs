@@ -5,14 +5,23 @@ public partial class Player : CharacterBody2D
 {
 	public const float SPEED = 100.0f;
 	public const float DECELERATION = 5000.0f;
-	public int Health { get; set; } = 100; 
-	
+	public int playerHealth = 100;
+	public int Health {
+			get => playerHealth;
+			set{
+				playerHealth = Mathf.Clamp(value, 0, 100);
+				playerHealthBar.Value = playerHealth;
+			}
+	}
+	public ProgressBar playerHealthBar;
 	private AnimatedSprite2D sprite;
 
 	public override void _Ready()
 	{
 		AddToGroup("Player");
 		sprite = GetNode<AnimatedSprite2D>("PlayerSprite");
+		playerHealthBar = GetNode<ProgressBar>("PlayerHealth");
+		playerHealthBar.Value = Health;
 	}
 
 	public override void _PhysicsProcess(double delta)

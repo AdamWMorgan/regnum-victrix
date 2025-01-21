@@ -16,12 +16,11 @@ public partial class Enemy : CharacterBody2D
 		DetectionArea.BodyEntered += OnBodyEntered;
 		DetectionArea.BodyExited += OnBodyExited;
 		sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");  
-		player = GetNode<Player>("/root/Main/Player");	  
+		player = GetNode<Player>("/root/Main/Player");	 
 	}
 	
 	public override void _PhysicsProcess(double delta)
 	{
-		GD.Print(player.Health);
 		Vector2 velocity = Velocity;
 
 		Vector2 directionToPlayer = player.Position - Position;
