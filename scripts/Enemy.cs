@@ -61,6 +61,10 @@ public partial class Enemy : CharacterBody2D
 	// Function to handle the attack logic
 	private void AttackPlayer(Node node)
 	{
+		// Todo: need to improve this so that it's only after the 
+		// swing is finished that health is taken.
+		// Also it only takes into account 1 swing per time the player enters 
+		// the attack zone currently. 
 		GD.Print("Player is in range! Attack!");
 		sprite.Play("enemy_attack_animation");
 		player.Health -= 50;
