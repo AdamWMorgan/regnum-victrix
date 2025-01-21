@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cb0rtekr02b04"]
+[gd_scene load_steps=21 format=3 uid="uid://cb0rtekr02b04"]
 
 [ext_resource type="Script" path="res://scripts/Player.cs" id="1_ewjmd"]
 [ext_resource type="Texture2D" uid="uid://b8b5ai0rjq1a0" path="res://game/assets/characters/Soldier.png" id="2_1t0wy"]
@@ -26,6 +26,22 @@ region = Rect2(400, 200, 100, 100)
 [sub_resource type="AtlasTexture" id="AtlasTexture_qavyi"]
 atlas = ExtResource("2_1t0wy")
 region = Rect2(500, 200, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7gom0"]
+atlas = ExtResource("2_1t0wy")
+region = Rect2(0, 600, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_52ejp"]
+atlas = ExtResource("2_1t0wy")
+region = Rect2(100, 600, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rww5a"]
+atlas = ExtResource("2_1t0wy")
+region = Rect2(200, 600, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h1wmw"]
+atlas = ExtResource("2_1t0wy")
+region = Rect2(300, 600, 100, 100)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ya4o4"]
 atlas = ExtResource("2_1t0wy")
@@ -77,6 +93,23 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7gom0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_52ejp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rww5a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h1wmw")
+}],
+"loop": false,
+"name": &"death_animation",
+"speed": 5.0
+}, {
+"frames": [{
 "duration": 0.6,
 "texture": SubResource("AtlasTexture_ya4o4")
 }, {
@@ -112,7 +145,7 @@ script = ExtResource("1_ewjmd")
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_3bocj")
-animation = &"attack_animation"
+animation = &"death_animation"
 autoplay = "idle_animation"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

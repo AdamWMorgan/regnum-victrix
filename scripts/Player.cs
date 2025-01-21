@@ -6,9 +6,10 @@ public partial class Player : CharacterBody2D
 	public const float SPEED = 100.0f;
 	public const float DECELERATION = 5000.0f;
 	public int playerHealth = 100;
+	public bool playerAlive = true;
 	public int Health {
 			get => playerHealth;
-			set{
+			set {
 				playerHealth = Mathf.Clamp(value, 0, 100);
 				playerHealthBar.Value = playerHealth;
 			}
@@ -67,5 +68,13 @@ public partial class Player : CharacterBody2D
 		// Update velocity and move the character
 		Velocity = velocity;
 		MoveAndSlide();
+	}
+	
+	public override void _Process(double delta){
+		if(playerHealth <= 0 && playerAlive){
+			sprite.Play("death_animation");
+			playerAlive = false;
+			// Todo: will either need block control input here or straight into respawn
+		}
 	}
 }
