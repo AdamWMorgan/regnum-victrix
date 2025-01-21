@@ -5,17 +5,25 @@ public partial class Player : CharacterBody2D
 {
 	public const float SPEED = 100.0f;
 	public const float DECELERATION = 5000.0f;
-	public int playerHealth = 100;
+	public const int ATTACK_DAMAGE = 30;
+	public static int MAX_HEALTH = 100;
+	public int playerHealth = MAX_HEALTH;
 	public bool playerAlive = true;
 	public int Health {
 			get => playerHealth;
 			set {
-				playerHealth = Mathf.Clamp(value, 0, 100);
+				playerHealth = Mathf.Clamp(value, 0, MAX_HEALTH);
 				playerHealthBar.Value = playerHealth;
 			}
 	}
 	public ProgressBar playerHealthBar;
 	private AnimatedSprite2D sprite;
+	public Enemy enemy;
+	public Area2D attackDetectionArea;
+	public CollisionShape2D attackArea;
+	private bool enemyInAttackArea = false;
+	private float attackCooldown = 1.0f; // Cooldown duration in seconds
+	private float timeSinceLastAttack = 1.0f; // Tracks time since the last attack
 
 	public override void _Ready()
 	{
@@ -23,13 +31,20 @@ public partial class Player : CharacterBody2D
 		sprite = GetNode<AnimatedSprite2D>("PlayerSprite");
 		playerHealthBar = GetNode<ProgressBar>("PlayerHealth");
 		playerHealthBar.Value = Health;
+		playerHealthBar.MaxValue = MAX_HEALTH;
+		enemy = GetNode<Enemy>("/root/Main/Enemy");
+		attackDetectionArea = GetNode<Area2D>("DetectionArea");
+		attackArea = GetNode<CollisionShape2D>("AttackArea");
+		// Connect signals for the detection area
+		attackDetectionArea.Connect("body_entered", new Callable(this, nameof(OnBodyEntered)));
+		attackDetectionArea.Connect("body_exited", new Callable(this, nameof(OnBodyExited)));
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
 		if(playerAlive){
 		Vector2 velocity = Velocity;
-
+		timeSinceLastAttack += (float)delta;
 		// Get the input direction
 		Vector2 direction = Input.GetVector("left", "right", "up", "down");
 
@@ -37,11 +52,11 @@ public partial class Player : CharacterBody2D
 		if (direction != Vector2.Zero)
 		{
 			velocity = direction * SPEED;
-
 			// Flip the sprite based on movement direction
 			if (direction.X != 0)
-			{
-				sprite.Scale = new Vector2(Mathf.Sign(direction.X), sprite.Scale.Y);
+			{				
+				float directionSign = Mathf.Sign(direction.X);
+				sprite.Scale = new Vector2(directionSign, sprite.Scale.Y);
 			}
 		}
 		else
@@ -52,12 +67,17 @@ public partial class Player : CharacterBody2D
 		}
 
 		// Play attack animation when the attack action is pressed
-		if (Input.IsActionJustPressed("attack"))
+		if (Input.IsActionJustPressed("attack") && timeSinceLastAttack >= attackCooldown)
 		{
 			if (!sprite.IsPlaying() || sprite.Animation != "attack_animation")
 			{
 				sprite.Play("attack_animation");
 			}
+			if(enemyInAttackArea)
+			{
+				enemy.Health -= ATTACK_DAMAGE;
+			}
+			timeSinceLastAttack = 0.0f;
 		}
 
 		// If attack animation finishes, return to idle animation
@@ -77,6 +97,22 @@ public partial class Player : CharacterBody2D
 			sprite.Play("death_animation");
 			playerAlive = false;
 			// Todo: will either need block control input here or straight into respawn
+		}
+	}
+	
+	private void OnBodyEntered(Node body)
+	{
+		if (body == enemy)
+		{
+			enemyInAttackArea = true;
+		}
+	}
+
+	private void OnBodyExited(Node body)
+	{
+		if (body == enemy)
+		{
+			enemyInAttackArea = false;
 		}
 	}
 }

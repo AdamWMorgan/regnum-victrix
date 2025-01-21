@@ -5,6 +5,18 @@ public partial class Enemy : CharacterBody2D
 {
 	// Reference to the Area2D node
 	[Export] public Area2D DetectionArea;
+	public static int MAX_HEALTH = 80;
+	public const int ATTACK_DAMAGE = 20;
+	public int enemyHealth = MAX_HEALTH;
+	public bool enemyAlive = true;
+	public int Health {
+			get => enemyHealth;
+			set {
+				enemyHealth = Mathf.Clamp(value, 0, MAX_HEALTH);
+				enemyHealthBar.Value = enemyHealth;
+			}
+	}
+	public ProgressBar enemyHealthBar;
 	public AnimatedSprite2D sprite;
 	public Player player;	
 	public const float SPEED = 100.0f;
@@ -16,11 +28,15 @@ public partial class Enemy : CharacterBody2D
 		DetectionArea.BodyEntered += OnBodyEntered;
 		DetectionArea.BodyExited += OnBodyExited;
 		sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");  
-		player = GetNode<Player>("/root/Main/Player");	 
+		player = GetNode<Player>("/root/Main/Player");
+		enemyHealthBar = GetNode<ProgressBar>("EnemyHealth");
+		enemyHealthBar.Value = enemyHealth;
+		enemyHealthBar.MaxValue = MAX_HEALTH;  
 	}
 	
 	public override void _PhysicsProcess(double delta)
 	{
+		if(enemyAlive){
 		Vector2 velocity = Velocity;
 
 		Vector2 directionToPlayer = player.Position - Position;
@@ -35,13 +51,21 @@ public partial class Enemy : CharacterBody2D
 		// Update velocity and move the character
 		Velocity = velocity;
 		MoveAndSlide();
+		}
+	}
+	
+	public override void _Process(double delta){
+		if(enemyHealth <= 0 && enemyAlive){
+			enemyAlive = false;
+			sprite.Play("enemy_death_animation");
+		}
 	}
 	
 	// Called when a body enters the Area2D
 	private void OnBodyEntered(Node body)
 	{
 		GD.Print("Player entered!");
-		if (body.IsInGroup("Player"))
+		if (body.IsInGroup("Player") && enemyAlive)
 		{
 			AttackPlayer(body);
 		}
@@ -51,7 +75,7 @@ public partial class Enemy : CharacterBody2D
 	private void OnBodyExited(Node body)
 	{
 		GD.Print("Player exited!");
-		if (body.IsInGroup("Player"))
+		if (body.IsInGroup("Player") && enemyAlive)
 		{
 			// Stop attacking or revert to normal state when the player exits
 			NormalState();
@@ -67,7 +91,7 @@ public partial class Enemy : CharacterBody2D
 		// the attack zone currently. 
 		GD.Print("Player is in range! Attack!");
 		sprite.Play("enemy_attack_animation");
-		player.Health -= 50;
+		player.Health -= ATTACK_DAMAGE;
 		GD.Print(player.Health);
 	}
 

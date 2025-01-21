@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://floxwro1x75e"]
+[gd_scene load_steps=24 format=3 uid="uid://floxwro1x75e"]
 
 [ext_resource type="Texture2D" uid="uid://b0xjjq5gasjkp" path="res://game/assets/characters/Orc.png" id="1_5j5ws"]
 [ext_resource type="Script" path="res://scripts/Enemy.cs" id="1_gtct7"]
@@ -26,6 +26,22 @@ region = Rect2(400, 200, 100, 100)
 [sub_resource type="AtlasTexture" id="AtlasTexture_4qpx7"]
 atlas = ExtResource("1_5j5ws")
 region = Rect2(500, 200, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nw7xs"]
+atlas = ExtResource("1_5j5ws")
+region = Rect2(0, 500, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3wjlx"]
+atlas = ExtResource("1_5j5ws")
+region = Rect2(100, 500, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xvxrc"]
+atlas = ExtResource("1_5j5ws")
+region = Rect2(200, 500, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hapcn"]
+atlas = ExtResource("1_5j5ws")
+region = Rect2(300, 500, 100, 100)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_l1t7c"]
 atlas = ExtResource("1_5j5ws")
@@ -78,6 +94,23 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_nw7xs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3wjlx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xvxrc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hapcn")
+}],
+"loop": false,
+"name": &"enemy_death_animation",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_l1t7c")
 }, {
 "duration": 1.0,
@@ -107,6 +140,11 @@ height = 18.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_typao"]
 radius = 16.0312
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dqk6o"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kgywc"]
+bg_color = Color(0.72, 0, 0.0119998, 1)
+
 [node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("DetectionArea")]
 collision_layer = 2
 collision_mask = 2
@@ -116,7 +154,7 @@ DetectionArea = NodePath("DetectionArea")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_7ty51")
-animation = &"enemy_idle_animation"
+animation = &"enemy_death_animation"
 autoplay = "enemy_idle_animation"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -129,3 +167,16 @@ collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
 shape = SubResource("CircleShape2D_typao")
+
+[node name="EnemyHealth" type="ProgressBar" parent="."]
+clip_contents = true
+offset_left = 9.0
+offset_top = 11.0
+offset_right = 11.0
+offset_bottom = 29.0
+rotation = 1.57009
+theme_override_styles/background = SubResource("StyleBoxFlat_dqk6o")
+theme_override_styles/fill = SubResource("StyleBoxFlat_kgywc")
+value = 50.0
+fill_mode = 3
+show_percentage = false

@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://cb0rtekr02b04"]
+[gd_scene load_steps=24 format=3 uid="uid://cb0rtekr02b04"]
 
 [ext_resource type="Script" path="res://scripts/Player.cs" id="1_ewjmd"]
 [ext_resource type="Texture2D" uid="uid://b8b5ai0rjq1a0" path="res://game/assets/characters/Soldier.png" id="2_1t0wy"]
@@ -15,13 +15,13 @@ region = Rect2(100, 200, 100, 100)
 atlas = ExtResource("2_1t0wy")
 region = Rect2(200, 200, 100, 100)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_k2jga"]
-atlas = ExtResource("2_1t0wy")
-region = Rect2(300, 200, 100, 100)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_6sk2i"]
 atlas = ExtResource("2_1t0wy")
 region = Rect2(400, 200, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k2jga"]
+atlas = ExtResource("2_1t0wy")
+region = Rect2(300, 200, 100, 100)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qavyi"]
 atlas = ExtResource("2_1t0wy")
@@ -80,17 +80,17 @@ animations = [{
 "texture": SubResource("AtlasTexture_4c86b")
 }, {
 "duration": 0.5,
-"texture": SubResource("AtlasTexture_k2jga")
+"texture": SubResource("AtlasTexture_6sk2i")
 }, {
 "duration": 0.5,
-"texture": SubResource("AtlasTexture_6sk2i")
+"texture": SubResource("AtlasTexture_k2jga")
 }, {
 "duration": 0.5,
 "texture": SubResource("AtlasTexture_qavyi")
 }],
 "loop": false,
 "name": &"attack_animation",
-"speed": 5.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -142,6 +142,9 @@ height = 17.0
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vymx7"]
 bg_color = Color(4.23551e-06, 0.722861, 0.27359, 1)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_26gvc"]
+size = Vector2(12, 15)
+
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 2
@@ -150,8 +153,10 @@ script = ExtResource("1_ewjmd")
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_3bocj")
-animation = &"death_animation"
+animation = &"attack_animation"
 autoplay = "idle_animation"
+frame = 5
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_apauy")
@@ -172,3 +177,15 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_vymx7")
 value = 50.0
 fill_mode = 3
 show_percentage = false
+
+[node name="DetectionArea" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="AttackArea" type="CollisionShape2D" parent="DetectionArea"]
+light_mask = 2
+visibility_layer = 2
+position = Vector2(13, -0.5)
+shape = SubResource("RectangleShape2D_26gvc")
+one_way_collision_margin = 0.0
+debug_color = Color(0.980473, 0, 0.379368, 0.42)
