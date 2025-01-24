@@ -24,7 +24,9 @@ public partial class Player : CharacterBody2D
 	private bool enemyInAttackArea = false;
 	private float attackCooldown = 1.0f; // Cooldown duration in seconds
 	private float timeSinceLastAttack = 1.0f; // Tracks time since the last attack
-
+	private float attackPosX = 0.0f;
+	private float attackPosY = 0.0f;
+	
 	public override void _Ready()
 	{
 		AddToGroup("Player");
@@ -34,7 +36,9 @@ public partial class Player : CharacterBody2D
 		playerHealthBar.MaxValue = MAX_HEALTH;
 		enemy = GetNode<Enemy>("/root/Main/Enemy");
 		attackDetectionArea = GetNode<Area2D>("DetectionArea");
-		attackArea = GetNode<CollisionShape2D>("AttackArea");
+		attackArea = GetNode<CollisionShape2D>("DetectionArea/AttackArea");
+		attackPosX = attackArea.Position.X;
+		attackPosY = attackArea.Position.Y;
 		// Connect signals for the detection area
 		attackDetectionArea.Connect("body_entered", new Callable(this, nameof(OnBodyEntered)));
 		attackDetectionArea.Connect("body_exited", new Callable(this, nameof(OnBodyExited)));
@@ -57,7 +61,19 @@ public partial class Player : CharacterBody2D
 			{				
 				float directionSign = Mathf.Sign(direction.X);
 				sprite.Scale = new Vector2(directionSign, sprite.Scale.Y);
-				// TODO: Get attack working in both directions
+				float currX = attackArea.Position.X;
+				float currY = attackArea.Position.Y;
+				
+				// Attack working in both directions by moving attack area
+				if(direction.X < 0){
+					attackPosX = -Math.Abs(attackPosX);
+					attackPosY = -Math.Abs(attackPosY);
+					attackArea.Position = new Vector2(attackPosX, attackPosY);
+				} else {
+					attackPosX = +Math.Abs(attackPosX);
+					attackPosY = +Math.Abs(attackPosY);
+					attackArea.Position = new Vector2(attackPosX, attackPosY);
+				}
 			}
 		}
 		else
