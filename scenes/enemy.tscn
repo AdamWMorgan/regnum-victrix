@@ -148,6 +148,7 @@ bg_color = Color(0.72, 0, 0.0119998, 1)
 [node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("DetectionArea")]
 collision_layer = 2
 collision_mask = 2
+platform_floor_layers = 4294967293
 script = ExtResource("1_gtct7")
 DetectionArea = NodePath("DetectionArea")
 

@@ -1,22 +1,9 @@
-[gd_scene load_steps=6 format=4 uid="uid://ddgpd7ae3v778"]
+[gd_scene load_steps=5 format=4 uid="uid://ddgpd7ae3v778"]
 
 [ext_resource type="TileSet" uid="uid://bon0tuqm31npn" path="res://Tilesets/game_tile_set.tres" id="1_tjwv8"]
 [ext_resource type="PackedScene" uid="uid://cb0rtekr02b04" path="res://scenes/player.tscn" id="2_i68oy"]
-[ext_resource type="PackedScene" uid="uid://floxwro1x75e" path="res://scenes/enemy.tscn" id="3_nxeek"]
+[ext_resource type="PackedScene" uid="uid://floxwro1x75e" path="res://scenes/Enemy.tscn" id="3_nxeek"]
 [ext_resource type="Script" path="res://scripts/Spawner.cs" id="4_3agec"]
-
-[sub_resource type="PackedScene" id="PackedScene_48jla"]
-_bundled = {
-"conn_count": 0,
-"conns": PackedInt32Array(),
-"editable_instances": [],
-"names": PackedStringArray("Node2D", "Node2D"),
-"node_count": 1,
-"node_paths": [],
-"nodes": PackedInt32Array(-1, -1, 1, 0, -1, 0, 0),
-"variants": [],
-"version": 3
-}
 
 [node name="Main" type="Node2D"]
 metadata/_edit_horizontal_guides_ = [200.0]
@@ -33,9 +20,9 @@ position = Vector2(62, 24)
 platform_floor_layers = 4294967293
 
 [node name="EnemySpawner" type="Node2D" parent="."]
-position = Vector2(185, 109)
+position = Vector2(110, 69)
 script = ExtResource("4_3agec")
-EnemyScene = SubResource("PackedScene_48jla")
+EnemyScene = ExtResource("3_nxeek")
 
 [node name="Enemy" parent="." instance=ExtResource("3_nxeek")]
 position = Vector2(142, 24)

@@ -34,6 +34,7 @@ public partial class Player : CharacterBody2D
 		playerHealthBar = GetNode<ProgressBar>("PlayerHealth");
 		playerHealthBar.Value = Health;
 		playerHealthBar.MaxValue = MAX_HEALTH;
+		// this doesn't get enemies from spawner
 		enemy = GetNode<Enemy>("/root/Main/Enemy");
 		attackDetectionArea = GetNode<Area2D>("DetectionArea");
 		attackArea = GetNode<CollisionShape2D>("DetectionArea/AttackArea");

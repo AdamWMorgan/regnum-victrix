@@ -7,16 +7,16 @@ public partial class Spawner : Node2D
 	[Export] public PackedScene EnemyScene { get; set; }
 	[Export] public int SpawnCount { get; set; } = 5;
 	[Export] public Rect2 SpawnArea { get; set; } = new Rect2(Vector2.Zero, new Vector2(400, 400));
-	[Export] public float MinSpawnDistance { get; set; } = 400f;
+	[Export] public float MinSpawnDistance { get; set; } = 4f;
 
-	public AnimatedSprite2D Player { get; set; }
+	public CharacterBody2D Player { get; set; }
 
 	private List<Vector2> _spawnedPositions = new List<Vector2>();
 	private List<Enemy> enemies = new List<Enemy>();
 
 	public override void _Ready()
 	{
-		Player = GetNode<AnimatedSprite2D>("/root/Main/Player/PlayerSprite");
+		Player = GetNode<CharacterBody2D>("/root/Main/Player");
 		SpawnEnemies();
 	}
 
@@ -31,10 +31,10 @@ private void SpawnEnemies()
 		Vector2 spawnPosition;
 
 		// Instantiate the enemy scene
-		Enemy enemy = (Enemy)EnemyScene.Instantiate();
+		Enemy enemy = EnemyScene.Instantiate<Enemy>();
 		
-		enemies.Add(enemy);
-		
+		//enemies.Add(enemy);
+
 		if(enemy==null){
 			GD.Print("enemy is null");
 		}
@@ -45,6 +45,7 @@ private void SpawnEnemies()
 		// Randomize the spawn position
 		do
 		{
+			GD.Print("enemy is not working");
 			spawnPosition = SpawnArea.Position + new Vector2(
 				(float)random.NextDouble() * SpawnArea.Size.X,
 				(float)random.NextDouble() * SpawnArea.Size.Y
@@ -57,7 +58,8 @@ private void SpawnEnemies()
 		_spawnedPositions.Add(spawnPosition);
 
 		// Add the enemy to the scene (parent it to the root or another node)
-		GetParent().AddChild(enemy);
+		AddChild(enemy);
+		GD.Print($"Enemy {i} spawned at {spawnPosition}");
 	}
 }
 
