@@ -12,6 +12,7 @@ public partial class Spawner : Node2D
 	public AnimatedSprite2D Player { get; set; }
 
 	private List<Vector2> _spawnedPositions = new List<Vector2>();
+	private List<Enemy> enemies = new List<Enemy>();
 
 	public override void _Ready()
 	{
@@ -21,18 +22,6 @@ public partial class Spawner : Node2D
 
 private void SpawnEnemies()
 {
-	if (EnemyScene == null)
-	{
-		GD.PrintErr("EnemyScene is not assigned! Please assign a packed scene in the editor.");
-		return;
-	}
-
-	if (Player == null)
-	{
-		GD.PrintErr("Player is not assigned!");
-		return;
-	}
-
 	Random random = new Random();
 
 	for (int i = 0; i < SpawnCount; i++)
@@ -42,22 +31,17 @@ private void SpawnEnemies()
 		Vector2 spawnPosition;
 
 		// Instantiate the enemy scene
-		Node2D enemyNode = EnemyScene.Instantiate() as Node2D;
-
-		if (enemyNode == null)
-		{
-			GD.PrintErr("Failed to instantiate the enemy scene.");
-			continue;
+		Enemy enemy = (Enemy)EnemyScene.Instantiate();
+		
+		enemies.Add(enemy);
+		
+		if(enemy==null){
+			GD.Print("enemy is null");
 		}
-
-		// Try casting to Enemy
-		Enemy enemy = enemyNode as Enemy;
-		if (enemy == null)
-		{
-			GD.PrintErr("The instantiated node is not of type Enemy.");
-			continue;
+		if(enemy is not Enemy){
+			GD.Print("enemy is not enemy");
 		}
-
+		
 		// Randomize the spawn position
 		do
 		{
@@ -73,7 +57,7 @@ private void SpawnEnemies()
 		_spawnedPositions.Add(spawnPosition);
 
 		// Add the enemy to the scene (parent it to the root or another node)
-		GetParent().AddChild(enemyNode);
+		GetParent().AddChild(enemy);
 	}
 }
 

@@ -30,6 +30,7 @@ tile_set = ExtResource("1_tjwv8")
 [node name="Player" parent="." instance=ExtResource("2_i68oy")]
 texture_filter = 1
 position = Vector2(62, 24)
+platform_floor_layers = 4294967293
 
 [node name="EnemySpawner" type="Node2D" parent="."]
 position = Vector2(185, 109)
@@ -38,3 +39,4 @@ EnemyScene = SubResource("PackedScene_48jla")
 
 [node name="Enemy" parent="." instance=ExtResource("3_nxeek")]
 position = Vector2(142, 24)
+platform_floor_layers = 4294967293
