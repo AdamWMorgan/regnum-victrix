@@ -24,6 +24,7 @@ public partial class Player : CharacterBody2D
 	public Area2D attackDetectionArea;
 	public CollisionShape2D attackArea;
 	private bool enemyInAttackArea = false;
+	private List<Enemy> enemiesInAttackArea = new List<Enemy>();
 	private float attackCooldown = 1.0f; // Cooldown duration in seconds
 	private float timeSinceLastAttack = 1.0f; // Tracks time since the last attack
 	private float attackPosX = 0.0f;
@@ -96,7 +97,7 @@ public partial class Player : CharacterBody2D
 			for(int i = 0; i < enemies.Count; i++)
 			{	
 				Enemy enemy = enemies[i];
-				if(enemyInAttackArea)
+				if(enemiesInAttackArea.Any(e => e == enemy))
 				{
 					enemy.Health -= ATTACK_DAMAGE;
 				}
@@ -126,11 +127,18 @@ public partial class Player : CharacterBody2D
 	
 	private void OnBodyEntered(Node body)
 	{
-		enemyInAttackArea = enemies.Any(e => e == body); 
+		Enemy enemy = body as Enemy;
+		
+		if(enemy != null){
+			enemiesInAttackArea.Add(enemy);
+		}
 	}
 
 	private void OnBodyExited(Node body)
 	{
-		enemyInAttackArea = !enemies.Any(e => e == body); 
+		Enemy enemy = body as Enemy;
+		if(enemy != null){
+			enemiesInAttackArea.Remove(enemy);
+		}
 	}
 }
