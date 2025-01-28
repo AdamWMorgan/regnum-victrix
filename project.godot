@@ -14,6 +14,10 @@ config/name="Regnum Victrix"
 run/main_scene="res://scenes/tilemap.tscn"
 config/features=PackedStringArray("4.3", "C#", "Forward Plus")
 
+[autoload]
+
+GameManager="*res://scripts/GameManager.cs"
+
 [display]
 
 window/size/viewport_width=640

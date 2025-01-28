@@ -5,9 +5,10 @@ using System.Collections.Generic;
 public partial class Spawner : Node2D
 {
 	[Export] public PackedScene EnemyScene { get; set; }
-	[Export] public int SpawnCount { get; set; } = 5;
+	[Export] public int SpawnCount { get; set; } = 10;
 	[Export] public Rect2 SpawnArea { get; set; } = new Rect2(Vector2.Zero, new Vector2(400, 400));
-	[Export] public float MinSpawnDistance { get; set; } = 4f;
+	[Export] public float MinSpawnDistance { get; set; } = 0.2f;
+	[Export] public float MaxSpawnDistance { get; set; } = 0.5f;
 
 	public CharacterBody2D Player { get; set; }
 
@@ -59,6 +60,7 @@ private void SpawnEnemies()
 
 		// Add the enemy to the scene (parent it to the root or another node)
 		AddChild(enemy);
+		GameManager.Instance.RegisterEnemy(enemy);
 		GD.Print($"Enemy {i} spawned at {spawnPosition}");
 	}
 }
@@ -67,7 +69,7 @@ private void SpawnEnemies()
 	{
 		foreach (var otherPosition in _spawnedPositions)
 		{
-			if (position.DistanceTo(otherPosition) < MinSpawnDistance)
+			if (position.DistanceTo(otherPosition) < MinSpawnDistance && position.DistanceTo(otherPosition) > MaxSpawnDistance)
 			{
 				return true;
 			}

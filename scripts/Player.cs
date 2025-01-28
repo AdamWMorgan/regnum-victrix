@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 public partial class Player : CharacterBody2D
 {
@@ -18,7 +20,7 @@ public partial class Player : CharacterBody2D
 	}
 	public ProgressBar playerHealthBar;
 	private AnimatedSprite2D sprite;
-	public Enemy enemy;
+	public List<Enemy> enemies;
 	public Area2D attackDetectionArea;
 	public CollisionShape2D attackArea;
 	private bool enemyInAttackArea = false;
@@ -35,7 +37,7 @@ public partial class Player : CharacterBody2D
 		playerHealthBar.Value = Health;
 		playerHealthBar.MaxValue = MAX_HEALTH;
 		// this doesn't get enemies from spawner
-		enemy = GetNode<Enemy>("/root/Main/Enemy");
+		enemies = GameManager.Instance.AllEnemies;
 		attackDetectionArea = GetNode<Area2D>("DetectionArea");
 		attackArea = GetNode<CollisionShape2D>("DetectionArea/AttackArea");
 		attackPosX = attackArea.Position.X;
@@ -91,10 +93,14 @@ public partial class Player : CharacterBody2D
 			{
 				sprite.Play("attack_animation");
 			}
-			if(enemyInAttackArea)
-			{
-				enemy.Health -= ATTACK_DAMAGE;
-			}
+			for(int i = 0; i < enemies.Count; i++)
+			{	
+				Enemy enemy = enemies[i];
+				if(enemyInAttackArea)
+				{
+					enemy.Health -= ATTACK_DAMAGE;
+				}
+			}	
 			timeSinceLastAttack = 0.0f;
 		}
 
@@ -120,17 +126,11 @@ public partial class Player : CharacterBody2D
 	
 	private void OnBodyEntered(Node body)
 	{
-		if (body == enemy)
-		{
-			enemyInAttackArea = true;
-		}
+		enemyInAttackArea = enemies.Any(e => e == body); 
 	}
 
 	private void OnBodyExited(Node body)
 	{
-		if (body == enemy)
-		{
-			enemyInAttackArea = false;
-		}
+		enemyInAttackArea = !enemies.Any(e => e == body); 
 	}
 }
