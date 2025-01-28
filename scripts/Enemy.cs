@@ -39,7 +39,7 @@ public partial class Enemy : CharacterBody2D
 	
 	public override void _PhysicsProcess(double delta)
 	{
-		if(player.Health <= 0){
+		if(player.Health <= 0 && enemyAlive){
 			NormalState();
 		}
 		
