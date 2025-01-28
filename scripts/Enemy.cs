@@ -9,6 +9,9 @@ public partial class Enemy : CharacterBody2D
 	public const int ATTACK_DAMAGE = 20;
 	public int enemyHealth = MAX_HEALTH;
 	public bool enemyAlive = true;
+	public bool playerInAttackRange = false;
+	private float attackCooldown = 1.2f; // Cooldown duration in seconds
+	private float timeSinceLastAttack = 1.2f; // Tracks time since the last attack
 	public int Health {
 			get => enemyHealth;
 			set {
@@ -36,12 +39,14 @@ public partial class Enemy : CharacterBody2D
 	
 	public override void _PhysicsProcess(double delta)
 	{
+		if(player.Health <= 0){
+			NormalState();
+		}
+		
 		if(enemyAlive){
 		Vector2 velocity = Velocity;
 
 		Vector2 directionToPlayer = player.Position - GlobalPosition;
-		GD.Print("Position = " + GlobalPosition);
-		GD.Print("Player Position = " + player.Position);
 		if(directionToPlayer.X > 0){
 			sprite.FlipH = false;
 		}
@@ -49,6 +54,14 @@ public partial class Enemy : CharacterBody2D
 			sprite.FlipH = true;	
 		}
 		
+		timeSinceLastAttack += (float)delta;
+		
+		if(playerInAttackRange && timeSinceLastAttack >= attackCooldown){
+			AttackPlayer(player);
+			timeSinceLastAttack = 0.0f;
+		} else if(!playerInAttackRange){
+			NormalState();
+		}
 		// Update velocity and move the character
 		Velocity = velocity;
 		MoveAndSlide();
@@ -65,21 +78,18 @@ public partial class Enemy : CharacterBody2D
 	// Called when a body enters the Area2D
 	private void OnBodyEntered(Node body)
 	{
-		GD.Print("Player entered!");
-		if (body.IsInGroup("Player") && enemyAlive)
+		if (body.IsInGroup("Player"))
 		{
-			AttackPlayer(body);
+			playerInAttackRange = true;
 		}
 	}
 
 	// Called when a body exits the Area2D
 	private void OnBodyExited(Node body)
 	{
-		GD.Print("Player exited!");
-		if (body.IsInGroup("Player") && enemyAlive)
+		if (body.IsInGroup("Player"))
 		{
-			// Stop attacking or revert to normal state when the player exits
-			NormalState();
+			playerInAttackRange = false;
 		}
 	}
 
@@ -98,7 +108,6 @@ public partial class Enemy : CharacterBody2D
 
 	private void NormalState()
 	{
-		GD.Print("Enemy is idle.");
 		sprite.Play("enemy_idle_animation");
 	}
 }

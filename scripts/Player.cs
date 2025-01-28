@@ -25,8 +25,8 @@ public partial class Player : CharacterBody2D
 	public CollisionShape2D attackArea;
 	private bool enemyInAttackArea = false;
 	private List<Enemy> enemiesInAttackArea = new List<Enemy>();
-	private float attackCooldown = 1.0f; // Cooldown duration in seconds
-	private float timeSinceLastAttack = 1.0f; // Tracks time since the last attack
+	private float attackCooldown = 0.8f; // Cooldown duration in seconds
+	private float timeSinceLastAttack = 0.8f; // Tracks time since the last attack
 	private float attackPosX = 0.0f;
 	private float attackPosY = 0.0f;
 	
