@@ -39,8 +39,9 @@ public partial class Enemy : CharacterBody2D
 		if(enemyAlive){
 		Vector2 velocity = Velocity;
 
-		Vector2 directionToPlayer = player.Position - Position;
-		
+		Vector2 directionToPlayer = player.Position - GlobalPosition;
+		GD.Print("Position = " + GlobalPosition);
+		GD.Print("Player Position = " + player.Position);
 		if(directionToPlayer.X > 0){
 			sprite.FlipH = false;
 		}
