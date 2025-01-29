@@ -11,6 +11,7 @@ public partial class Enemy : CharacterBody2D
 	public int enemyHealth = MAX_HEALTH;
 	public bool enemyAlive = true;
 	public bool playerInAttackRange = false;
+	public bool playerDetected = false;
 	private float attackCooldown = 1.2f; // Cooldown duration in seconds
 	private float timeSinceLastAttack = 1.2f; // Tracks time since the last attack
 	public int Health {
@@ -23,14 +24,16 @@ public partial class Enemy : CharacterBody2D
 	public ProgressBar enemyHealthBar;
 	public AnimatedSprite2D sprite;
 	public Player player;	
-	public const float SPEED = 100.0f;
+	public const float SPEED = 1.0f;
 	public const float DECELERATION = 5000.0f;
 
 	public override void _Ready()
 	{
 		// Connect the body_entered and body_exited signals to the methods
-		AttackArea.BodyEntered += OnBodyEntered;
-		AttackArea.BodyExited += OnBodyExited;
+		AttackArea.BodyEntered += OnBodyEnteredAttackArea;
+		AttackArea.BodyExited += OnBodyExitedAttackArea;
+		DetectionArea.BodyEntered += OnBodyEnteredDetectionArea;
+		DetectionArea.BodyExited += OnBodyExitedDetectionArea;
 		sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");  
 		player = GetNode<Player>("/root/Main/Player");
 		enemyHealthBar = GetNode<ProgressBar>("EnemyHealth");
@@ -49,6 +52,10 @@ public partial class Enemy : CharacterBody2D
 		}
 		else if (directionToPlayer.X < 0){
 			sprite.FlipH = true;	
+		}
+		
+		if(playerDetected){
+			velocity = directionToPlayer * SPEED;
 		}
 		
 		timeSinceLastAttack += (float)delta;
@@ -73,7 +80,7 @@ public partial class Enemy : CharacterBody2D
 	}
 	
 	// Called when a body enters the Area2D
-	private void OnBodyEntered(Node body)
+	private void OnBodyEnteredAttackArea(Node body)
 	{
 		if (body.IsInGroup("Player"))
 		{
@@ -82,11 +89,23 @@ public partial class Enemy : CharacterBody2D
 	}
 
 	// Called when a body exits the Area2D
-	private void OnBodyExited(Node body)
+	private void OnBodyExitedAttackArea(Node body)
 	{
 		if (body.IsInGroup("Player"))
 		{
 			playerInAttackRange = false;
+		}
+	}
+	
+	private void OnBodyEnteredDetectionArea(Node body){
+		if(body.IsInGroup("Player")){
+			playerDetected = true;
+		}
+	}
+	
+	private void OnBodyExitedDetectionArea(Node body){
+		if(body.IsInGroup("Player")){
+			playerDetected = false;
 		}
 	}
 
