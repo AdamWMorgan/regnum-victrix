@@ -5,8 +5,9 @@ public partial class Enemy : CharacterBody2D
 {
 	// Reference to the Area2D node
 	[Export] public Area2D DetectionArea;
-	public static int MAX_HEALTH = 80;
-	public const int ATTACK_DAMAGE = 20;
+	[Export] public Area2D AttackArea;
+	public static int MAX_HEALTH = 60;
+	public const int ATTACK_DAMAGE = 10;
 	public int enemyHealth = MAX_HEALTH;
 	public bool enemyAlive = true;
 	public bool playerInAttackRange = false;
@@ -28,8 +29,8 @@ public partial class Enemy : CharacterBody2D
 	public override void _Ready()
 	{
 		// Connect the body_entered and body_exited signals to the methods
-		DetectionArea.BodyEntered += OnBodyEntered;
-		DetectionArea.BodyExited += OnBodyExited;
+		AttackArea.BodyEntered += OnBodyEntered;
+		AttackArea.BodyExited += OnBodyExited;
 		sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");  
 		player = GetNode<Player>("/root/Main/Player");
 		enemyHealthBar = GetNode<ProgressBar>("EnemyHealth");
@@ -38,11 +39,7 @@ public partial class Enemy : CharacterBody2D
 	}
 	
 	public override void _PhysicsProcess(double delta)
-	{
-		if(player.Health <= 0 && enemyAlive){
-			NormalState();
-		}
-		
+	{		
 		if(enemyAlive){
 		Vector2 velocity = Velocity;
 

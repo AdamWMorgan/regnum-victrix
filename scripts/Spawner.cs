@@ -46,7 +46,6 @@ private void SpawnEnemies()
 		// Randomize the spawn position
 		do
 		{
-			GD.Print("enemy is not working");
 			spawnPosition = SpawnArea.Position + new Vector2(
 				(float)random.NextDouble() * SpawnArea.Size.X,
 				(float)random.NextDouble() * SpawnArea.Size.Y

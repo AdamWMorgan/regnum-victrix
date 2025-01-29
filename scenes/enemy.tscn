@@ -1,7 +1,10 @@
-[gd_scene load_steps=24 format=3 uid="uid://floxwro1x75e"]
+[gd_scene load_steps=25 format=3 uid="uid://floxwro1x75e"]
 
 [ext_resource type="Texture2D" uid="uid://b0xjjq5gasjkp" path="res://game/assets/characters/Orc.png" id="1_5j5ws"]
 [ext_resource type="Script" path="res://scripts/Enemy.cs" id="1_gtct7"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_poafi"]
+radius = 16.1245
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k5sg8"]
 atlas = ExtResource("1_5j5ws")
@@ -138,19 +141,27 @@ radius = 9.0
 height = 18.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_typao"]
-radius = 16.0312
+radius = 98.0204
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dqk6o"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kgywc"]
 bg_color = Color(0.72, 0, 0.0119998, 1)
 
-[node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("DetectionArea")]
+[node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("DetectionArea", "AttackArea")]
 collision_layer = 2
 collision_mask = 2
 platform_floor_layers = 4294967293
 script = ExtResource("1_gtct7")
 DetectionArea = NodePath("DetectionArea")
+AttackArea = NodePath("AttackArea")
+
+[node name="AttackArea" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+shape = SubResource("CircleShape2D_poafi")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
