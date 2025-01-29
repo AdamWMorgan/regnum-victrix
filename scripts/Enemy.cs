@@ -24,7 +24,7 @@ public partial class Enemy : CharacterBody2D
 	public ProgressBar enemyHealthBar;
 	public AnimatedSprite2D sprite;
 	public Player player;	
-	public const float SPEED = 1.0f;
+	public const float SPEED = 0.5f;
 	public const float DECELERATION = 5000.0f;
 
 	public override void _Ready()
@@ -56,6 +56,8 @@ public partial class Enemy : CharacterBody2D
 		
 		if(playerDetected){
 			velocity = directionToPlayer * SPEED;
+		} else{
+			velocity = Vector2.Zero;
 		}
 		
 		timeSinceLastAttack += (float)delta;
@@ -69,6 +71,8 @@ public partial class Enemy : CharacterBody2D
 		// Update velocity and move the character
 		Velocity = velocity;
 		MoveAndSlide();
+		} else {
+			GameManager.Instance.UnregisterEnemy(this);
 		}
 	}
 	

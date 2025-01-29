@@ -25,4 +25,4 @@ script = ExtResource("4_3agec")
 EnemyScene = ExtResource("3_nxeek")
 
 [node name="Enemy" parent="." instance=ExtResource("3_nxeek")]
-position = Vector2(142, 24)
+position = Vector2(501, 37)
