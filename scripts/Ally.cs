@@ -26,6 +26,7 @@ public partial class Ally : CharacterBody2D
 	public Player player;	
 	public const float SPEED = 0.5f;
 	public const float DECELERATION = 5000.0f;
+	public const float ALLY_PLAYER_GAP = 30.0f;
 
 	public override void _Ready()
 	{
@@ -46,17 +47,20 @@ public partial class Ally : CharacterBody2D
 		if(allyAlive){
 		Vector2 velocity = Velocity;
 
-		Vector2 directionToPlayer = player.Position - GlobalPosition;
+		Vector2 directionToPlayer = player.Position - GlobalPosition ;
 		if(directionToPlayer.X > 0){
 			sprite.FlipH = false;
 		}
 		else if (directionToPlayer.X < 0){
 			sprite.FlipH = true;	
 		}
-		
-		if(playerDetected){
+		GD.Print("distance = " + player.GlobalPosition.DistanceTo(this.GlobalPosition));
+		if(playerDetected && player.GlobalPosition.DistanceTo(this.GlobalPosition) > ALLY_PLAYER_GAP)
+		{
 			velocity = directionToPlayer * SPEED;
-		} else{
+		}
+		else
+		{
 			velocity = Vector2.Zero;
 		}
 		
@@ -104,7 +108,9 @@ public partial class Ally : CharacterBody2D
 	}
 	
 	private void OnBodyEnteredDetectionArea(Node body){
+		GD.Print("in detection area");
 		if(body.IsInGroup("Player")){
+			GD.Print("in group");
 			playerDetected = true;
 		}
 	}

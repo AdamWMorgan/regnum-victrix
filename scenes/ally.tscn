@@ -165,12 +165,16 @@ position = Vector2(0, -1)
 shape = SubResource("CircleShape2D_1ne15")
 
 [node name="AttackArea" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
 
 [node name="AttackRange" type="CollisionShape2D" parent="AttackArea"]
 position = Vector2(0, -1)
 shape = SubResource("CircleShape2D_6842p")
 
 [node name="DetectionArea" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
 
 [node name="DetectionRange" type="CollisionShape2D" parent="DetectionArea"]
 shape = SubResource("CircleShape2D_u1nxu")
