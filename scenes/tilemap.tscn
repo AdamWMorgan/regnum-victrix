@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=4 uid="uid://ddgpd7ae3v778"]
+[gd_scene load_steps=7 format=4 uid="uid://ddgpd7ae3v778"]
 
 [ext_resource type="TileSet" uid="uid://bon0tuqm31npn" path="res://Tilesets/game_tile_set.tres" id="1_tjwv8"]
 [ext_resource type="PackedScene" uid="uid://cb0rtekr02b04" path="res://scenes/player.tscn" id="2_i68oy"]
 [ext_resource type="PackedScene" uid="uid://floxwro1x75e" path="res://scenes/enemy.tscn" id="3_nxeek"]
 [ext_resource type="Script" path="res://scripts/Spawner.cs" id="4_3agec"]
+[ext_resource type="Script" path="res://scripts/AllySpawner.cs" id="5_ndcmt"]
+[ext_resource type="PackedScene" uid="uid://drtu1nxxs28rm" path="res://scenes/ally.tscn" id="6_nk3t0"]
 
 [node name="Main" type="Node2D"]
 metadata/_edit_horizontal_guides_ = [200.0]
@@ -20,9 +22,14 @@ position = Vector2(62, 24)
 platform_floor_layers = 4294967293
 
 [node name="EnemySpawner" type="Node2D" parent="."]
-position = Vector2(110, 69)
+position = Vector2(310, 246)
 script = ExtResource("4_3agec")
 EnemyScene = ExtResource("3_nxeek")
 
 [node name="Enemy" parent="." instance=ExtResource("3_nxeek")]
 position = Vector2(501, 37)
+
+[node name="AllySpawner" type="Node2D" parent="."]
+position = Vector2(84, 91)
+script = ExtResource("5_ndcmt")
+AllyScene = ExtResource("6_nk3t0")
