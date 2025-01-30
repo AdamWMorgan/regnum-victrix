@@ -121,10 +121,8 @@ public partial class Enemy : CharacterBody2D
 		// swing is finished that health is taken.
 		// Also it only takes into account 1 swing per time the player enters 
 		// the attack zone currently. 
-		GD.Print("Player is in range! Attack!");
 		sprite.Play("enemy_attack_animation");
 		player.Health -= ATTACK_DAMAGE;
-		GD.Print(player.Health);
 	}
 
 	private void NormalState()

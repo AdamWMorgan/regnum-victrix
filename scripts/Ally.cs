@@ -54,7 +54,7 @@ public partial class Ally : CharacterBody2D
 		else if (directionToPlayer.X < 0){
 			sprite.FlipH = true;	
 		}
-		GD.Print("distance = " + player.GlobalPosition.DistanceTo(this.GlobalPosition));
+		
 		if(playerDetected && player.GlobalPosition.DistanceTo(this.GlobalPosition) > ALLY_PLAYER_GAP)
 		{
 			velocity = directionToPlayer * SPEED;
@@ -108,9 +108,7 @@ public partial class Ally : CharacterBody2D
 	}
 	
 	private void OnBodyEnteredDetectionArea(Node body){
-		GD.Print("in detection area");
 		if(body.IsInGroup("Player")){
-			GD.Print("in group");
 			playerDetected = true;
 		}
 	}
@@ -128,10 +126,8 @@ public partial class Ally : CharacterBody2D
 		// swing is finished that health is taken.
 		// Also it only takes into account 1 swing per time the player enters 
 		// the attack zone currently. 
-		GD.Print("Player is in range! Attack!");
 		sprite.Play("ally_attack_animation");
 		player.Health -= ATTACK_DAMAGE;
-		GD.Print(player.Health);
 	}
 
 	private void NormalState()
