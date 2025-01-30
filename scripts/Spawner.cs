@@ -36,15 +36,6 @@ private void SpawnEnemies()
 		// Instantiate the enemy scene
 		Enemy enemy = EnemyScene.Instantiate<Enemy>();
 		
-		//enemies.Add(enemy);
-
-		if(enemy==null){
-			GD.Print("enemy is null");
-		}
-		if(enemy is not Enemy){
-			GD.Print("enemy is not enemy");
-		}
-		
 		// Randomize the spawn position
 		do
 		{

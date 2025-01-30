@@ -36,13 +36,6 @@ private void SpawnAllies()
 		// Instantiate the ally scene
 		Ally ally = AllyScene.Instantiate<Ally>();
 		
-		if(ally==null){
-			GD.Print("ally is null");
-		}
-		if(ally is not Ally){
-			GD.Print("ally is not ally");
-		}
-		
 		// Randomize the spawn position
 		do
 		{
