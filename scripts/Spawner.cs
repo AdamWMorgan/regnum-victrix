@@ -20,7 +20,9 @@ public partial class Spawner : Node2D
 		Player = GetNode<CharacterBody2D>("/root/Main/Player");
 		SpawnEnemies();
 	}
-
+public void DespawnEnemy(Node body){
+	RemoveChild(body);
+}
 private void SpawnEnemies()
 {
 	Random random = new Random();

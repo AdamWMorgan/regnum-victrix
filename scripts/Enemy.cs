@@ -73,6 +73,7 @@ public partial class Enemy : CharacterBody2D
 		MoveAndSlide();
 		} else {
 			GameManager.Instance.UnregisterEnemy(this);
+			//GetParent().RemoveChild(this);
 		}
 	}
 	

@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://drtu1nxxs28rm"]
+
+[node name="Ally" type="Node2D"]
+
+[node name="AllyBody" type="CharacterBody2D" parent="."]
+
+[node name="AllySprite" type="AnimatedSprite2D" parent="AllyBody"]
