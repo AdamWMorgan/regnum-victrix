@@ -77,7 +77,8 @@ public partial class Enemy : CharacterBody2D
 		}
 	}
 	
-	public override void _Process(double delta){
+	public override void _Process(double delta)
+	{
 		if(enemyHealth <= 0 && enemyAlive){
 			enemyAlive = false;
 			sprite.Play("enemy_death_animation");
@@ -102,7 +103,8 @@ public partial class Enemy : CharacterBody2D
 		}
 	}
 	
-	private void OnBodyEnteredDetectionArea(Node body){
+	private void OnBodyEnteredDetectionArea(Node body)
+	{
 		if(body.IsInGroup("Player")){
 			playerDetected = true;
 		}

@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class Ally : CharacterBody2D
 {
@@ -11,6 +12,8 @@ public partial class Ally : CharacterBody2D
 	public int allyHealth = MAX_HEALTH;
 	public bool allyAlive = true;
 	public bool playerInAttackRange = false;
+	public bool allyInAttackRange = false;
+	private List<Ally> nearbyAllies = new List<Ally>();
 	public bool playerDetected = false;
 	private float attackCooldown = 1.2f; // Cooldown duration in seconds
 	private float timeSinceLastAttack = 1.2f; // Tracks time since the last attack
@@ -24,12 +27,13 @@ public partial class Ally : CharacterBody2D
 	public ProgressBar allyHealthBar;
 	public AnimatedSprite2D sprite;
 	public Player player;	
-	public const float SPEED = 0.5f;
+	public const float SPEED = 50f;
 	public const float DECELERATION = 5000.0f;
-	public const float ALLY_PLAYER_GAP = 30.0f;
+	public const float ALLY_PLAYER_GAP = 50.0f;
 
 	public override void _Ready()
 	{
+		AddToGroup("Ally");
 		// Connect the body_entered and body_exited signals to the methods
 		AttackArea.BodyEntered += OnBodyEnteredAttackArea;
 		AttackArea.BodyExited += OnBodyExitedAttackArea;
@@ -45,23 +49,30 @@ public partial class Ally : CharacterBody2D
 	public override void _PhysicsProcess(double delta)
 	{		
 		if(allyAlive){
-		Vector2 velocity = Velocity;
+		Vector2 velocity = Vector2.Zero;
+		
+		
 
-		Vector2 directionToPlayer = player.Position - GlobalPosition ;
-		if(directionToPlayer.X > 0){
-			sprite.FlipH = false;
+		if (playerDetected && player.GlobalPosition.DistanceTo(GlobalPosition) > ALLY_PLAYER_GAP){
+			Vector2 directionToPlayer = (player.GlobalPosition - GlobalPosition).Normalized();
+			velocity += directionToPlayer * SPEED;
+			if(directionToPlayer.X > 0){
+				sprite.FlipH = false;
+			}
+			else if (directionToPlayer.X < 0){
+				sprite.FlipH = true;	
+			}
 		}
-		else if (directionToPlayer.X < 0){
-			sprite.FlipH = true;	
+
+		foreach (Ally otherAlly in nearbyAllies)
+		{
+			Vector2 moveAway = (GlobalPosition - otherAlly.GlobalPosition).Normalized();
+			velocity += moveAway * (SPEED * 0.7f); // Reduce weight so it doesn't overpower player movement
 		}
 		
-		if(playerDetected && player.GlobalPosition.DistanceTo(this.GlobalPosition) > ALLY_PLAYER_GAP)
-		{
-			velocity = directionToPlayer * SPEED;
-		}
-		else
-		{
-			velocity = Vector2.Zero;
+		if (velocity.Length() > SPEED)
+		{		
+			velocity = velocity.Normalized() * SPEED;
 		}
 		
 		timeSinceLastAttack += (float)delta;
@@ -96,6 +107,10 @@ public partial class Ally : CharacterBody2D
 		{
 			playerInAttackRange = true;
 		}
+		else if(body.IsInGroup("Ally")){
+			allyInAttackRange = true;
+			nearbyAllies.Add((Ally) body);
+		}
 	}
 
 	// Called when a body exits the Area2D
@@ -104,6 +119,10 @@ public partial class Ally : CharacterBody2D
 		if (body.IsInGroup("Player"))
 		{
 			playerInAttackRange = false;
+		}
+		else if(body.IsInGroup("Ally")){
+			allyInAttackRange = false;
+			nearbyAllies.Remove((Ally)body);
 		}
 	}
 	
