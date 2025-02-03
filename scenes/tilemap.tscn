@@ -26,9 +26,6 @@ position = Vector2(310, 246)
 script = ExtResource("4_3agec")
 EnemyScene = ExtResource("3_nxeek")
 
-[node name="Enemy" parent="." instance=ExtResource("3_nxeek")]
-position = Vector2(501, 37)
-
 [node name="AllySpawner" type="Node2D" parent="."]
 position = Vector2(84, 91)
 script = ExtResource("5_ndcmt")
