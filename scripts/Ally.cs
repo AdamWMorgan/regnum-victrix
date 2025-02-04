@@ -80,7 +80,6 @@ public partial class Ally : CharacterBody2D
 					sprite.Play("ally_idle_animation");
 				}
 			}
-
 		} 
 		else if (playerDetected && player.GlobalPosition.DistanceTo(GlobalPosition) > ALLY_PLAYER_GAP){
 			// If attack animation finishes, return to idle animation

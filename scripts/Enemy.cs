@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class Enemy : CharacterBody2D
 {
@@ -10,8 +11,11 @@ public partial class Enemy : CharacterBody2D
 	public const int ATTACK_DAMAGE = 10;
 	public int enemyHealth = MAX_HEALTH;
 	public bool enemyAlive = true;
+	public bool allyInAttackRange = false;
 	public bool playerInAttackRange = false;
 	public bool playerDetected = false;
+	private List<Ally> detectedAllies = new List<Ally>();
+	private List<Ally> attackableAllies = new List<Ally>();
 	private float attackCooldown = 1.2f; // Cooldown duration in seconds
 	private float timeSinceLastAttack = 1.2f; // Tracks time since the last attack
 	public int Health {
@@ -45,29 +49,51 @@ public partial class Enemy : CharacterBody2D
 	public override void _PhysicsProcess(double delta)
 	{		
 		if(enemyAlive){
-		Vector2 velocity = Velocity;
-
-		Vector2 directionToPlayer = player.Position - GlobalPosition;
-		if(directionToPlayer.X > 0){
-			sprite.FlipH = false;
-		}
-		else if (directionToPlayer.X < 0){
-			sprite.FlipH = true;	
-		}
-		
-		if(playerDetected){
-			velocity = directionToPlayer * SPEED;
-		} else{
-			velocity = Vector2.Zero;
-		}
-		
+			
 		timeSinceLastAttack += (float)delta;
+		Vector2 velocity = Velocity;
 		
-		if(playerInAttackRange && timeSinceLastAttack >= attackCooldown){
+		detectedAllies.RemoveAll(ally => ally.Health <= 0);
+		if(detectedAllies.Count > 0){
+			Vector2 directionToAlly = detectedAllies[0].GlobalPosition - GlobalPosition;
+			velocity = directionToAlly * SPEED;
+			
+			if(directionToAlly.X > 0){
+				sprite.FlipH = false;
+			}
+			else if (directionToAlly.X < 0){
+				sprite.FlipH = true;	
+			}
+			if(attackableAllies.Count > 0 && attackableAllies[0].Health > 0 && timeSinceLastAttack >= attackCooldown){
+				if (!sprite.IsPlaying() || sprite.Animation != "enemy_attack_animation")
+				{
+					sprite.Play("enemy_attack_animation");
+				}
+				attackableAllies[0].Health -= ATTACK_DAMAGE;
+				timeSinceLastAttack = 0.0f;
+			} else if(attackableAllies.Count == 0) {
+				// If attack animation finishes, return to idle animation
+				if (sprite.Animation == "enemy_attack_animation")
+				{
+					sprite.Play("enemy_idle_animation");
+				}
+			}
+		} else if(playerDetected){
+			Vector2 directionToPlayer = player.Position - GlobalPosition;
+			if(directionToPlayer.X > 0){
+				sprite.FlipH = false;
+			}
+			else if (directionToPlayer.X < 0){
+				sprite.FlipH = true;	
+			}
+			velocity = directionToPlayer * SPEED;
+		}
+		else if(playerInAttackRange && timeSinceLastAttack >= attackCooldown){
 			AttackPlayer(player);
 			timeSinceLastAttack = 0.0f;
-		} else if(!playerInAttackRange){
+		} else{
 			NormalState();
+			velocity = Vector2.Zero;
 		}
 		// Update velocity and move the character
 		Velocity = velocity;
@@ -92,6 +118,10 @@ public partial class Enemy : CharacterBody2D
 		if (body.IsInGroup("Player"))
 		{
 			playerInAttackRange = true;
+		}		
+		if(body.IsInGroup("Ally")){
+			allyInAttackRange = true;
+			attackableAllies.Add((Ally)body);
 		}
 	}
 
@@ -101,6 +131,10 @@ public partial class Enemy : CharacterBody2D
 		if (body.IsInGroup("Player"))
 		{
 			playerInAttackRange = false;
+		}		
+		if(body.IsInGroup("Ally")){
+			allyInAttackRange = false;
+			attackableAllies.Remove((Ally)body);
 		}
 	}
 	
@@ -108,12 +142,18 @@ public partial class Enemy : CharacterBody2D
 	{
 		if(body.IsInGroup("Player")){
 			playerDetected = true;
+		}		
+		if(body.IsInGroup("Ally")){
+			detectedAllies.Add((Ally) body);
 		}
 	}
 	
 	private void OnBodyExitedDetectionArea(Node body){
 		if(body.IsInGroup("Player")){
 			playerDetected = false;
+		}
+		if(body.IsInGroup("Ally")){
+			detectedAllies.Remove((Ally) body);
 		}
 	}
 
