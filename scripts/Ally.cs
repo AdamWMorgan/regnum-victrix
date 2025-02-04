@@ -7,6 +7,7 @@ public partial class Ally : CharacterBody2D
 	// Reference to the Area2D node
 	[Export] public Area2D DetectionArea;
 	[Export] public Area2D AttackArea;
+	[Export] public CollisionShape2D collisionShape;
 	public static int MAX_HEALTH = 60;
 	public const int ATTACK_DAMAGE = 10;
 	public int allyHealth = MAX_HEALTH;
@@ -123,6 +124,7 @@ public partial class Ally : CharacterBody2D
 		MoveAndSlide();
 		} else {
 			GameManager.Instance.UnregisterAlly(this);
+			collisionShape.Disabled = true;
 			//GetParent().RemoveChild(this);
 		}
 	}

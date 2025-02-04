@@ -148,13 +148,14 @@ radius = 98.0204
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kgywc"]
 bg_color = Color(0.72, 0, 0.0119998, 1)
 
-[node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("DetectionArea", "AttackArea")]
+[node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("DetectionArea", "AttackArea", "collisionShape")]
 collision_layer = 2
 collision_mask = 2
 platform_floor_layers = 4294967293
 script = ExtResource("1_gtct7")
 DetectionArea = NodePath("DetectionArea")
 AttackArea = NodePath("AttackArea")
+collisionShape = NodePath("CollisionShape2D")
 
 [node name="AttackArea" type="Area2D" parent="."]
 collision_layer = 2
