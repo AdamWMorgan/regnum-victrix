@@ -140,7 +140,7 @@ radius = 5.0
 radius = 13.0384
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_u1nxu"]
-radius = 217.23
+radius = 115.017
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1y0ld"]
 

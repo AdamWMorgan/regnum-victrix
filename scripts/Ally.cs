@@ -31,7 +31,7 @@ public partial class Ally : CharacterBody2D
 	public ProgressBar allyHealthBar;
 	public AnimatedSprite2D sprite;
 	public Player player;	
-	public const float SPEED = 50f;
+	public const float SPEED = 55.0f;
 	public const float DECELERATION = 5000.0f;
 	public const float ALLY_PLAYER_GAP = 50.0f;
 
@@ -81,7 +81,9 @@ public partial class Ally : CharacterBody2D
 					sprite.Play("ally_idle_animation");
 				}
 			}
-		} 
+		} else if(detectedEnemies.Count == 0 && sprite.Animation == "ally_attack_animation"){
+				sprite.Play("ally_idle_animation");
+		}
 		else if (playerDetected && player.GlobalPosition.DistanceTo(GlobalPosition) > ALLY_PLAYER_GAP){
 			// If attack animation finishes, return to idle animation
 			if (sprite.Animation == "ally_attack_animation")
