@@ -55,6 +55,13 @@ public partial class Enemy : CharacterBody2D
 		Vector2 velocity = Velocity;
 		
 		detectedAllies.RemoveAll(ally => ally.Health <= 0);
+		attackableAllies.RemoveAll(ally => ally.Health <= 0);
+		
+		if (attackableAllies.Count == 0 && !playerInAttackRange && sprite.Animation == "enemy_attack_animation")
+		{
+			NormalState();
+		}
+	
 		if(detectedAllies.Count > 0){
 			Vector2 directionToAlly = detectedAllies[0].GlobalPosition - GlobalPosition;
 			velocity = directionToAlly * SPEED;
@@ -72,13 +79,7 @@ public partial class Enemy : CharacterBody2D
 				}
 				attackableAllies[0].Health -= ATTACK_DAMAGE;
 				timeSinceLastAttack = 0.0f;
-			} else if(attackableAllies.Count == 0) {
-				// If attack animation finishes, return to idle animation
-				if (sprite.Animation == "enemy_attack_animation")
-				{
-					sprite.Play("enemy_idle_animation");
-				}
-			}
+			} 
 		} else if(playerDetected){
 			Vector2 directionToPlayer = player.Position - GlobalPosition;
 			if(directionToPlayer.X > 0){
@@ -88,12 +89,14 @@ public partial class Enemy : CharacterBody2D
 				sprite.FlipH = true;	
 			}
 			velocity = directionToPlayer * SPEED;
-		}
-		else if(playerInAttackRange && timeSinceLastAttack >= attackCooldown){
-			AttackPlayer(player);
-			timeSinceLastAttack = 0.0f;
-		} else{
-			NormalState();
+			
+			if(playerInAttackRange && timeSinceLastAttack >= attackCooldown){
+				AttackPlayer(player);
+				timeSinceLastAttack = 0.0f;
+			}
+		} 
+		
+		 else{
 			velocity = Vector2.Zero;
 		}
 		// Update velocity and move the character
