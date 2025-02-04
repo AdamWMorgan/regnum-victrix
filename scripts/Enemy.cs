@@ -29,6 +29,7 @@ public partial class Enemy : CharacterBody2D
 
 	public override void _Ready()
 	{
+		AddToGroup("Enemy");
 		// Connect the body_entered and body_exited signals to the methods
 		AttackArea.BodyEntered += OnBodyEnteredAttackArea;
 		AttackArea.BodyExited += OnBodyExitedAttackArea;
