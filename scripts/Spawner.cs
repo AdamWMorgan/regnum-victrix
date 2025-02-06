@@ -53,7 +53,6 @@ private void SpawnEnemies()
 		// Add the enemy to the scene (parent it to the root or another node)
 		AddChild(enemy);
 		GameManager.Instance.RegisterEnemy(enemy);
-		GD.Print($"Enemy {i} spawned at {spawnPosition}");
 	}
 }
 

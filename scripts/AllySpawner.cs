@@ -53,7 +53,6 @@ private void SpawnAllies()
 		// Add the ally to the scene (parent it to the root or another node)
 		AddChild(ally);
 		GameManager.Instance.RegisterAlly(ally);
-		GD.Print($"Ally {i} spawned at {spawnPosition}");
 	}
 }
 
