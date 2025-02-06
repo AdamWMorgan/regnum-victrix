@@ -18,6 +18,7 @@ tile_map_data = PackedByteArray("AAAjABwAAwABAAIAAAAjABsAAwABAAEAAAAjABoAAwABAAE
 tile_set = ExtResource("1_tjwv8")
 
 [node name="Player" parent="." instance=ExtResource("2_i68oy")]
+y_sort_enabled = true
 texture_filter = 1
 position = Vector2(62, 24)
 platform_floor_layers = 4294967293

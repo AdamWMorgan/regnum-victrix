@@ -140,6 +140,7 @@ public partial class Ally : CharacterBody2D
 				
 		if(Input.IsKeyPressed(Key.Q)){
 			followPlayer = !followPlayer;
+			GD.Print(followPlayer);
 		}
 	}
 	
