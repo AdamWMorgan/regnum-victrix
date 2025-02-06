@@ -137,10 +137,11 @@ public partial class Ally : CharacterBody2D
 			allyAlive = false;
 			sprite.Play("ally_death_animation");
 		}
-				
+	}
+	
+	public override void _Input(InputEvent @event){				
 		if(Input.IsKeyPressed(Key.Q)){
 			followPlayer = !followPlayer;
-			GD.Print(followPlayer);
 		}
 	}
 	
