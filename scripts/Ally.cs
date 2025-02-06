@@ -19,6 +19,7 @@ public partial class Ally : CharacterBody2D
 	private List<Enemy> detectedEnemies = new List<Enemy>();
 	private List<Enemy> attackableEnemies = new List<Enemy>();
 	public bool playerDetected = false;
+	private bool followPlayer = false;
 	private float attackCooldown = 1.2f; // Cooldown duration in seconds
 	private float timeSinceLastAttack = 1.2f; // Tracks time since the last attack
 	public int Health {
@@ -84,7 +85,7 @@ public partial class Ally : CharacterBody2D
 		} else if(detectedEnemies.Count == 0 && sprite.Animation == "ally_attack_animation"){
 				sprite.Play("ally_idle_animation");
 		}
-		else if (playerDetected && player.GlobalPosition.DistanceTo(GlobalPosition) > ALLY_PLAYER_GAP){
+		else if (playerDetected && player.GlobalPosition.DistanceTo(GlobalPosition) > ALLY_PLAYER_GAP && followPlayer){
 			// If attack animation finishes, return to idle animation
 			if (sprite.Animation == "ally_attack_animation")
 			{
@@ -135,6 +136,10 @@ public partial class Ally : CharacterBody2D
 		if(allyHealth <= 0 && allyAlive){
 			allyAlive = false;
 			sprite.Play("ally_death_animation");
+		}
+				
+		if(Input.IsKeyPressed(Key.Q)){
+			followPlayer = !followPlayer;
 		}
 	}
 	
