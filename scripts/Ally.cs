@@ -6,6 +6,7 @@ public partial class Ally : CharacterBody2D
 {
 	// Reference to the Area2D node
 	[Export] public Area2D DetectionArea;
+	[Export] public Area2D PlayerDetectionArea;
 	[Export] public Area2D AttackArea;
 	[Export] public CollisionShape2D collisionShape;
 	public static int MAX_HEALTH = 60;
@@ -44,6 +45,8 @@ public partial class Ally : CharacterBody2D
 		AttackArea.BodyExited += OnBodyExitedAttackArea;
 		DetectionArea.BodyEntered += OnBodyEnteredDetectionArea;
 		DetectionArea.BodyExited += OnBodyExitedDetectionArea;
+		PlayerDetectionArea.BodyEntered += OnBodyEnteredPlayerDetectionArea;
+		PlayerDetectionArea.BodyExited += OnBodyExitedPlayerDetectionArea;
 		sprite = GetNode<AnimatedSprite2D>("AllySprite");  
 		player = GetNode<Player>("/root/Main/Player");
 		allyHealthBar = GetNode<ProgressBar>("AllyHealth");
@@ -184,23 +187,26 @@ public partial class Ally : CharacterBody2D
 	}
 	
 	private void OnBodyEnteredDetectionArea(Node body){
-		if(body.IsInGroup("Player")){
-			playerDetected = true;
-		}
-		
 		if(body.IsInGroup("Enemy")){
 			detectedEnemies.Add((Enemy) body);
 		}
 	}
 	
-	private void OnBodyExitedDetectionArea(Node body){
-		if(body.IsInGroup("Player")){
-			playerDetected = false;
-		}
-		
-		
+	private void OnBodyExitedDetectionArea(Node body){		
 		if(body.IsInGroup("Enemy")){
 			detectedEnemies.Remove((Enemy) body);
+		}
+	}
+	
+	private void OnBodyEnteredPlayerDetectionArea(Node body){		
+		if(body.IsInGroup("Player")){
+			playerDetected = true;
+		}
+	}
+	
+	private void OnBodyExitedPlayerDetectionArea(Node body){
+		if(body.IsInGroup("Player")){
+			playerDetected = false;
 		}
 	}
 
