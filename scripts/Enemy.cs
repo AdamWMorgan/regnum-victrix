@@ -81,7 +81,7 @@ public partial class Enemy : CharacterBody2D
 				timeSinceLastAttack = 0.0f;
 			} 
 		} else if(playerDetected){
-			Vector2 directionToPlayer = player.Position - GlobalPosition;
+			Vector2 directionToPlayer = player.GlobalPosition - GlobalPosition;
 			if(directionToPlayer.X > 0){
 				sprite.FlipH = false;
 			}
@@ -95,7 +95,6 @@ public partial class Enemy : CharacterBody2D
 				timeSinceLastAttack = 0.0f;
 			}
 		} 
-		
 		 else{
 			velocity = Vector2.Zero;
 		}

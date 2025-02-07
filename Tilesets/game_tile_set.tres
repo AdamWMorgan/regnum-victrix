@@ -1,7 +1,27 @@
-[gd_resource type="TileSet" load_steps=5 format=3 uid="uid://bon0tuqm31npn"]
+[gd_resource type="TileSet" load_steps=7 format=3 uid="uid://bon0tuqm31npn"]
 
+[ext_resource type="Texture2D" uid="uid://ceg12ehnshfqn" path="res://game/assets/tilesets/fences.png" id="1_qnnmw"]
 [ext_resource type="Texture2D" uid="uid://c3tenlg4fdesq" path="res://game/assets/tilesets/water.png" id="1_wlr76"]
 [ext_resource type="Texture2D" uid="uid://kvfhykl66k7h" path="res://game/assets/tilesets/grass.png" id="2_nsdxg"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3e6ka"]
+texture = ExtResource("1_qnnmw")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bxkem"]
 texture = ExtResource("2_nsdxg")
@@ -164,3 +184,4 @@ terrain_set_0/terrain_1/name = "Water"
 terrain_set_0/terrain_1/color = Color(0, 0.447561, 0.790341, 1)
 sources/3 = SubResource("TileSetAtlasSource_bxkem")
 sources/5 = SubResource("TileSetAtlasSource_li30e")
+sources/0 = SubResource("TileSetAtlasSource_3e6ka")
