@@ -9,9 +9,8 @@ public partial class Ally : CharacterBody2D
 	[Export] public Area2D PlayerDetectionArea;
 	[Export] public Area2D AttackArea;
 	[Export] public CollisionShape2D collisionShape;
-	public static int MAX_HEALTH = 60;
+	[Export] public Health health;
 	public const int ATTACK_DAMAGE = 15;
-	public int allyHealth = MAX_HEALTH;
 	public bool allyAlive = true;
 	public bool playerInAttackRange = false;
 	public bool enemyInAttackRange = false;
@@ -23,14 +22,6 @@ public partial class Ally : CharacterBody2D
 	private bool followPlayer = false;
 	private float attackCooldown = 1.2f; // Cooldown duration in seconds
 	private float timeSinceLastAttack = 1.2f; // Tracks time since the last attack
-	public int Health {
-			get => allyHealth;
-			set {
-				allyHealth = Mathf.Clamp(value, 0, MAX_HEALTH);
-				allyHealthBar.Value = allyHealth;
-			}
-	}
-	public ProgressBar allyHealthBar;
 	public AnimatedSprite2D sprite;
 	public Player player;	
 	public const float SPEED = 55.0f;
@@ -49,9 +40,6 @@ public partial class Ally : CharacterBody2D
 		PlayerDetectionArea.BodyExited += OnBodyExitedPlayerDetectionArea;
 		sprite = GetNode<AnimatedSprite2D>("AllySprite");  
 		player = GetNode<Player>("/root/Main/Player");
-		allyHealthBar = GetNode<ProgressBar>("AllyHealth");
-		allyHealthBar.Value = allyHealth;
-		allyHealthBar.MaxValue = MAX_HEALTH;  
 	}
 	
 	public override void _PhysicsProcess(double delta)
@@ -136,7 +124,7 @@ public partial class Ally : CharacterBody2D
 	}
 	
 	public override void _Process(double delta){
-		if(allyHealth <= 0 && allyAlive){
+		if(health.CurrentHealth <= 0 && allyAlive){
 			allyAlive = false;
 			sprite.Play("ally_death_animation");
 		}

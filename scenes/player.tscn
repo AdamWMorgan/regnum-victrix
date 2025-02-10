@@ -1,7 +1,8 @@
-[gd_scene load_steps=24 format=3 uid="uid://cb0rtekr02b04"]
+[gd_scene load_steps=25 format=3 uid="uid://cb0rtekr02b04"]
 
 [ext_resource type="Script" path="res://scripts/Player.cs" id="1_ewjmd"]
 [ext_resource type="Texture2D" uid="uid://b8b5ai0rjq1a0" path="res://game/assets/characters/Soldier.png" id="2_1t0wy"]
+[ext_resource type="PackedScene" uid="uid://pp8iho8f2wo6" path="res://scenes/health.tscn" id="3_1yasj"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7ca4k"]
 atlas = ExtResource("2_1t0wy")
@@ -187,3 +188,5 @@ position = Vector2(13, -2.5)
 shape = SubResource("RectangleShape2D_26gvc")
 one_way_collision_margin = 0.0
 debug_color = Color(0.980473, 0, 0.379368, 0.42)
+
+[node name="Health" parent="." instance=ExtResource("3_1yasj")]

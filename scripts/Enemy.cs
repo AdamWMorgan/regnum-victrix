@@ -54,8 +54,8 @@ public partial class Enemy : CharacterBody2D
 		timeSinceLastAttack += (float)delta;
 		Vector2 velocity = Velocity;
 		
-		detectedAllies.RemoveAll(ally => ally.Health <= 0);
-		attackableAllies.RemoveAll(ally => ally.Health <= 0);
+		detectedAllies.RemoveAll(ally => ally.health.CurrentHealth <= 0);
+		attackableAllies.RemoveAll(ally => ally.health.CurrentHealth <= 0);
 		
 		if (attackableAllies.Count == 0 && !playerInAttackRange && sprite.Animation == "enemy_attack_animation")
 		{
@@ -72,12 +72,13 @@ public partial class Enemy : CharacterBody2D
 			else if (directionToAlly.X < 0){
 				sprite.FlipH = true;	
 			}
-			if(attackableAllies.Count > 0 && attackableAllies[0].Health > 0 && timeSinceLastAttack >= attackCooldown){
+			
+			if(attackableAllies.Count > 0 && attackableAllies[0].health.CurrentHealth > 0 && timeSinceLastAttack >= attackCooldown){
 				if (!sprite.IsPlaying() || sprite.Animation != "enemy_attack_animation")
 				{
 					sprite.Play("enemy_attack_animation");
 				}
-				attackableAllies[0].Health -= ATTACK_DAMAGE;
+				attackableAllies[0].health.Damage(ATTACK_DAMAGE);
 				timeSinceLastAttack = 0.0f;
 			} 
 		} else if(playerDetected){

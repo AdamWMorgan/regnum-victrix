@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://pp8iho8f2wo6"]
+
+[ext_resource type="Script" path="res://scripts/Health.cs" id="1_p2fqu"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_73khe"]
+
+[node name="Health" type="Node2D"]
+script = ExtResource("1_p2fqu")
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+clip_contents = true
+offset_left = 9.0
+offset_top = 11.0
+offset_right = 11.0
+offset_bottom = 29.0
+rotation = 1.57009
+theme_override_styles/background = SubResource("StyleBoxFlat_73khe")
+value = 50.0
+fill_mode = 3
+show_percentage = false
