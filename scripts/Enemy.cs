@@ -10,6 +10,7 @@ public partial class Enemy : CharacterBody2D
 	[Export] public CollisionShape2D collisionShape;
 	[Export] public Health health;
 	public const int ATTACK_DAMAGE = 10;
+	private const float FAST_PROCESS_SECONDS = 1.1f;
 	public bool enemyAlive = true;
 	public bool allyInAttackRange = false;
 	public bool playerInAttackRange = false;
@@ -17,7 +18,8 @@ public partial class Enemy : CharacterBody2D
 	private List<Ally> detectedAllies = new List<Ally>();
 	private List<Ally> attackableAllies = new List<Ally>();
 	private float attackCooldown = 1.2f; // Cooldown duration in seconds
-	private float timeSinceLastAttack = 1.2f; // Tracks time since the last attack
+	private float timeSinceLastAttack = 1.2f;
+	private float timeSinceLastProcessed = 0.0f; // Tracks time since the last attack
 	public AnimatedSprite2D sprite;
 	public Player player;	
 	public const float SPEED = 0.5f;
@@ -40,55 +42,27 @@ public partial class Enemy : CharacterBody2D
 		if(enemyAlive){
 			
 		timeSinceLastAttack += (float)delta;
-		Vector2 velocity = Velocity;
-		
-		detectedAllies.RemoveAll(ally => ally.health.CurrentHealth <= 0);
-		attackableAllies.RemoveAll(ally => ally.health.CurrentHealth <= 0);
+		//timeSinceProcessed += (float)delta;
 		
 		if (attackableAllies.Count == 0 && !playerInAttackRange && sprite.Animation == "enemy_attack_animation")
 		{
 			NormalState();
 		}
-	
-		if(detectedAllies.Count > 0){
-			Vector2 directionToAlly = detectedAllies[0].GlobalPosition - GlobalPosition;
-			velocity = directionToAlly * SPEED;
 			
-			if(directionToAlly.X > 0){
-				sprite.FlipH = false;
-			}
-			else if (directionToAlly.X < 0){
-				sprite.FlipH = true;	
-			}
-			
-			if(attackableAllies.Count > 0 && attackableAllies[0].health.CurrentHealth > 0 && timeSinceLastAttack >= attackCooldown){
+		if(attackableAllies.Count > 0 && attackableAllies[0].health.CurrentHealth > 0 && timeSinceLastAttack >= attackCooldown){
 				if (!sprite.IsPlaying() || sprite.Animation != "enemy_attack_animation")
 				{
 					sprite.Play("enemy_attack_animation");
 				}
 				attackableAllies[0].health.Damage(ATTACK_DAMAGE);
 				timeSinceLastAttack = 0.0f;
-			} 
-		} else if(playerDetected){
-			Vector2 directionToPlayer = player.GlobalPosition - GlobalPosition;
-			if(directionToPlayer.X > 0){
-				sprite.FlipH = false;
-			}
-			else if (directionToPlayer.X < 0){
-				sprite.FlipH = true;	
-			}
-			velocity = directionToPlayer * SPEED;
-			
-			if(playerInAttackRange && timeSinceLastAttack >= attackCooldown){
+			} else 	if(playerInAttackRange && timeSinceLastAttack >= attackCooldown){
 				AttackPlayer(player);
 				timeSinceLastAttack = 0.0f;
 			}
-		} 
-		 else{
-			velocity = Vector2.Zero;
-		}
+			
 		// Update velocity and move the character
-		Velocity = velocity;
+		Velocity = calculateMovePosition();
 		MoveAndSlide();
 		} else {
 			GameManager.Instance.UnregisterEnemy(this);
@@ -99,9 +73,41 @@ public partial class Enemy : CharacterBody2D
 
 	public override void _Process(double delta)
 	{
+		detectedAllies.RemoveAll(ally => ally.health.CurrentHealth <= 0);
+		attackableAllies.RemoveAll(ally => ally.health.CurrentHealth <= 0);
+		
 		if(health.CurrentHealth <= 0 && enemyAlive){
 			enemyAlive = false;
 			sprite.Play("enemy_death_animation");
+		}
+	}
+	
+	private Vector2 calculateMovePosition(){
+		if(detectedAllies.Count > 0){
+			Vector2 directionToAlly = detectedAllies[0].GlobalPosition - GlobalPosition;
+			
+			if(directionToAlly.X > 0){
+				sprite.FlipH = false;
+			}
+			else if (directionToAlly.X < 0){
+				sprite.FlipH = true;	
+			}
+			// move towards ally node
+			return directionToAlly * SPEED;
+		} else if(playerDetected){
+			Vector2 directionToPlayer = player.GlobalPosition - GlobalPosition;
+			if(directionToPlayer.X > 0){
+				sprite.FlipH = false;
+			}
+			else if (directionToPlayer.X < 0){
+				sprite.FlipH = true;	
+			}
+			// move towards player node
+			return directionToPlayer * SPEED;
+		} 
+		 else{
+			// do not move
+			return Vector2.Zero;
 		}
 	}
 	
