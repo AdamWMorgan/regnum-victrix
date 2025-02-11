@@ -5,20 +5,11 @@ using System.Linq;
 
 public partial class Player : CharacterBody2D
 {
+	[Export] public Health health;
 	public const float SPEED = 100.0f;
 	public const float DECELERATION = 5000.0f;
 	public const int ATTACK_DAMAGE = 30;
-	public static int MAX_HEALTH = 100;
-	public int playerHealth = MAX_HEALTH;
 	public bool playerAlive = true;
-	public int Health {
-			get => playerHealth;
-			set {
-				playerHealth = Mathf.Clamp(value, 0, MAX_HEALTH);
-				playerHealthBar.Value = playerHealth;
-			}
-	}
-	public ProgressBar playerHealthBar;
 	private AnimatedSprite2D sprite;
 	public List<Enemy> enemies;
 	public Area2D attackDetectionArea;
@@ -34,9 +25,6 @@ public partial class Player : CharacterBody2D
 	{
 		AddToGroup("Player");
 		sprite = GetNode<AnimatedSprite2D>("PlayerSprite");
-		playerHealthBar = GetNode<ProgressBar>("PlayerHealth");
-		playerHealthBar.Value = Health;
-		playerHealthBar.MaxValue = MAX_HEALTH;
 		// this doesn't get enemies from spawner
 		enemies = GameManager.Instance.AllEnemies;
 		attackDetectionArea = GetNode<Area2D>("DetectionArea");
@@ -99,7 +87,7 @@ public partial class Player : CharacterBody2D
 				Enemy enemy = enemies[i];
 				if(enemiesInAttackArea.Any(e => e == enemy))
 				{
-					enemy.Health -= ATTACK_DAMAGE;
+					enemy.health.Damage(ATTACK_DAMAGE);
 				}
 			}	
 			timeSinceLastAttack = 0.0f;
@@ -118,7 +106,7 @@ public partial class Player : CharacterBody2D
 	}
 	
 	public override void _Process(double delta){
-		if(playerHealth <= 0 && playerAlive){
+		if(health.CurrentHealth <= 0 && playerAlive){
 			sprite.Play("death_animation");
 			playerAlive = false;
 			// Todo: will either need block control input here or straight into respawn

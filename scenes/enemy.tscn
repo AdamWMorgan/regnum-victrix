@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://b0xjjq5gasjkp" path="res://game/assets/characters/Orc.png" id="1_5j5ws"]
 [ext_resource type="Script" path="res://scripts/Enemy.cs" id="1_gtct7"]
+[ext_resource type="PackedScene" uid="uid://pp8iho8f2wo6" path="res://scenes/health.tscn" id="3_0fuy4"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_poafi"]
 radius = 16.1245
@@ -143,12 +144,10 @@ height = 18.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_typao"]
 radius = 98.0204
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dqk6o"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wxyvj"]
+bg_color = Color(0.737255, 0, 0.0666667, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kgywc"]
-bg_color = Color(0.72, 0, 0.0119998, 1)
-
-[node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("DetectionArea", "AttackArea", "collisionShape")]
+[node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("DetectionArea", "AttackArea", "collisionShape", "health")]
 collision_layer = 2
 collision_mask = 2
 platform_floor_layers = 4294967293
@@ -156,6 +155,7 @@ script = ExtResource("1_gtct7")
 DetectionArea = NodePath("DetectionArea")
 AttackArea = NodePath("AttackArea")
 collisionShape = NodePath("CollisionShape2D")
+health = NodePath("Health")
 
 [node name="AttackArea" type="Area2D" parent="."]
 collision_layer = 2
@@ -181,15 +181,6 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
 shape = SubResource("CircleShape2D_typao")
 
-[node name="EnemyHealth" type="ProgressBar" parent="."]
-clip_contents = true
-offset_left = 9.0
-offset_top = 11.0
-offset_right = 11.0
-offset_bottom = 29.0
-rotation = 1.57009
-theme_override_styles/background = SubResource("StyleBoxFlat_dqk6o")
-theme_override_styles/fill = SubResource("StyleBoxFlat_kgywc")
-value = 50.0
-fill_mode = 3
-show_percentage = false
+[node name="Health" parent="." instance=ExtResource("3_0fuy4")]
+health = 40
+colour = SubResource("StyleBoxFlat_wxyvj")

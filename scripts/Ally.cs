@@ -48,7 +48,7 @@ public partial class Ally : CharacterBody2D
 		timeSinceLastAttack += (float)delta;
 		Vector2 velocity = Vector2.Zero;
 		
-		detectedEnemies.RemoveAll(enemy => enemy.Health <= 0);
+		detectedEnemies.RemoveAll(enemy => enemy.health.CurrentHealth <= 0);
 		if(detectedEnemies.Count > 0){
 			Vector2 directionToEnemy = (detectedEnemies[0].GlobalPosition - GlobalPosition).Normalized();
 			velocity += directionToEnemy * SPEED;
@@ -59,12 +59,12 @@ public partial class Ally : CharacterBody2D
 			else if (directionToEnemy.X < 0){
 				sprite.FlipH = true;	
 			}
-			if(attackableEnemies.Count > 0 && attackableEnemies[0].Health > 0 && timeSinceLastAttack >= attackCooldown){
+			if(attackableEnemies.Count > 0 && attackableEnemies[0].health.CurrentHealth > 0 && timeSinceLastAttack >= attackCooldown){
 				if (!sprite.IsPlaying() || sprite.Animation != "ally_attack_animation")
 				{
 					sprite.Play("ally_attack_animation");
 				}
-				attackableEnemies[0].Health -= ATTACK_DAMAGE;
+				attackableEnemies[0].health.Damage(ATTACK_DAMAGE);
 				timeSinceLastAttack = 0.0f;
 			} else if(attackableEnemies.Count == 0) {
 				// If attack animation finishes, return to idle animation
@@ -206,7 +206,7 @@ public partial class Ally : CharacterBody2D
 		// Also it only takes into account 1 swing per time the player enters 
 		// the attack zone currently. 
 		sprite.Play("ally_attack_animation");
-		player.Health -= ATTACK_DAMAGE;
+		player.health.Damage(ATTACK_DAMAGE);
 	}
 
 	private void NormalState()

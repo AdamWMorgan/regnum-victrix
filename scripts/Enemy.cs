@@ -8,9 +8,8 @@ public partial class Enemy : CharacterBody2D
 	[Export] public Area2D DetectionArea;
 	[Export] public Area2D AttackArea;
 	[Export] public CollisionShape2D collisionShape;
-	public static int MAX_HEALTH = 60;
+	[Export] public Health health;
 	public const int ATTACK_DAMAGE = 10;
-	public int enemyHealth = MAX_HEALTH;
 	public bool enemyAlive = true;
 	public bool allyInAttackRange = false;
 	public bool playerInAttackRange = false;
@@ -19,14 +18,6 @@ public partial class Enemy : CharacterBody2D
 	private List<Ally> attackableAllies = new List<Ally>();
 	private float attackCooldown = 1.2f; // Cooldown duration in seconds
 	private float timeSinceLastAttack = 1.2f; // Tracks time since the last attack
-	public int Health {
-			get => enemyHealth;
-			set {
-				enemyHealth = Mathf.Clamp(value, 0, MAX_HEALTH);
-				enemyHealthBar.Value = enemyHealth;
-			}
-	}
-	public ProgressBar enemyHealthBar;
 	public AnimatedSprite2D sprite;
 	public Player player;	
 	public const float SPEED = 0.5f;
@@ -42,9 +33,6 @@ public partial class Enemy : CharacterBody2D
 		DetectionArea.BodyExited += OnBodyExitedDetectionArea;
 		sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");  
 		player = GetNode<Player>("/root/Main/Player");
-		enemyHealthBar = GetNode<ProgressBar>("EnemyHealth");
-		enemyHealthBar.Value = enemyHealth;
-		enemyHealthBar.MaxValue = MAX_HEALTH;  
 	}
 	
 	public override void _PhysicsProcess(double delta)
@@ -111,7 +99,7 @@ public partial class Enemy : CharacterBody2D
 
 	public override void _Process(double delta)
 	{
-		if(enemyHealth <= 0 && enemyAlive){
+		if(health.CurrentHealth <= 0 && enemyAlive){
 			enemyAlive = false;
 			sprite.Play("enemy_death_animation");
 		}
@@ -170,7 +158,7 @@ public partial class Enemy : CharacterBody2D
 		// Also it only takes into account 1 swing per time the player enters 
 		// the attack zone currently. 
 		sprite.Play("enemy_attack_animation");
-		player.Health -= ATTACK_DAMAGE;
+		player.health.Damage(ATTACK_DAMAGE);
 	}
 
 	private void NormalState()
