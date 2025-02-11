@@ -10,7 +10,7 @@ public partial class Enemy : CharacterBody2D
 	[Export] public CollisionShape2D collisionShape;
 	[Export] public Health health;
 	public const int ATTACK_DAMAGE = 10;
-	private const float FAST_PROCESS_SECONDS = 1.1f;
+	private const float FAST_PROCESS_SECONDS = 0.5f;
 	public bool enemyAlive = true;
 	public bool allyInAttackRange = false;
 	public bool playerInAttackRange = false;
@@ -42,7 +42,7 @@ public partial class Enemy : CharacterBody2D
 		if(enemyAlive){
 			
 		timeSinceLastAttack += (float)delta;
-		//timeSinceProcessed += (float)delta;
+		timeSinceLastProcessed += (float)delta;
 		
 		if (attackableAllies.Count == 0 && !playerInAttackRange && sprite.Animation == "enemy_attack_animation")
 		{
@@ -61,9 +61,13 @@ public partial class Enemy : CharacterBody2D
 				timeSinceLastAttack = 0.0f;
 			}
 			
+		if(timeSinceLastProcessed >= FAST_PROCESS_SECONDS){
 		// Update velocity and move the character
-		Velocity = calculateMovePosition();
+			Velocity = calculateMovePosition();
+			timeSinceLastProcessed = 0.0f;
+		}
 		MoveAndSlide();
+		
 		} else {
 			GameManager.Instance.UnregisterEnemy(this);
 			collisionShape.Disabled = true;
