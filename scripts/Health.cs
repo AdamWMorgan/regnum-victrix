@@ -6,7 +6,6 @@ public partial class Health : Node2D
 	[Export] public int health = 100;
 	[Export] public StyleBoxFlat colour;
 	private ProgressBar healthBar;
-		
 	public int CurrentHealth { get; private set; }
 	
 	public override void _Ready()
@@ -15,9 +14,7 @@ public partial class Health : Node2D
 		healthBar = GetNode<ProgressBar>("HealthBar");
 		healthBar.Value = CurrentHealth;
 		healthBar.MaxValue = CurrentHealth;
-
 		healthBar.AddThemeStyleboxOverride("fill", colour);
-   
 	}
 	
 	public int Damage(int damageValue){

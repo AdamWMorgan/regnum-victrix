@@ -56,7 +56,7 @@ public partial class Enemy : CharacterBody2D
 				}
 				attackableAllies[0].health.Damage(ATTACK_DAMAGE);
 				timeSinceLastAttack = 0.0f;
-			} else 	if(playerInAttackRange && timeSinceLastAttack >= attackCooldown){
+			} else if(playerInAttackRange && timeSinceLastAttack >= attackCooldown){
 				AttackPlayer(player);
 				timeSinceLastAttack = 0.0f;
 			}
