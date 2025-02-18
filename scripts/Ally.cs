@@ -27,6 +27,8 @@ public partial class Ally : CharacterBody2D
 	public const float SPEED = 55.0f;
 	public const float DECELERATION = 5000.0f;
 	public const float ALLY_PLAYER_GAP = 50.0f;
+	private const String ALLY_IDLE_ANIMATION = "ally_idle_animation";
+	private const String ALLY_ATTACK_ANIMATION = "ally_attack_animation";
 
 	public override void _Ready()
 	{
@@ -60,27 +62,27 @@ public partial class Ally : CharacterBody2D
 				sprite.FlipH = true;	
 			}
 			if(attackableEnemies.Count > 0 && attackableEnemies[0].health.CurrentHealth > 0 && timeSinceLastAttack >= attackCooldown){
-				if (!sprite.IsPlaying() || sprite.Animation != "ally_attack_animation")
+				if (!sprite.IsPlaying() || sprite.Animation != ALLY_ATTACK_ANIMATION)
 				{
-					sprite.Play("ally_attack_animation");
+					sprite.Play(ALLY_ATTACK_ANIMATION);
 				}
 				attackableEnemies[0].health.Damage(ATTACK_DAMAGE);
 				timeSinceLastAttack = 0.0f;
 			} else if(attackableEnemies.Count == 0) {
 				// If attack animation finishes, return to idle animation
-				if (sprite.Animation == "ally_attack_animation")
+				if (sprite.Animation == ALLY_ATTACK_ANIMATION)
 				{
-					sprite.Play("ally_idle_animation");
+					sprite.Play(ALLY_IDLE_ANIMATION);
 				}
 			}
-		} else if(detectedEnemies.Count == 0 && sprite.Animation == "ally_attack_animation"){
-				sprite.Play("ally_idle_animation");
+		} else if(detectedEnemies.Count == 0 && sprite.Animation == ALLY_ATTACK_ANIMATION){
+				sprite.Play(ALLY_IDLE_ANIMATION);
 		}
 		else if (playerDetected && player.GlobalPosition.DistanceTo(GlobalPosition) > ALLY_PLAYER_GAP && followPlayer){
 			// If attack animation finishes, return to idle animation
-			if (sprite.Animation == "ally_attack_animation")
+			if (sprite.Animation == ALLY_ATTACK_ANIMATION)
 			{
-				sprite.Play("ally_idle_animation");
+				sprite.Play(ALLY_IDLE_ANIMATION);
 			}
 			
 			Vector2 directionToPlayer = (player.GlobalPosition - GlobalPosition).Normalized();
@@ -205,12 +207,12 @@ public partial class Ally : CharacterBody2D
 		// swing is finished that health is taken.
 		// Also it only takes into account 1 swing per time the player enters 
 		// the attack zone currently. 
-		sprite.Play("ally_attack_animation");
+		sprite.Play(ALLY_ATTACK_ANIMATION);
 		player.health.Damage(ATTACK_DAMAGE);
 	}
 
 	private void NormalState()
 	{
-		sprite.Play("ally_idle_animation");
+		sprite.Play(ALLY_IDLE_ANIMATION);
 	}
 }
