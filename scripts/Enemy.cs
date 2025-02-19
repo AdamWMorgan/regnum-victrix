@@ -24,6 +24,8 @@ public partial class Enemy : CharacterBody2D
 	public Player player;	
 	public const float SPEED = 0.5f;
 	public const float DECELERATION = 5000.0f;
+	private const String ENEMY_IDLE_ANIMATION = "enemy_idle_animation";
+	private const String ENEMY_ATTACK_ANIMATION = "enemy_attack_animation";
 
 	public override void _Ready()
 	{
@@ -44,15 +46,15 @@ public partial class Enemy : CharacterBody2D
 		timeSinceLastAttack += (float)delta;
 		timeSinceLastProcessed += (float)delta;
 		
-		if (attackableAllies.Count == 0 && !playerInAttackRange && sprite.Animation == "enemy_attack_animation")
+		if (attackableAllies.Count == 0 && !playerInAttackRange && sprite.Animation == ENEMY_ATTACK_ANIMATION)
 		{
 			NormalState();
 		}
 			
 		if(attackableAllies.Count > 0 && attackableAllies[0].health.CurrentHealth > 0 && timeSinceLastAttack >= attackCooldown){
-				if (!sprite.IsPlaying() || sprite.Animation != "enemy_attack_animation")
+				if (!sprite.IsPlaying() || sprite.Animation != ENEMY_ATTACK_ANIMATION)
 				{
-					sprite.Play("enemy_attack_animation");
+					sprite.Play(ENEMY_ATTACK_ANIMATION);
 				}
 				attackableAllies[0].health.Damage(ATTACK_DAMAGE);
 				timeSinceLastAttack = 0.0f;
@@ -167,12 +169,12 @@ public partial class Enemy : CharacterBody2D
 		// swing is finished that health is taken.
 		// Also it only takes into account 1 swing per time the player enters 
 		// the attack zone currently. 
-		sprite.Play("enemy_attack_animation");
+		sprite.Play(ENEMY_ATTACK_ANIMATION);
 		player.health.Damage(ATTACK_DAMAGE);
 	}
 
 	private void NormalState()
 	{
-		sprite.Play("enemy_idle_animation");
+		sprite.Play(ENEMY_IDLE_ANIMATION);
 	}
 }

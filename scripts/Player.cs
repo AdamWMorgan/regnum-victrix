@@ -20,6 +20,8 @@ public partial class Player : CharacterBody2D
 	private float timeSinceLastAttack = 0.8f; // Tracks time since the last attack
 	private float attackPosX = 0.0f;
 	private float attackPosY = 0.0f;
+	private const String PLAYER_IDLE_ANIMATION = "idle_animation";
+	private const String PLAYER_ATTACK_ANIMATION = "attack_animation";
 	
 	public override void _Ready()
 	{
@@ -78,9 +80,9 @@ public partial class Player : CharacterBody2D
 		// Play attack animation when the attack action is pressed
 		if (Input.IsActionJustPressed("attack") && timeSinceLastAttack >= attackCooldown)
 		{
-			if (!sprite.IsPlaying() || sprite.Animation != "attack_animation")
+			if (!sprite.IsPlaying() || sprite.Animation != PLAYER_ATTACK_ANIMATION)
 			{
-				sprite.Play("attack_animation");
+				sprite.Play(PLAYER_ATTACK_ANIMATION);
 			}
 			for(int i = 0; i < enemies.Count; i++)
 			{	
@@ -94,9 +96,9 @@ public partial class Player : CharacterBody2D
 		}
 
 		// If attack animation finishes, return to idle animation
-		if (sprite.Animation == "attack_animation" && !sprite.IsPlaying())
+		if (sprite.Animation == PLAYER_ATTACK_ANIMATION && !sprite.IsPlaying())
 		{
-			sprite.Play("idle_animation");
+			sprite.Play(PLAYER_IDLE_ANIMATION);
 		}
 
 		// Update velocity and move the character
