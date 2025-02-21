@@ -10,7 +10,7 @@ public partial class Ally : CharacterBody2D
 	[Export] public Area2D AttackArea;
 	[Export] public CollisionShape2D collisionShape;
 	[Export] public Health health;
-	public const int ATTACK_DAMAGE = 20;
+	public const int ATTACK_DAMAGE = 10;
 	public bool allyAlive = true;
 	public bool playerInAttackRange = false;
 	public bool enemyInAttackRange = false;
