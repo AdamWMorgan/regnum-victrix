@@ -22,6 +22,8 @@ public partial class Ally : CharacterBody2D
 	private bool followPlayer = false;
 	private float attackCooldown = 1.2f; // Cooldown duration in seconds
 	private float timeSinceLastAttack = 1.2f; // Tracks time since the last attack
+	private float timeSinceLastHealthRegen = 0f;
+	private float healthRegenCooldown = 20f;
 	public AnimatedSprite2D sprite;
 	public Player player;	
 	public const float SPEED = 55.0f;
@@ -129,6 +131,16 @@ public partial class Ally : CharacterBody2D
 		if(health.CurrentHealth <= 0 && allyAlive){
 			allyAlive = false;
 			sprite.Play("ally_death_animation");
+		}
+		HealthRegen(delta);
+	}
+	
+	private void HealthRegen(double delta){
+		if(timeSinceLastHealthRegen > healthRegenCooldown && allyAlive && (health.CurrentHealth < 100 || health.CurrentHealth > 0) ){
+			health.Heal(10);
+			timeSinceLastHealthRegen = 0.0f;
+		} else {
+			timeSinceLastHealthRegen += (float)delta;
 		}
 	}
 	

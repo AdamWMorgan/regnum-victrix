@@ -20,6 +20,8 @@ public partial class Enemy : CharacterBody2D
 	private float attackCooldown = 1.2f; // Cooldown duration in seconds
 	private float timeSinceLastAttack = 1.2f;
 	private float timeSinceLastProcessed = 0.0f; // Tracks time since the last attack
+	private float timeSinceLastHealthRegen = 0f;
+	private float healthRegenCooldown = 20f;
 	public AnimatedSprite2D sprite;
 	public Player player;	
 	public const float SPEED = 0.5f;
@@ -85,6 +87,17 @@ public partial class Enemy : CharacterBody2D
 		if(health.CurrentHealth <= 0 && enemyAlive){
 			enemyAlive = false;
 			sprite.Play("enemy_death_animation");
+		}
+	
+		HealthRegen(delta);
+	}
+	
+	private void HealthRegen(double delta){
+		if(timeSinceLastHealthRegen > healthRegenCooldown && enemyAlive && (health.CurrentHealth < 100 || health.CurrentHealth > 0) ){
+			health.Heal(10);
+			timeSinceLastHealthRegen = 0.0f;
+		} else {
+			timeSinceLastHealthRegen += (float)delta;
 		}
 	}
 	

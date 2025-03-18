@@ -17,7 +17,9 @@ public partial class Player : CharacterBody2D
 	private bool enemyInAttackArea = false;
 	private List<Enemy> enemiesInAttackArea = new List<Enemy>();
 	private float attackCooldown = 0.8f; // Cooldown duration in seconds
-	private float timeSinceLastAttack = 0.8f; // Tracks time since the last attack
+	private float timeSinceLastAttack = 0.8f; // Tracks time since the last attack	
+	private float timeSinceLastHealthRegen = 0f;
+	private float healthRegenCooldown = 20f;
 	private float attackPosX = 0.0f;
 	private float attackPosY = 0.0f;
 	private const String PLAYER_IDLE_ANIMATION = "idle_animation";
@@ -112,6 +114,17 @@ public partial class Player : CharacterBody2D
 			sprite.Play("death_animation");
 			playerAlive = false;
 			// Todo: will either need block control input here or straight into respawn
+		}
+		
+		HealthRegen(delta);
+	}
+	
+	private void HealthRegen(double delta){
+		if(timeSinceLastHealthRegen > healthRegenCooldown && playerAlive && (health.CurrentHealth < 100 || health.CurrentHealth > 0) ){
+			health.Heal(10);
+			timeSinceLastHealthRegen = 0.0f;
+		} else {
+			timeSinceLastHealthRegen += (float)delta;
 		}
 	}
 	
