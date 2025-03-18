@@ -120,11 +120,13 @@ public partial class Player : CharacterBody2D
 	}
 	
 	private void HealthRegen(double delta){
-		if(timeSinceLastHealthRegen > healthRegenCooldown && playerAlive && (health.CurrentHealth < 100 || health.CurrentHealth > 0) ){
-			health.Heal(10);
-			timeSinceLastHealthRegen = 0.0f;
-		} else {
-			timeSinceLastHealthRegen += (float)delta;
+		if( playerAlive && (health.CurrentHealth < 100 || health.CurrentHealth > 0) ){
+			if(timeSinceLastHealthRegen > healthRegenCooldown){
+				health.Heal(10);
+				timeSinceLastHealthRegen = 0.0f;
+			} else {
+				timeSinceLastHealthRegen += (float)delta;
+			}
 		}
 	}
 	

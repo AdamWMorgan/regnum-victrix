@@ -93,11 +93,13 @@ public partial class Enemy : CharacterBody2D
 	}
 	
 	private void HealthRegen(double delta){
-		if(timeSinceLastHealthRegen > healthRegenCooldown && enemyAlive && (health.CurrentHealth < 100 || health.CurrentHealth > 0) ){
-			health.Heal(10);
-			timeSinceLastHealthRegen = 0.0f;
-		} else {
-			timeSinceLastHealthRegen += (float)delta;
+		if(enemyAlive && (health.CurrentHealth < 100 || health.CurrentHealth > 0) ){
+			if(timeSinceLastHealthRegen > healthRegenCooldown){
+				health.Heal(10);
+				timeSinceLastHealthRegen = 0.0f;
+			} else {
+				timeSinceLastHealthRegen += (float)delta;
+			}
 		}
 	}
 	

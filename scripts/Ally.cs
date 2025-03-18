@@ -136,11 +136,13 @@ public partial class Ally : CharacterBody2D
 	}
 	
 	private void HealthRegen(double delta){
-		if(timeSinceLastHealthRegen > healthRegenCooldown && allyAlive && (health.CurrentHealth < 100 || health.CurrentHealth > 0) ){
-			health.Heal(10);
-			timeSinceLastHealthRegen = 0.0f;
-		} else {
-			timeSinceLastHealthRegen += (float)delta;
+		if( allyAlive && (health.CurrentHealth < 100 || health.CurrentHealth > 0) ){
+			if(timeSinceLastHealthRegen > healthRegenCooldown){
+				health.Heal(10);
+				timeSinceLastHealthRegen = 0.0f;
+			} else {
+				timeSinceLastHealthRegen += (float)delta;
+			}
 		}
 	}
 	
