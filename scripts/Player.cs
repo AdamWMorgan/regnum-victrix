@@ -9,6 +9,7 @@ public partial class Player : CharacterBody2D
 	public const float SPEED = 100.0f;
 	public const float DECELERATION = 5000.0f;
 	public const int ATTACK_DAMAGE = 30;
+	public const int HEALTH_REGEN_VAL = 10;
 	public bool playerAlive = true;
 	private AnimatedSprite2D sprite;
 	public List<Enemy> enemies;
@@ -122,7 +123,7 @@ public partial class Player : CharacterBody2D
 	private void HealthRegen(double delta){
 		if( playerAlive && (health.CurrentHealth < 100 || health.CurrentHealth > 0) ){
 			if(timeSinceLastHealthRegen > healthRegenCooldown){
-				health.Heal(10);
+				health.Heal(HEALTH_REGEN_VAL);
 				timeSinceLastHealthRegen = 0.0f;
 			} else {
 				timeSinceLastHealthRegen += (float)delta;

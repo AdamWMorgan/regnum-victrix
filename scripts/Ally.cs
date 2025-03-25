@@ -11,6 +11,7 @@ public partial class Ally : CharacterBody2D
 	[Export] public CollisionShape2D collisionShape;
 	[Export] public Health health;
 	public const int ATTACK_DAMAGE = 10;
+	public const int HEALTH_REGEN_VAL = 10;
 	public bool allyAlive = true;
 	public bool playerInAttackRange = false;
 	public bool enemyInAttackRange = false;
@@ -138,7 +139,7 @@ public partial class Ally : CharacterBody2D
 	private void HealthRegen(double delta){
 		if( allyAlive && (health.CurrentHealth < 100 || health.CurrentHealth > 0) ){
 			if(timeSinceLastHealthRegen > healthRegenCooldown){
-				health.Heal(10);
+				health.Heal(HEALTH_REGEN_VAL);
 				timeSinceLastHealthRegen = 0.0f;
 			} else {
 				timeSinceLastHealthRegen += (float)delta;
