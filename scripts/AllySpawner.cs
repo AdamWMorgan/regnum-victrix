@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public partial class AllySpawner : Node2D
 {
 	[Export] public PackedScene AllyScene { get; set; }
-	[Export] public int AllySpawnCount { get; set; } = 10;
+	[Export] public int AllySpawnCount { get; set; }
 	[Export] public Rect2 AllySpawnArea { get; set; } = new Rect2(Vector2.Zero, new Vector2(400, 400));
 	[Export] public float AllyMinSpawnDistance { get; set; } = 0.2f;
 	[Export] public float AllyMaxSpawnDistance { get; set; } = 0.5f;
@@ -47,6 +47,7 @@ private void SpawnAllies()
 		} while (IsTooClose(spawnPosition) && attempt < maxAttempt);
 
 		ally.Position = spawnPosition;
+		ally.spawnPosition = spawnPosition;
 
 		_allySpawnedPositions.Add(spawnPosition);
 

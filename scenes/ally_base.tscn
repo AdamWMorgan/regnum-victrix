@@ -16,4 +16,5 @@ tile_set = ExtResource("1_u5dyn")
 position = Vector2(-2, -2)
 script = ExtResource("2_64lto")
 AllyScene = ExtResource("3_ru2op")
+AllySpawnCount = 1
 AllySpawnArea = Rect2(0, 0, 100, 100)

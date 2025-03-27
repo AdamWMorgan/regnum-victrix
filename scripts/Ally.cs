@@ -10,6 +10,7 @@ public partial class Ally : CharacterBody2D
 	[Export] public Area2D AttackArea;
 	[Export] public CollisionShape2D collisionShape;
 	[Export] public Health health;
+	[Export] public Vector2 spawnPosition;
 	public const int ATTACK_DAMAGE = 10;
 	public const int HEALTH_REGEN_VAL = 10;
 	public bool allyAlive = true;
@@ -78,7 +79,8 @@ public partial class Ally : CharacterBody2D
 					sprite.Play(ALLY_IDLE_ANIMATION);
 				}
 			}
-		} else if(detectedEnemies.Count == 0 && sprite.Animation == ALLY_ATTACK_ANIMATION){
+		} 
+		else if(detectedEnemies.Count == 0 && sprite.Animation == ALLY_ATTACK_ANIMATION){
 				sprite.Play(ALLY_IDLE_ANIMATION);
 		}
 		else if (playerDetected && player.GlobalPosition.DistanceTo(GlobalPosition) > ALLY_PLAYER_GAP && followPlayer){
@@ -95,6 +97,18 @@ public partial class Ally : CharacterBody2D
 			}
 			else if (directionToPlayer.X < 0){
 				sprite.FlipH = true;	
+			}
+		} 
+		else{
+			if(!followPlayer && this.GlobalPosition.DistanceTo(spawnPosition) > 1.0f){
+				Vector2 directionToSpawn = (spawnPosition - this.GlobalPosition);
+				velocity = directionToSpawn * SPEED;
+				if(directionToSpawn.X > 0){
+					sprite.FlipH = false;
+				}
+				else if (directionToSpawn.X < 0){
+					sprite.FlipH = true;	
+				}
 			}
 		}
 
