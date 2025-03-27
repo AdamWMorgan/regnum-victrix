@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=4 uid="uid://dunxqo17c10wb"]
+
+[ext_resource type="TileSet" uid="uid://bon0tuqm31npn" path="res://Tilesets/game_tile_set.tres" id="1_i0vd7"]
+[ext_resource type="Script" path="res://scripts/Spawner.cs" id="2_o2p75"]
+[ext_resource type="PackedScene" uid="uid://floxwro1x75e" path="res://scenes/enemy.tscn" id="3_snjed"]
+
+[node name="EnemyBase" type="Node2D"]
+position = Vector2(450, 247)
+
+[node name="EnemyBaseStructure" type="TileMapLayer" parent="."]
+position = Vector2(67, 41)
+tile_map_data = PackedByteArray("AAD9//7/AAADAAIAAAD9//3/AAADAAIAAAD9//z/AAADAAAAAAD8//7/AAACAAMAAAD8//z/AAADAAAAAAD7//7/AAACAAMAAAD7//z/AAADAAAAAAD6//7/AAABAAIAAAD6//3/AAAAAAEAAAD6//z/AAABAAAAAAA=")
+tile_set = ExtResource("1_i0vd7")
+
+[node name="EnemySpawner" type="Node2D" parent="."]
+position = Vector2(0, 2)
+script = ExtResource("2_o2p75")
+EnemyScene = ExtResource("3_snjed")
