@@ -102,7 +102,7 @@ public partial class Ally : CharacterBody2D
 		else{
 			if(!followPlayer && this.GlobalPosition.DistanceTo(spawnPosition) > 1.0f){
 				Vector2 directionToSpawn = (spawnPosition - this.GlobalPosition);
-				velocity = directionToSpawn * SPEED;
+				velocity += directionToSpawn * SPEED;
 				if(directionToSpawn.X > 0){
 					sprite.FlipH = false;
 				}

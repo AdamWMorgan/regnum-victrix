@@ -13,7 +13,7 @@ tile_map_data = PackedByteArray("AAANAPr/AAABAAAAAAANAPv/AAAAAAEAAAANAPz/AAAAAAE
 tile_set = ExtResource("1_u5dyn")
 
 [node name="AllySpawner" type="Node2D" parent="."]
-position = Vector2(-2, -2)
+position = Vector2(-2, -4)
 script = ExtResource("2_64lto")
 AllyScene = ExtResource("3_ru2op")
 AllySpawnCount = 1
