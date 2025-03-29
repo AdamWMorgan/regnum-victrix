@@ -83,6 +83,10 @@ public partial class Player : CharacterBody2D
 		// Play attack animation when the attack action is pressed
 		if (Input.IsActionJustPressed("attack") && timeSinceLastAttack >= attackCooldown)
 		{
+			foreach (Base b in GameManager.Instance.AllBases){
+			GD.Print(b.ID);
+			GD.Print(b.CurrentBaseOwner);
+		}
 			if (!sprite.IsPlaying() || sprite.Animation != PLAYER_ATTACK_ANIMATION)
 			{
 				sprite.Play(PLAYER_ATTACK_ANIMATION);

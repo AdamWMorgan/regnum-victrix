@@ -1,11 +1,13 @@
-[gd_scene load_steps=4 format=4 uid="uid://dunxqo17c10wb"]
+[gd_scene load_steps=5 format=4 uid="uid://dunxqo17c10wb"]
 
 [ext_resource type="TileSet" uid="uid://bon0tuqm31npn" path="res://Tilesets/game_tile_set.tres" id="1_i0vd7"]
+[ext_resource type="Script" path="res://scenes/EnemyBase.cs" id="1_k1rjx"]
 [ext_resource type="Script" path="res://scripts/Spawner.cs" id="2_o2p75"]
 [ext_resource type="PackedScene" uid="uid://floxwro1x75e" path="res://scenes/enemy.tscn" id="3_snjed"]
 
 [node name="EnemyBase" type="Node2D"]
 position = Vector2(450, 247)
+script = ExtResource("1_k1rjx")
 
 [node name="EnemyBaseStructure" type="TileMapLayer" parent="."]
 position = Vector2(67, 41)

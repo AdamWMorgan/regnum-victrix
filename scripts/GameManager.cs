@@ -7,6 +7,7 @@ public partial class GameManager : Node
 	public static GameManager Instance { get; private set;}
 	public List<Enemy> AllEnemies { get; private set;} = new List<Enemy>();
 	public List<Ally> AllAllies { get; private set;} = new List<Ally>();
+	public List<Base> AllBases {get; set;} = new List<Base>();
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -32,5 +33,9 @@ public partial class GameManager : Node
 	
 	public void UnregisterAlly(Ally ally){
 		AllAllies.Remove(ally);
+	}
+	
+	public void BaseRegister(Base newBase){
+		AllBases.Add(newBase);
 	}
 }
