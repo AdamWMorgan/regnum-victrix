@@ -36,4 +36,4 @@ position = Vector2(463, 560)
 position = Vector2(187, 149)
 
 [node name="AllyBase" parent="." instance=ExtResource("7_2s1wi")]
-position = Vector2(699, -212)
+position = Vector2(647, 114)

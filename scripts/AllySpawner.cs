@@ -7,8 +7,8 @@ public partial class AllySpawner : Node2D
 	[Export] public PackedScene AllyScene { get; set; }
 	[Export] public int AllySpawnCount { get; set; }
 	[Export] public Rect2 AllySpawnArea { get; set; }
-	[Export] public float AllyMinSpawnDistance { get; set; } = 0.2f;
-	[Export] public float AllyMaxSpawnDistance { get; set; } = 0.5f;
+	[Export] public float AllyMinSpawnDistance { get; set; } = 0.8f;
+	[Export] public float AllyMaxSpawnDistance { get; set; } = 1.2f;
 
 	public CharacterBody2D Player { get; set; }
 
