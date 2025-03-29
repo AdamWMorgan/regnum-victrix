@@ -5,32 +5,13 @@ public partial class Base : Node
 {
 	
 	public String ID { get; private set; }
-	public BaseOwner CurrentBaseOwner { get; set; }
-	public Vector2 Position;
-	public string Name;
-	public int Level;
-	
-	// IMPLEMENT BUILDER PATTERN
+	public BaseOwner CurrentBaseOwner { get; private set; } = BaseOwner.NONE;
+	public Vector2 Position { get; private set; }
+	public string Name { get; private set; } = "Base";
+	public int Level { get; private set; } = 1;
 	
 	public Base(){
-		Guid uuid = Guid.NewGuid();
-		this.ID = uuid.ToString();
-		this.CurrentBaseOwner = BaseOwner.NONE;
-	}
-	
-	public Base(BaseOwner baseOwner){
-		Guid uuid = Guid.NewGuid();
-		this.ID = uuid.ToString();
-		this.CurrentBaseOwner = baseOwner;
-	}
-	
-	public Base(BaseOwner baseOwner, Vector2 position, string name, int level){
-		Guid uuid = Guid.NewGuid();
-		this.ID = uuid.ToString();
-		this.CurrentBaseOwner = baseOwner;
-		this.Position = position;
-		this.Name = name;
-		this.Level = level;
+		this.ID = Guid.NewGuid().ToString();
 	}
 	
 	public enum BaseOwner
@@ -40,14 +21,37 @@ public partial class Base : Node
 		NONE
 	}
 	
-	
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-	}
+	public class Builder{
+		private Base _base = new Base();
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
+		public Builder SetOwner(Base.BaseOwner owner)
+		{
+			_base.CurrentBaseOwner = owner;
+			return this;
+		}
+
+		public Builder SetPosition(Vector2 position)
+		{
+			_base.Position = position;
+			return this;
+		}
+
+		public Builder SetName(string name)
+		{
+			_base.Name = name;
+			return this;
+		}
+
+		public Builder SetLevel(int level)
+		{
+			_base.Level = level;
+			return this;
+		}
+
+		public Base Build()
+		{
+			return _base;
+		}
 	}
+	
 }
