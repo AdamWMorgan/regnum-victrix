@@ -39,10 +39,10 @@ private void SpawnAllies()
 		// Randomize the spawn position
 		do
 		{
-			spawnPosition = AllySpawnArea.Position + new Vector2(
+			spawnPosition = (this.GlobalPosition + AllySpawnArea.Position + new Vector2(
 				(float)random.NextDouble() * AllySpawnArea.Size.X,
 				(float)random.NextDouble() * AllySpawnArea.Size.Y
-			);
+			));
 			attempt++;
 		} while (IsTooClose(spawnPosition) && attempt < maxAttempt);
 

@@ -100,9 +100,10 @@ public partial class Ally : CharacterBody2D
 			}
 		} 
 		else{
-			if(!followPlayer && this.GlobalPosition.DistanceTo(spawnPosition) > 1.0f){
-				Vector2 directionToSpawn = (spawnPosition - this.GlobalPosition);
+			if(!followPlayer && this.GlobalPosition.DistanceTo(this.spawnPosition) > 1.0f){
+				Vector2 directionToSpawn = (this.spawnPosition - this.GlobalPosition);
 				velocity += directionToSpawn * SPEED;
+				
 				if(directionToSpawn.X > 0){
 					sprite.FlipH = false;
 				}

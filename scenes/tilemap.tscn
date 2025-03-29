@@ -29,11 +29,11 @@ position = Vector2(310, 246)
 script = ExtResource("4_3agec")
 EnemyScene = ExtResource("3_nxeek")
 
-[node name="AllyBase" parent="." instance=ExtResource("7_2s1wi")]
-position = Vector2(725, 59)
-
 [node name="EnemyBase" parent="." instance=ExtResource("7_38ejd")]
-position = Vector2(230, 407)
+position = Vector2(463, 560)
 
 [node name="AllyBase2" parent="." instance=ExtResource("7_2s1wi")]
-position = Vector2(168, 136)
+position = Vector2(187, 149)
+
+[node name="AllyBase" parent="." instance=ExtResource("7_2s1wi")]
+position = Vector2(699, -212)
