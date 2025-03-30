@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public partial class Enemy : CharacterBody2D
 {
+	
+	public String ID { get; private set; }
 	// Reference to the Area2D node
 	[Export] public Area2D DetectionArea;
 	[Export] public Area2D AttackArea;
@@ -30,6 +32,10 @@ public partial class Enemy : CharacterBody2D
 	private const String ENEMY_IDLE_ANIMATION = "enemy_idle_animation";
 	private const String ENEMY_ATTACK_ANIMATION = "enemy_attack_animation";
 
+	public Enemy(){
+		this.ID = Guid.NewGuid().ToString();
+	}
+	
 	public override void _Ready()
 	{
 		AddToGroup("Enemy");

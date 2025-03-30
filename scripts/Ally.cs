@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public partial class Ally : CharacterBody2D
 {
+	public String ID { get; private set; }
 	// Reference to the Area2D node
 	[Export] public Area2D DetectionArea;
 	[Export] public Area2D PlayerDetectionArea;
@@ -33,7 +34,11 @@ public partial class Ally : CharacterBody2D
 	public const float ALLY_PLAYER_GAP = 50.0f;
 	private const String ALLY_IDLE_ANIMATION = "ally_idle_animation";
 	private const String ALLY_ATTACK_ANIMATION = "ally_attack_animation";
-
+	
+	public Ally(){
+		this.ID = Guid.NewGuid().ToString();
+	}
+	
 	public override void _Ready()
 	{
 		AddToGroup("Ally");

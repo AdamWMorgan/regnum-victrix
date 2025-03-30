@@ -3,7 +3,6 @@ using System;
 
 public partial class Base : Node
 {
-	
 	public String ID { get; private set; }
 	public BaseOwner CurrentBaseOwner { get; private set; } = BaseOwner.NONE;
 	public Vector2 Position { get; private set; }
