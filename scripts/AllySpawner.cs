@@ -14,11 +14,23 @@ public partial class AllySpawner : Node2D
 
 	private List<Vector2> _allySpawnedPositions = new List<Vector2>();
 	private List<Ally> allies = new List<Ally>();
+	public string baseId;
 
 	public override void _Ready()
 	{
 		Player = GetNode<CharacterBody2D>("/root/Main/Player");
-		SpawnAllies();
+		CallDeferred(nameof(DeferredCheck));
+	}
+	
+	private void DeferredCheck()
+	{	
+	 	Node parent = GetParent();
+		AllyBase allyBase = parent as AllyBase;
+		
+		if(allyBase != null && allyBase.BaseID != null){
+			baseId = allyBase.BaseID;
+			SpawnAllies();
+		}
 	}
 public void DespawnAlly(Node body){
 	RemoveChild(body);
@@ -53,7 +65,7 @@ private void SpawnAllies()
 
 		// Add the ally to the scene (parent it to the root or another node)
 		AddChild(ally);
-		GameManager.Instance.RegisterAlly(ally);
+		GameManager.Instance.RegisterAllyWithBase(ally, baseId);
 	}
 }
 

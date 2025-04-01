@@ -37,6 +37,12 @@ public partial class GameManager : Node
 		AllAllies.Add(ally);
 	}
 	
+	public void RegisterAllyWithBase(Ally ally, string baseId){
+		AllAllies.Add(ally);
+		Base targetBase = AllBases.Find(b => b.ID == baseId);
+		targetBase.AddUnit(ally);
+	}
+	
 	public void UnregisterAlly(Ally ally){
 		AllAllies.Remove(ally);
 	}
