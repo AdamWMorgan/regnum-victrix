@@ -9,17 +9,30 @@ public partial class Spawner : Node2D
 	[Export] public Rect2 SpawnArea { get; set; }
 	[Export] public float MinSpawnDistance { get; set; } = 0.2f;
 	[Export] public float MaxSpawnDistance { get; set; } = 0.5f;
-
+	
 	public CharacterBody2D Player { get; set; }
-
+	public string baseId;
+	
 	private List<Vector2> _spawnedPositions = new List<Vector2>();
 	private List<Enemy> enemies = new List<Enemy>();
 
 	public override void _Ready()
 	{
 		Player = GetNode<CharacterBody2D>("/root/Main/Player");
-		SpawnEnemies();
+		CallDeferred(nameof(DeferredCheck));
 	}
+	
+	private void DeferredCheck()
+	{	
+	 	Node parent = GetParent();
+		EnemyBase enemyBase = parent as EnemyBase;
+		
+		if(enemyBase != null && enemyBase.BaseID != null){
+			baseId = enemyBase.BaseID;
+			SpawnEnemies();
+		}
+	}
+	
 public void DespawnEnemy(Node body){
 	RemoveChild(body);
 }
@@ -52,7 +65,7 @@ private void SpawnEnemies()
 
 		// Add the enemy to the scene (parent it to the root or another node)
 		AddChild(enemy);
-		GameManager.Instance.RegisterEnemy(enemy);
+		GameManager.Instance.RegisterEnemyWithBase(enemy, baseId);
 	}
 }
 

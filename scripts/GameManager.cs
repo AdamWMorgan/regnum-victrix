@@ -23,6 +23,12 @@ public partial class GameManager : Node
 		AllEnemies.Add(enemy);
 	}
 	
+	public void RegisterEnemyWithBase(Enemy enemy, string baseId){
+		AllEnemies.Add(enemy);
+		Base targetBase = AllBases.Find(b => b.ID == baseId);
+		targetBase.AddUnit(enemy);
+	}
+	
 	public void UnregisterEnemy(Enemy enemy){
 		AllEnemies.Remove(enemy);
 	}
@@ -35,7 +41,8 @@ public partial class GameManager : Node
 		AllAllies.Remove(ally);
 	}
 	
-	public void BaseRegister(Base newBase){
+	public string BaseRegister(Base newBase){
 		AllBases.Add(newBase);
+		return newBase.ID;
 	}
 }

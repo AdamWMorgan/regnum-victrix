@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class Enemy : CharacterBody2D
+public partial class Enemy : CharacterBody2D, IUnit
 {
 	
 	public String ID { get; private set; }
@@ -34,6 +34,10 @@ public partial class Enemy : CharacterBody2D
 
 	public Enemy(){
 		this.ID = Guid.NewGuid().ToString();
+	}
+	
+	public string GetId(){
+		return ID;
 	}
 	
 	public override void _Ready()

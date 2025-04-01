@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class Ally : CharacterBody2D
+public partial class Ally : CharacterBody2D, IUnit
 {
 	public String ID { get; private set; }
 	// Reference to the Area2D node
@@ -37,6 +37,10 @@ public partial class Ally : CharacterBody2D
 	
 	public Ally(){
 		this.ID = Guid.NewGuid().ToString();
+	}
+	
+	public string GetId(){
+		return ID;
 	}
 	
 	public override void _Ready()
