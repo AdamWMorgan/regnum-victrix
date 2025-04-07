@@ -18,7 +18,12 @@ public partial class GameManager : Node
 		}
 		Instance = this;
 	}
+	
+	public override void _Process(double delta)
+	{
+	}
 
+	// Registering
 	public void RegisterEnemy(Enemy enemy){
 		AllEnemies.Add(enemy);
 	}
@@ -51,4 +56,6 @@ public partial class GameManager : Node
 		AllBases.Add(newBase);
 		return newBase.ID;
 	}
+	
+	// Resource State
 }

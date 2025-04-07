@@ -10,19 +10,24 @@ public partial class Base : Node
 	public string Name { get; private set; } = "Base";
 	public int Level { get; private set; } = 1;
 	public List<IUnit> Units = new List<IUnit>();
-	
+	public List<Resource> Resources = new List<Resource>();
+		
 	public Base(){
 		this.ID = Guid.NewGuid().ToString();
+		foreach (ResourceType type in Enum.GetValues(typeof(ResourceType))){
+			this.Resources.Add(new Resource(type, 0));
+		}
 	}
 	
 	public List<IUnit> AddUnit(IUnit unit){
 		Units.Add(unit);
-		GD.Print(unit.GetId() + " added to " + CurrentBaseOwner + " base " + ID);
+		this.Resources.ForEach(res => GD.Print(res.Type));
 		return Units;
 	}
 	
 	public List<IUnit> RemoveUnit(IUnit unit){
 		Units.Remove((IUnit) unit);
+		this.Resources.ForEach(res => GD.Print(res.Type));
 		return Units;
 	}
 	
