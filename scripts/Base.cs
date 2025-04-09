@@ -21,7 +21,6 @@ public partial class Base : Node
 	
 	public List<IUnit> AddUnit(IUnit unit){
 		Units.Add(unit);
-		this.Resources.ForEach(res => GD.Print(res.Type));
 		return Units;
 	}
 	

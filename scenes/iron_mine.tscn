@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://di4b2677tr3s8"]
+
+[ext_resource type="Script" path="res://scripts/IronMine.cs" id="1_6rycr"]
+[ext_resource type="TileSet" uid="uid://bon0tuqm31npn" path="res://Tilesets/game_tile_set.tres" id="1_jl74d"]
+
+[node name="IronMine" type="Node2D"]
+script = ExtResource("1_6rycr")
+
+[node name="IronTileLayer" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray(0, 0, 0, 0, 0, 0, 1, 0, 4, 0, 1, 0, 0, 0, 0, 0, 255, 255, 1, 0, 4, 0, 0, 0, 0, 0, 255, 255, 0, 0, 1, 0, 3, 0, 1, 0, 0, 0, 255, 255, 255, 255, 1, 0, 3, 0, 0, 0, 0, 0)
+tile_set = ExtResource("1_jl74d")

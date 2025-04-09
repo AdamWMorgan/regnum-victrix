@@ -10,4 +10,8 @@ public partial class Resource : Node
 		this.Type = type;
 		this.Quantity = quantity;
 	}
+	
+	public int IncrementResourceQuantity(int amount){
+		return this.Quantity += amount;
+	}
 }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=4 uid="uid://ddgpd7ae3v778"]
+[gd_scene load_steps=8 format=4 uid="uid://ddgpd7ae3v778"]
 
 [ext_resource type="TileSet" uid="uid://bon0tuqm31npn" path="res://Tilesets/game_tile_set.tres" id="1_tjwv8"]
 [ext_resource type="PackedScene" uid="uid://cb0rtekr02b04" path="res://scenes/player.tscn" id="2_i68oy"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://scripts/Spawner.cs" id="4_3agec"]
 [ext_resource type="PackedScene" uid="uid://coeuknkpeyvk3" path="res://scenes/ally_base.tscn" id="7_2s1wi"]
 [ext_resource type="PackedScene" uid="uid://dunxqo17c10wb" path="res://scenes/enemy_base.tscn" id="7_38ejd"]
+[ext_resource type="PackedScene" uid="uid://di4b2677tr3s8" path="res://scenes/iron_mine.tscn" id="7_o2nhv"]
 
 [node name="Main" type="Node2D"]
 position = Vector2(-139, -147)
@@ -28,12 +29,21 @@ platform_floor_layers = 4294967293
 position = Vector2(463, 560)
 
 [node name="AllyBase" parent="." instance=ExtResource("7_2s1wi")]
-position = Vector2(196, -25)
+position = Vector2(65, 112)
 
 [node name="AllyBase2" parent="." instance=ExtResource("7_2s1wi")]
-position = Vector2(187, 149)
+position = Vector2(714, 114)
 
 [node name="EnemySpawner" type="Node2D" parent="."]
 position = Vector2(310, 246)
 script = ExtResource("4_3agec")
 EnemyScene = ExtResource("3_nxeek")
+
+[node name="IronMine" parent="." instance=ExtResource("7_o2nhv")]
+position = Vector2(142, 15)
+
+[node name="IronMine2" parent="." instance=ExtResource("7_o2nhv")]
+position = Vector2(560, 47)
+
+[node name="IronMine3" parent="." instance=ExtResource("7_o2nhv")]
+position = Vector2(513, 483)
