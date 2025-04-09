@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dd8lvnuod1hif"]
 
-[ext_resource type="Script" path="res://scripts/GoldMine.cs" id="1_7vaj8"]
+[ext_resource type="Script" path="res://scripts/resources/GoldMine.cs" id="1_7vaj8"]
 
 [node name="GoldMine" type="Node2D"]
 script = ExtResource("1_7vaj8")

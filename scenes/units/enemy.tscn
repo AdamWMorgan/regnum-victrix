@@ -1,74 +1,74 @@
 [gd_scene load_steps=25 format=3 uid="uid://floxwro1x75e"]
 
-[ext_resource type="Texture2D" uid="uid://b0xjjq5gasjkp" path="res://game/assets/characters/Orc.png" id="1_5j5ws"]
-[ext_resource type="Script" path="res://scripts/Enemy.cs" id="1_gtct7"]
-[ext_resource type="PackedScene" uid="uid://pp8iho8f2wo6" path="res://scenes/health.tscn" id="3_0fuy4"]
+[ext_resource type="Script" path="res://scripts/units/Enemy.cs" id="1_12qrk"]
+[ext_resource type="Texture2D" uid="uid://b0xjjq5gasjkp" path="res://game/assets/characters/Orc.png" id="2_nq6ol"]
+[ext_resource type="PackedScene" uid="uid://pp8iho8f2wo6" path="res://scenes/health.tscn" id="3_yky3p"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_poafi"]
 radius = 16.1245
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k5sg8"]
-atlas = ExtResource("1_5j5ws")
+atlas = ExtResource("2_nq6ol")
 region = Rect2(0, 200, 100, 100)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_y7yiu"]
-atlas = ExtResource("1_5j5ws")
+atlas = ExtResource("2_nq6ol")
 region = Rect2(100, 200, 100, 100)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_myylh"]
-atlas = ExtResource("1_5j5ws")
+atlas = ExtResource("2_nq6ol")
 region = Rect2(200, 200, 100, 100)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m0ian"]
-atlas = ExtResource("1_5j5ws")
+atlas = ExtResource("2_nq6ol")
 region = Rect2(300, 200, 100, 100)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4xjhq"]
-atlas = ExtResource("1_5j5ws")
+atlas = ExtResource("2_nq6ol")
 region = Rect2(400, 200, 100, 100)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4qpx7"]
-atlas = ExtResource("1_5j5ws")
+atlas = ExtResource("2_nq6ol")
 region = Rect2(500, 200, 100, 100)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nw7xs"]
-atlas = ExtResource("1_5j5ws")
+atlas = ExtResource("2_nq6ol")
 region = Rect2(0, 500, 100, 100)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3wjlx"]
-atlas = ExtResource("1_5j5ws")
+atlas = ExtResource("2_nq6ol")
 region = Rect2(100, 500, 100, 100)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xvxrc"]
-atlas = ExtResource("1_5j5ws")
+atlas = ExtResource("2_nq6ol")
 region = Rect2(200, 500, 100, 100)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hapcn"]
-atlas = ExtResource("1_5j5ws")
+atlas = ExtResource("2_nq6ol")
 region = Rect2(300, 500, 100, 100)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_l1t7c"]
-atlas = ExtResource("1_5j5ws")
+atlas = ExtResource("2_nq6ol")
 region = Rect2(0, 0, 100, 100)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3h3qd"]
-atlas = ExtResource("1_5j5ws")
+atlas = ExtResource("2_nq6ol")
 region = Rect2(100, 0, 100, 100)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4bbs1"]
-atlas = ExtResource("1_5j5ws")
+atlas = ExtResource("2_nq6ol")
 region = Rect2(200, 0, 100, 100)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_icadv"]
-atlas = ExtResource("1_5j5ws")
+atlas = ExtResource("2_nq6ol")
 region = Rect2(300, 0, 100, 100)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_11jab"]
-atlas = ExtResource("1_5j5ws")
+atlas = ExtResource("2_nq6ol")
 region = Rect2(400, 0, 100, 100)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ti885"]
-atlas = ExtResource("1_5j5ws")
+atlas = ExtResource("2_nq6ol")
 region = Rect2(500, 0, 100, 100)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_7ty51"]
@@ -151,7 +151,7 @@ bg_color = Color(0.737255, 0, 0.0666667, 1)
 collision_layer = 2
 collision_mask = 2
 platform_floor_layers = 4294967293
-script = ExtResource("1_gtct7")
+script = ExtResource("1_12qrk")
 DetectionArea = NodePath("DetectionArea")
 AttackArea = NodePath("AttackArea")
 collisionShape = NodePath("CollisionShape2D")
@@ -181,6 +181,6 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
 shape = SubResource("CircleShape2D_typao")
 
-[node name="Health" parent="." instance=ExtResource("3_0fuy4")]
+[node name="Health" parent="." instance=ExtResource("3_yky3p")]
 health = 40
 colour = SubResource("StyleBoxFlat_wxyvj")

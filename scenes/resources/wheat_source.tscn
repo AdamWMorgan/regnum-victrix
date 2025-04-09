@@ -1,8 +1,8 @@
 [gd_scene load_steps=2 format=3 uid="uid://dxy8xb66n8wse"]
 
-[ext_resource type="Script" path="res://scripts/WheatSource.cs" id="1_nrhch"]
+[ext_resource type="Script" path="res://scripts/resources/WheatSource.cs" id="1_wof3y"]
 
 [node name="WheatSource" type="Node2D"]
-script = ExtResource("1_nrhch")
+script = ExtResource("1_wof3y")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
