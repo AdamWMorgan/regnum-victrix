@@ -45,7 +45,7 @@ EnemyScene = ExtResource("3_nxeek")
 position = Vector2(142, 15)
 
 [node name="IronMine2" parent="." instance=ExtResource("7_o2nhv")]
-position = Vector2(560, 47)
+position = Vector2(561, 56)
 
 [node name="IronMine3" parent="." instance=ExtResource("7_o2nhv")]
 position = Vector2(513, 483)

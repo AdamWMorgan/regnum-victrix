@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class Base : Node
+public partial class Base : Node2D
 {
 	public String ID { get; private set; }
 	public BaseOwner CurrentBaseOwner { get; private set; } = BaseOwner.NONE;
@@ -17,6 +17,10 @@ public partial class Base : Node
 		foreach (ResourceType type in Enum.GetValues(typeof(ResourceType))){
 			this.Resources.Add(new Resource(type, 0));
 		}
+	}
+	
+	public override void _Ready(){
+		AddToGroup("Bases");
 	}
 	
 	public List<IUnit> AddUnit(IUnit unit){
