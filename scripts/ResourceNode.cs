@@ -5,7 +5,7 @@ public abstract partial class ResourceNode : Node
 {
 	public Resource resource {get; private set;}
 	public int generatingCapacity {get; private set;}
-	private float DEFAULT_GENERATION_SPEED = 30f;
+	private float DEFAULT_GENERATION_SPEED = 1f;
 	private float timeSinceLastGen = 0f;
 	
 	public ResourceNode(Resource resource){
@@ -26,5 +26,6 @@ public abstract partial class ResourceNode : Node
 		} else {
 			timeSinceLastGen += (float)delta;
 		}
+		GD.Print(resource.Quantity);
 	}
 }
