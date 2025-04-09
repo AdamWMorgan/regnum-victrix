@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://b5iimnslkfqcg"]
+
+[ext_resource type="Script" path="res://scripts/WaterSource.cs" id="1_56yrs"]
+
+[node name="WaterSource" type="Node2D"]
+script = ExtResource("1_56yrs")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=4 uid="uid://ddgpd7ae3v778"]
+[gd_scene load_steps=10 format=4 uid="uid://ddgpd7ae3v778"]
 
 [ext_resource type="TileSet" uid="uid://bon0tuqm31npn" path="res://Tilesets/game_tile_set.tres" id="1_tjwv8"]
 [ext_resource type="PackedScene" uid="uid://cb0rtekr02b04" path="res://scenes/player.tscn" id="2_i68oy"]
@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://coeuknkpeyvk3" path="res://scenes/ally_base.tscn" id="7_2s1wi"]
 [ext_resource type="PackedScene" uid="uid://dunxqo17c10wb" path="res://scenes/enemy_base.tscn" id="7_38ejd"]
 [ext_resource type="PackedScene" uid="uid://di4b2677tr3s8" path="res://scenes/iron_mine.tscn" id="7_o2nhv"]
+[ext_resource type="PackedScene" uid="uid://dd8lvnuod1hif" path="res://scenes/gold_mine.tscn" id="8_awi20"]
+[ext_resource type="PackedScene" uid="uid://b5iimnslkfqcg" path="res://scenes/water_source.tscn" id="9_unb16"]
 
 [node name="Main" type="Node2D"]
 position = Vector2(-139, -147)
@@ -47,3 +49,7 @@ position = Vector2(560, 47)
 
 [node name="IronMine3" parent="." instance=ExtResource("7_o2nhv")]
 position = Vector2(513, 483)
+
+[node name="GoldMine" parent="." instance=ExtResource("8_awi20")]
+
+[node name="WaterSource" parent="." instance=ExtResource("9_unb16")]

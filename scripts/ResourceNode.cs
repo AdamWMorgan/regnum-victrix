@@ -26,6 +26,6 @@ public abstract partial class ResourceNode : Node
 		} else {
 			timeSinceLastGen += (float)delta;
 		}
-		GD.Print(resource.Quantity);
+		GD.Print(resource.Type + " " + resource.Quantity);
 	}
 }
