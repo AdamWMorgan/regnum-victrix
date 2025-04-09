@@ -3,7 +3,10 @@ using System;
 
 public partial class WheatSource : ResourceNode
 {
+	public String ID { get; private set; }
+	
 	public WheatSource() : base(new Resource(ResourceType.WHEAT)){
+		this.ID = Guid.NewGuid().ToString();
 	}
 	
 	// Called when the node enters the scene tree for the first time.

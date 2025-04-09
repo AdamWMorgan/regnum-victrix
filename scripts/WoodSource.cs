@@ -3,7 +3,11 @@ using System;
 
 public partial class WoodSource : ResourceNode
 {
-	public WoodSource() : base(new Resource(ResourceType.WOOD)){}
+	public String ID { get; private set; }
+	
+	public WoodSource() : base(new Resource(ResourceType.WOOD)){
+		this.ID = Guid.NewGuid().ToString();
+	}
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()

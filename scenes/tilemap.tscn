@@ -53,3 +53,4 @@ position = Vector2(513, 483)
 [node name="GoldMine" parent="." instance=ExtResource("8_awi20")]
 
 [node name="WaterSource" parent="." instance=ExtResource("9_unb16")]
+position = Vector2(510, 19)

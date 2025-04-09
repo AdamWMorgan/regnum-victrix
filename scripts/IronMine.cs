@@ -3,7 +3,10 @@ using System;
 
 public partial class IronMine : ResourceNode
 {
+	public String ID { get; private set; }
+	
 	public IronMine() : base(new Resource(ResourceType.IRON)){
+		this.ID = Guid.NewGuid().ToString();
 	}
 	
 	// Called when the node enters the scene tree for the first time.
