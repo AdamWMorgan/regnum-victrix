@@ -7,6 +7,8 @@ public abstract partial class ResourceNode : Node2D
 	public Resource resource {get; private set;}
 	public int generatingCapacity {get; private set;}
 	public Base attachedBase;
+	// the number at which the resource should be sent to the associated base
+	private int SEND_TRIGGER_CAPACITY = 10;
 	private float DEFAULT_GENERATION_SPEED = 1f;
 	private float timeSinceLastGen = 0f;
 	
@@ -55,6 +57,18 @@ public abstract partial class ResourceNode : Node2D
 			timeSinceLastGen = 0.0f;
 		} else {
 			timeSinceLastGen += (float)delta;
+		}
+		sendResourceToBase();
+	}
+	
+	private void sendResourceToBase(){
+		// assign here so that any additional resource generated whilst 
+		// executing if statement is not overwritten
+		int currResourceQuantity = resource.Quantity;
+		
+		if(currResourceQuantity >= SEND_TRIGGER_CAPACITY){
+			attachedBase.receiveResource(resource.Type, resource.Quantity);
+			resource.Quantity -= resource.Quantity;
 		}
 	}
 }
