@@ -6,7 +6,7 @@ public partial class Enemy : CharacterBody2D, IUnit
 {
 	
 	public String ID { get; private set; }
-	public UnitLevel level {get; private set;} = UnitLevel.ONE;
+	public UnitLevel level {get; private set;} = UnitLevel.VELITES;
 	// Reference to the Area2D node
 	[Export] public Area2D DetectionArea;
 	[Export] public Area2D AttackArea;

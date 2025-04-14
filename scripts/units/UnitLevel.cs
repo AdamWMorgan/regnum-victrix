@@ -1,8 +1,9 @@
 public enum UnitLevel
 {
-	ONE = 1,
-	TWO = 2,
-	THREE = 3,
-	FOUR = 4,
-	FIVE = 5
+	VELITES = 1,
+	HASTATI = 2,
+	PRINCIPES = 3,
+	TRIARII = 4,
+	OPTIO = 5,
+	CENTURION = 6
 }

@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public partial class Base : Node2D
 {
@@ -9,7 +10,6 @@ public partial class Base : Node2D
 	public Vector2 Position { get; private set; }
 	public BaseLevel level {get; private set;} = BaseLevel.ONE;
 	public string Name { get; private set; } = "Base";
-	public int Level { get; private set; } = 1;
 	public List<IUnit> Units = new List<IUnit>();
 	public List<Resource> Resources = new List<Resource>();
 		
@@ -42,6 +42,15 @@ public partial class Base : Node2D
 		return resource.Quantity;
 	}
 	
+	public BaseLevel LevelUp(){
+		BaseLevel maxLevel = Enum.GetValues(typeof(BaseLevel)).Cast<BaseLevel>().Max();
+		
+		if((int) maxLevel > (int) level){
+			this.level = (BaseLevel)((int) level + 1);
+		}
+		return this.level;
+	}
+	
 	public enum BaseOwner
 	{
 		ALLY,
@@ -67,12 +76,6 @@ public partial class Base : Node2D
 		public Builder SetName(string name)
 		{
 			_base.Name = name;
-			return this;
-		}
-
-		public Builder SetLevel(int level)
-		{
-			_base.Level = level;
 			return this;
 		}
 		
