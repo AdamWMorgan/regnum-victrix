@@ -7,6 +7,7 @@ public partial class Base : Node2D
 	public String ID { get; private set; }
 	public BaseOwner CurrentBaseOwner { get; private set; } = BaseOwner.NONE;
 	public Vector2 Position { get; private set; }
+	public BaseLevel level {get; private set;} = BaseLevel.ONE;
 	public string Name { get; private set; } = "Base";
 	public int Level { get; private set; } = 1;
 	public List<IUnit> Units = new List<IUnit>();

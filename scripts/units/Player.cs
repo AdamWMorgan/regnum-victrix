@@ -6,6 +6,7 @@ using System.Linq;
 public partial class Player : CharacterBody2D
 {
 	[Export] public Health health;
+	public PlayerLevel level {get; private set;} = PlayerLevel.ONE;
 	public const float SPEED = 100.0f;
 	public const float DECELERATION = 5000.0f;
 	public const int ATTACK_DAMAGE = 30;

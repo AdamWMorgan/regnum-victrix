@@ -7,6 +7,7 @@ public abstract partial class ResourceNode : Node2D
 	public Resource resource {get; private set;}
 	public int generatingCapacity {get; private set;}
 	public int sendAmount {get; private set;}
+	public ResourceLevel level {get; private set;} = ResourceLevel.ONE;
 	public Base attachedBase;
 	// the number at which the resource should be sent to the associated base
 	private int DEFAULT_SEND_TRIGGER_CAPACITY = 10;

@@ -6,7 +6,7 @@ public partial class Enemy : CharacterBody2D, IUnit
 {
 	
 	public String ID { get; private set; }
-	public int Level { get; set; }
+	public UnitLevel level {get; private set;} = UnitLevel.ONE;
 	// Reference to the Area2D node
 	[Export] public Area2D DetectionArea;
 	[Export] public Area2D AttackArea;
@@ -35,7 +35,6 @@ public partial class Enemy : CharacterBody2D, IUnit
 
 	public Enemy(){
 		this.ID = Guid.NewGuid().ToString();
-		this.Level = 1;
 	}
 	
 	public string GetId(){
