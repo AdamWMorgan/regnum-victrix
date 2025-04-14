@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public partial class Ally : CharacterBody2D, IUnit
 {
@@ -159,6 +160,14 @@ public partial class Ally : CharacterBody2D, IUnit
 			sprite.Play("ally_death_animation");
 		}
 		HealthRegen(delta);
+	}
+	public UnitLevel LevelUp(){
+		UnitLevel maxLevel = Enum.GetValues(typeof(UnitLevel)).Cast<UnitLevel>().Max();
+		
+		if((int) maxLevel > (int) level){
+			this.level = (UnitLevel)((int) level + 1);
+		}
+		return this.level;
 	}
 	
 	private void HealthRegen(double delta){

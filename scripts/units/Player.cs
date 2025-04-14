@@ -125,6 +125,15 @@ public partial class Player : CharacterBody2D
 		HealthRegen(delta);
 	}
 	
+	public PlayerLevel LevelUp(){
+		PlayerLevel maxLevel = Enum.GetValues(typeof(PlayerLevel)).Cast<PlayerLevel>().Max();
+		
+		if((int) maxLevel > (int) level){
+			this.level = (PlayerLevel)((int) level + 1);
+		}
+		return this.level;
+	}
+	
 	private void HealthRegen(double delta){
 		if( playerAlive && (health.CurrentHealth < 100 || health.CurrentHealth > 0) ){
 			if(timeSinceLastHealthRegen > healthRegenCooldown){

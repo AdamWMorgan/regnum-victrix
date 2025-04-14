@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public abstract partial class ResourceNode : Node2D
 {
@@ -63,6 +64,15 @@ public abstract partial class ResourceNode : Node2D
 			timeSinceLastGen += (float)delta;
 		}
 		sendResourceToBase();
+	}
+	
+	public ResourceLevel LevelUp(){
+		ResourceLevel maxLevel = Enum.GetValues(typeof(ResourceLevel)).Cast<ResourceLevel>().Max();
+		
+		if((int) maxLevel > (int) level){
+			this.level = (ResourceLevel)((int) level + 1);
+		}
+		return this.level;
 	}
 	
 	private void sendResourceToBase(){
