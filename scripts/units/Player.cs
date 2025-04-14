@@ -121,16 +121,11 @@ public partial class Player : CharacterBody2D
 			playerAlive = false;
 			// Todo: will either need block control input here or straight into respawn
 		}
-		
 		HealthRegen(delta);
 	}
 	
 	public PlayerLevel LevelUp(){
-		PlayerLevel maxLevel = Enum.GetValues(typeof(PlayerLevel)).Cast<PlayerLevel>().Max();
-		
-		if((int) maxLevel > (int) level){
-			this.level = (PlayerLevel)((int) level + 1);
-		}
+		this.level = LevellingUtil<PlayerLevel>.LevelUp((int)this.level);
 		return this.level;
 	}
 	

@@ -43,11 +43,7 @@ public partial class Base : Node2D
 	}
 	
 	public BaseLevel LevelUp(){
-		BaseLevel maxLevel = Enum.GetValues(typeof(BaseLevel)).Cast<BaseLevel>().Max();
-		
-		if((int) maxLevel > (int) level){
-			this.level = (BaseLevel)((int) level + 1);
-		}
+		this.level = LevellingUtil<BaseLevel>.LevelUp((int)this.level);
 		return this.level;
 	}
 	

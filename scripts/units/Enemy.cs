@@ -106,11 +106,7 @@ public partial class Enemy : CharacterBody2D, IUnit
 	}
 	
 	public UnitLevel LevelUp(){
-		UnitLevel maxLevel = Enum.GetValues(typeof(UnitLevel)).Cast<UnitLevel>().Max();
-		
-		if((int) maxLevel > (int) level){
-			this.level = (UnitLevel)((int) level + 1);
-		}
+		this.level = LevellingUtil<UnitLevel>.LevelUp((int)this.level);
 		return this.level;
 	}
 	

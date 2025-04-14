@@ -67,11 +67,7 @@ public abstract partial class ResourceNode : Node2D
 	}
 	
 	public ResourceLevel LevelUp(){
-		ResourceLevel maxLevel = Enum.GetValues(typeof(ResourceLevel)).Cast<ResourceLevel>().Max();
-		
-		if((int) maxLevel > (int) level){
-			this.level = (ResourceLevel)((int) level + 1);
-		}
+		this.level = LevellingUtil<ResourceLevel>.LevelUp((int)this.level);
 		return this.level;
 	}
 	
