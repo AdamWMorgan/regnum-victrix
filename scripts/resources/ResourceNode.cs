@@ -13,7 +13,9 @@ public abstract partial class ResourceNode : Node2D
 	// the number at which the resource should be sent to the associated base
 	private int DEFAULT_SEND_TRIGGER_CAPACITY = 10;
 	private float DEFAULT_GENERATION_SPEED = 1f;
-	private float timeSinceLastGen = 0f;
+	private float timeSinceLastGen = 0f;	
+	public Area2D captureArea;
+	public Label ownerLabel;
 	
 	public ResourceNode(Resource resource){
 		this.resource = resource;
@@ -53,6 +55,9 @@ public abstract partial class ResourceNode : Node2D
 		}
 	  // Set the closest base if found
   	  attachedBase = closestBase;
+	  captureArea = GetNode<Area2D>("CaptureArea");
+	  ownerLabel = GetNode<Label>("OwnerLabel");
+	  ownerLabel.Text = attachedBase.CurrentBaseOwner.ToString();
 	}
 	
 	public override void _Process(double delta)

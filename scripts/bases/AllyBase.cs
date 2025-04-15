@@ -8,7 +8,7 @@ public partial class AllyBase : Node2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		allyBase = new Base.Builder().SetOwner(Base.BaseOwner.ENEMY).Build();
+		allyBase = new Base.Builder().SetOwner(Base.BaseOwner.ALLY).Build();
 		BaseID = GameManager.Instance.BaseRegister(allyBase);
 		AddChild(allyBase);
 	}
