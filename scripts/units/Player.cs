@@ -45,10 +45,10 @@ public partial class Player : CharacterBody2D
 	public override void _PhysicsProcess(double delta)
 	{
 		if(playerAlive){
-		Vector2 velocity = Velocity;
-		timeSinceLastAttack += (float)delta;
-		// Get the input direction
-		Vector2 direction = Input.GetVector("left", "right", "up", "down");
+			Vector2 velocity = Velocity;
+			timeSinceLastAttack += (float)delta;
+			// Get the input direction
+			Vector2 direction = Input.GetVector("left", "right", "up", "down");
 
 		// Apply movement if input is detected
 		if (direction != Vector2.Zero)
