@@ -11,7 +11,7 @@ public abstract partial class ResourceNode : Node2D
 	public ResourceLevel level {get; private set;} = ResourceLevel.ONE;
 	public Base attachedBase;
 	// the number at which the resource should be sent to the associated base
-	private int DEFAULT_SEND_TRIGGER_CAPACITY = 10;
+	private int DEFAULT_SEND_TRIGGER_CAPACITY = 50;
 	private float DEFAULT_GENERATION_SPEED = 1f;
 	private float timeSinceLastGen = 0f;	
 	public Area2D captureArea;

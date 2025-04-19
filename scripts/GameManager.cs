@@ -37,6 +37,7 @@ public partial class GameManager : Node
 	public void UnregisterEnemy(Enemy enemy){
 		AllEnemies.Remove(enemy);
 	}
+	
 	// can avoid duplication by checking instance of object
 	public void RegisterAlly(Ally ally){
 		AllAllies.Add(ally);
