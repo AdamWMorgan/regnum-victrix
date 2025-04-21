@@ -80,6 +80,18 @@ public partial class Base : Node2D
 			return this;
 		}
 
+		public Builder SetResources(List<Resource> resources){
+			resources.ForEach(r => {
+				Resource resource = _base.Resources.Find( existingResource => existingResource.Type == r.Type);
+				if(resource==null){
+					_base.Resources.Add(r);
+				} else {
+					resource.Quantity += r.Quantity;
+				}
+			});
+			return this;
+		}
+		
 		public Base Build()
 		{
 			return _base;
