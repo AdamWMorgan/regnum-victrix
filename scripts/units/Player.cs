@@ -6,7 +6,7 @@ using System.Linq;
 public partial class Player : CharacterBody2D
 {
 	[Export] public Health health;
-	public PlayerLevel Level {get; private set;} = PlayerLevel.ONE;
+	public PlayerLevel Level { get; private set; } = PlayerLevel.ONE;
 	public const float SPEED = 100.0f;
 	public const float DECELERATION = 5000.0f;
 	public const int ATTACK_DAMAGE = 30;
@@ -26,7 +26,7 @@ public partial class Player : CharacterBody2D
 	private float attackPosY = 0.0f;
 	private const string PLAYER_IDLE_ANIMATION = "idle_animation";
 	private const string PLAYER_ATTACK_ANIMATION = "attack_animation";
-	
+
 	public override void _Ready()
 	{
 		AddToGroup("Player");
@@ -44,107 +44,121 @@ public partial class Player : CharacterBody2D
 
 	public override void _PhysicsProcess(double delta)
 	{
-		if(playerAlive){
+		if (playerAlive)
+		{
 			Vector2 velocity = Velocity;
 			timeSinceLastAttack += (float)delta;
 			// Get the input direction
 			Vector2 direction = Input.GetVector("left", "right", "up", "down");
 
-		// Apply movement if input is detected
-		if (direction != Vector2.Zero)
-		{
-			velocity = direction * SPEED;
-			// Flip the sprite based on movement direction
-			if (direction.X != 0)
-			{				
-				float directionSign = Mathf.Sign(direction.X);
-				sprite.Scale = new Vector2(directionSign, sprite.Scale.Y);
-				float currX = attackArea.Position.X;
-				float currY = attackArea.Position.Y;
-				
-				// Attack working in both directions by moving attack area
-				if(direction.X < 0){
-					attackPosX = -Math.Abs(attackPosX);
-					attackPosY = -Math.Abs(attackPosY);
-					attackArea.Position = new Vector2(attackPosX, attackPosY);
-				} else {
-					attackPosX = +Math.Abs(attackPosX);
-					attackPosY = +Math.Abs(attackPosY);
-					attackArea.Position = new Vector2(attackPosX, attackPosY);
-				}
-			}
-		}
-		else
-		{
-			// Decelerate smoothly when no input is detected
-			velocity.X = Mathf.MoveToward(velocity.X, 0, DECELERATION * (float)delta);
-			velocity.Y = Mathf.MoveToward(velocity.Y, 0, DECELERATION * (float)delta);
-		}
-
-		// Play attack animation when the attack action is pressed
-		if (Input.IsActionJustPressed("attack") && timeSinceLastAttack >= attackCooldown)
-		{
-			foreach (Base b in GameManager.Instance.AllBases){
-			GD.Print(b.ID);
-			GD.Print(b.CurrentBaseOwner);
-		}
-			if (!sprite.IsPlaying() || sprite.Animation != PLAYER_ATTACK_ANIMATION)
+			// Apply movement if input is detected
+			if (direction != Vector2.Zero)
 			{
-				sprite.Play(PLAYER_ATTACK_ANIMATION);
-			}
-			for(int i = 0; i < enemies.Count; i++)
-			{	
-				Enemy enemy = enemies[i];
-				if(enemiesInAttackArea.Any(e => e == enemy))
+				velocity = direction * SPEED;
+				// Flip the sprite based on movement direction
+				if (direction.X != 0)
 				{
-					enemy.health.Damage(ATTACK_DAMAGE);
+					float directionSign = Mathf.Sign(direction.X);
+					sprite.Scale = new Vector2(directionSign, sprite.Scale.Y);
+					float currX = attackArea.Position.X;
+					float currY = attackArea.Position.Y;
+
+					// Attack working in both directions by moving attack area
+					if (direction.X < 0)
+					{
+						attackPosX = -Math.Abs(attackPosX);
+						attackPosY = -Math.Abs(attackPosY);
+						attackArea.Position = new Vector2(attackPosX, attackPosY);
+					}
+					else
+					{
+						attackPosX = +Math.Abs(attackPosX);
+						attackPosY = +Math.Abs(attackPosY);
+						attackArea.Position = new Vector2(attackPosX, attackPosY);
+					}
 				}
-			}	
-			timeSinceLastAttack = 0.0f;
-		}
+			}
+			else
+			{
+				// Decelerate smoothly when no input is detected
+				velocity.X = Mathf.MoveToward(velocity.X, 0, DECELERATION * (float)delta);
+				velocity.Y = Mathf.MoveToward(velocity.Y, 0, DECELERATION * (float)delta);
+			}
 
-		// If attack animation finishes, return to idle animation
-		if (sprite.Animation == PLAYER_ATTACK_ANIMATION && !sprite.IsPlaying())
-		{
-			sprite.Play(PLAYER_IDLE_ANIMATION);
-		}
+			// Play attack animation when the attack action is pressed
+			if (Input.IsActionJustPressed("attack") && timeSinceLastAttack >= attackCooldown)
+			{
+				foreach (Base b in GameManager.Instance.AllBases)
+				{
+					GD.Print(b.ID);
+					GD.Print(b.CurrentBaseOwner);
+				}
+				if (!sprite.IsPlaying() || sprite.Animation != PLAYER_ATTACK_ANIMATION)
+				{
+					sprite.Play(PLAYER_ATTACK_ANIMATION);
+				}
+				for (int i = 0; i < enemies.Count; i++)
+				{
+					Enemy enemy = enemies[i];
+					if (enemiesInAttackArea.Any(e => e == enemy))
+					{
+						enemy.health.Damage(ATTACK_DAMAGE);
+					}
+				}
+				timeSinceLastAttack = 0.0f;
+			}
 
-		// Update velocity and move the character
-		Velocity = velocity;
-		MoveAndSlide();
+			// If attack animation finishes, return to idle animation
+			if (sprite.Animation == PLAYER_ATTACK_ANIMATION && !sprite.IsPlaying())
+			{
+				sprite.Play(PLAYER_IDLE_ANIMATION);
+			}
+
+			// Update velocity and move the character
+			Velocity = velocity;
+			MoveAndSlide();
 		}
 	}
-	
-	public override void _Process(double delta){
-		if(health.CurrentHealth <= 0 && playerAlive){
+
+	public override void _Process(double delta)
+	{
+		if (health.CurrentHealth <= 0 && playerAlive)
+		{
 			sprite.Play("death_animation");
 			playerAlive = false;
 			// Todo: will either need block control input here or straight into respawn
 		}
 		HealthRegen(delta);
 	}
-	
-	public PlayerLevel LevelUp(){
+
+	public PlayerLevel LevelUp()
+	{
 		this.Level = LevellingUtil<PlayerLevel>.LevelUp((int)this.Level);
 		return this.Level;
 	}
-	
-	private void HealthRegen(double delta){
-		if( playerAlive && (health.CurrentHealth < 100 || health.CurrentHealth > 0) ){
-			if(timeSinceLastHealthRegen > healthRegenCooldown){
+
+	private void HealthRegen(double delta)
+	{
+		if (playerAlive && (health.CurrentHealth < 100 || health.CurrentHealth > 0))
+		{
+			if (timeSinceLastHealthRegen > healthRegenCooldown)
+			{
 				health.Heal(HEALTH_REGEN_VAL);
 				timeSinceLastHealthRegen = 0.0f;
-			} else {
+			}
+			else
+			{
 				timeSinceLastHealthRegen += (float)delta;
 			}
 		}
 	}
-	
+
 	private void OnBodyEntered(Node body)
 	{
 		Enemy enemy = body as Enemy;
-		
-		if(enemy != null){
+
+		if (enemy != null)
+		{
 			enemiesInAttackArea.Add(enemy);
 		}
 	}
@@ -152,7 +166,8 @@ public partial class Player : CharacterBody2D
 	private void OnBodyExited(Node body)
 	{
 		Enemy enemy = body as Enemy;
-		if(enemy != null){
+		if (enemy != null)
+		{
 			enemiesInAttackArea.Remove(enemy);
 		}
 	}

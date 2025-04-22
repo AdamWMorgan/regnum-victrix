@@ -4,8 +4,9 @@ using System;
 public partial class WaterSource : ResourceNode
 {
 	public String ID { get; private set; }
-	
-	public WaterSource() : base(new Resource(ResourceType.WATER)){
+
+	public WaterSource() : base(new Resource(ResourceType.WATER))
+	{
 		this.ID = Guid.NewGuid().ToString();
 	}
 

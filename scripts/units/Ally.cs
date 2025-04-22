@@ -6,7 +6,7 @@ using System.Linq;
 public partial class Ally : CharacterBody2D, IUnit
 {
 	public String ID { get; private set; }
-	public UnitLevel Level {get; private set;} = UnitLevel.VELITES;
+	public UnitLevel Level { get; private set; } = UnitLevel.VELITES;
 	// Reference to the Area2D node
 	[Export] public Area2D DetectionArea;
 	[Export] public Area2D PlayerDetectionArea;
@@ -30,21 +30,23 @@ public partial class Ally : CharacterBody2D, IUnit
 	private float timeSinceLastHealthRegen = 0f;
 	private float healthRegenCooldown = 20f;
 	public AnimatedSprite2D sprite;
-	public Player player;	
+	public Player player;
 	public const float SPEED = 55.0f;
 	public const float DECELERATION = 5000.0f;
 	public const float ALLY_PLAYER_GAP = 50.0f;
 	private const string ALLY_IDLE_ANIMATION = "ally_idle_animation";
 	private const string ALLY_ATTACK_ANIMATION = "ally_attack_animation";
-	
-	public Ally(){
+
+	public Ally()
+	{
 		this.ID = Guid.NewGuid().ToString();
 	}
-	
-	public string GetId(){
+
+	public string GetId()
+	{
 		return ID;
 	}
-	
+
 	public override void _Ready()
 	{
 		AddToGroup("Ally");
@@ -55,134 +57,161 @@ public partial class Ally : CharacterBody2D, IUnit
 		DetectionArea.BodyExited += OnBodyExitedDetectionArea;
 		PlayerDetectionArea.BodyEntered += OnBodyEnteredPlayerDetectionArea;
 		PlayerDetectionArea.BodyExited += OnBodyExitedPlayerDetectionArea;
-		sprite = GetNode<AnimatedSprite2D>("AllySprite");  
+		sprite = GetNode<AnimatedSprite2D>("AllySprite");
 		player = GetNode<Player>("/root/Main/Player");
 	}
-	
+
 	public override void _PhysicsProcess(double delta)
-	{		
-		if(allyAlive){
-		timeSinceLastAttack += (float)delta;
-		Vector2 velocity = Vector2.Zero;
-		
-		detectedEnemies.RemoveAll(enemy => enemy.health.CurrentHealth <= 0);
-		if(detectedEnemies.Count > 0){
-			Vector2 directionToEnemy = (detectedEnemies[0].GlobalPosition - GlobalPosition).Normalized();
-			velocity += directionToEnemy * SPEED;
-			
-			if(directionToEnemy.X > 0){
-				sprite.FlipH = false;
-			}
-			else if (directionToEnemy.X < 0){
-				sprite.FlipH = true;	
-			}
-			if(attackableEnemies.Count > 0 && attackableEnemies[0].health.CurrentHealth > 0 && timeSinceLastAttack >= attackCooldown){
-				if (!sprite.IsPlaying() || sprite.Animation != ALLY_ATTACK_ANIMATION)
+	{
+		if (allyAlive)
+		{
+			timeSinceLastAttack += (float)delta;
+			Vector2 velocity = Vector2.Zero;
+
+			detectedEnemies.RemoveAll(enemy => enemy.health.CurrentHealth <= 0);
+			if (detectedEnemies.Count > 0)
+			{
+				Vector2 directionToEnemy = (detectedEnemies[0].GlobalPosition - GlobalPosition).Normalized();
+				velocity += directionToEnemy * SPEED;
+
+				if (directionToEnemy.X > 0)
 				{
-					sprite.Play(ALLY_ATTACK_ANIMATION);
+					sprite.FlipH = false;
 				}
-				attackableEnemies[0].health.Damage(ATTACK_DAMAGE);
-				timeSinceLastAttack = 0.0f;
-			} else if(attackableEnemies.Count == 0) {
+				else if (directionToEnemy.X < 0)
+				{
+					sprite.FlipH = true;
+				}
+				if (attackableEnemies.Count > 0 && attackableEnemies[0].health.CurrentHealth > 0 && timeSinceLastAttack >= attackCooldown)
+				{
+					if (!sprite.IsPlaying() || sprite.Animation != ALLY_ATTACK_ANIMATION)
+					{
+						sprite.Play(ALLY_ATTACK_ANIMATION);
+					}
+					attackableEnemies[0].health.Damage(ATTACK_DAMAGE);
+					timeSinceLastAttack = 0.0f;
+				}
+				else if (attackableEnemies.Count == 0)
+				{
+					// If attack animation finishes, return to idle animation
+					if (sprite.Animation == ALLY_ATTACK_ANIMATION)
+					{
+						sprite.Play(ALLY_IDLE_ANIMATION);
+					}
+				}
+			}
+			else if (detectedEnemies.Count == 0 && sprite.Animation == ALLY_ATTACK_ANIMATION)
+			{
+				sprite.Play(ALLY_IDLE_ANIMATION);
+			}
+			else if (playerDetected && player.GlobalPosition.DistanceTo(GlobalPosition) > ALLY_PLAYER_GAP && followPlayer)
+			{
 				// If attack animation finishes, return to idle animation
 				if (sprite.Animation == ALLY_ATTACK_ANIMATION)
 				{
 					sprite.Play(ALLY_IDLE_ANIMATION);
 				}
-			}
-		} 
-		else if(detectedEnemies.Count == 0 && sprite.Animation == ALLY_ATTACK_ANIMATION){
-				sprite.Play(ALLY_IDLE_ANIMATION);
-		}
-		else if (playerDetected && player.GlobalPosition.DistanceTo(GlobalPosition) > ALLY_PLAYER_GAP && followPlayer){
-			// If attack animation finishes, return to idle animation
-			if (sprite.Animation == ALLY_ATTACK_ANIMATION)
-			{
-				sprite.Play(ALLY_IDLE_ANIMATION);
-			}
-			
-			Vector2 directionToPlayer = (player.GlobalPosition - GlobalPosition).Normalized();
-			velocity += directionToPlayer * SPEED;
-			if(directionToPlayer.X > 0){
-				sprite.FlipH = false;
-			}
-			else if (directionToPlayer.X < 0){
-				sprite.FlipH = true;	
-			}
-		} 
-		else{
-			if(!followPlayer && this.GlobalPosition.DistanceTo(this.spawnPosition) > 5.0f){
-				Vector2 directionToSpawn = (this.spawnPosition - this.GlobalPosition);
-				velocity += directionToSpawn * SPEED;
-				
-				if(directionToSpawn.X > 0){
+
+				Vector2 directionToPlayer = (player.GlobalPosition - GlobalPosition).Normalized();
+				velocity += directionToPlayer * SPEED;
+				if (directionToPlayer.X > 0)
+				{
 					sprite.FlipH = false;
 				}
-				else if (directionToSpawn.X < 0){
-					sprite.FlipH = true;	
+				else if (directionToPlayer.X < 0)
+				{
+					sprite.FlipH = true;
 				}
 			}
-		}
+			else
+			{
+				if (!followPlayer && this.GlobalPosition.DistanceTo(this.spawnPosition) > 5.0f)
+				{
+					Vector2 directionToSpawn = (this.spawnPosition - this.GlobalPosition);
+					velocity += directionToSpawn * SPEED;
 
-		foreach (Ally otherAlly in nearbyAllies)
-		{
-			Vector2 moveAway = (GlobalPosition - otherAlly.GlobalPosition).Normalized();
-			velocity += moveAway * (SPEED * 0.7f); // Reduce weight so it doesn't overpower player movement
-		}
-		
-		if (velocity.Length() > SPEED)
-		{		
-			velocity = velocity.Normalized() * SPEED;
-		}
-		
-		timeSinceLastAttack += (float)delta;
-		
-		//if(playerInAttackRange && timeSinceLastAttack >= attackCooldown){
+					if (directionToSpawn.X > 0)
+					{
+						sprite.FlipH = false;
+					}
+					else if (directionToSpawn.X < 0)
+					{
+						sprite.FlipH = true;
+					}
+				}
+			}
+
+			foreach (Ally otherAlly in nearbyAllies)
+			{
+				Vector2 moveAway = (GlobalPosition - otherAlly.GlobalPosition).Normalized();
+				velocity += moveAway * (SPEED * 0.7f); // Reduce weight so it doesn't overpower player movement
+			}
+
+			if (velocity.Length() > SPEED)
+			{
+				velocity = velocity.Normalized() * SPEED;
+			}
+
+			timeSinceLastAttack += (float)delta;
+
+			//if(playerInAttackRange && timeSinceLastAttack >= attackCooldown){
 			//AttackPlayer(player);
 			//timeSinceLastAttack = 0.0f;
-		//} else if(!playerInAttackRange){
+			//} else if(!playerInAttackRange){
 			//NormalState();
-		//}
-		
-		// Update velocity and move the character
-		Velocity = velocity;
-		MoveAndSlide();
-		} else {
+			//}
+
+			// Update velocity and move the character
+			Velocity = velocity;
+			MoveAndSlide();
+		}
+		else
+		{
 			GameManager.Instance.UnregisterAlly(this);
 			collisionShape.Disabled = true;
 			//GetParent().RemoveChild(this);
 		}
 	}
-	
-	public override void _Process(double delta){
-		if(health.CurrentHealth <= 0 && allyAlive){
+
+	public override void _Process(double delta)
+	{
+		if (health.CurrentHealth <= 0 && allyAlive)
+		{
 			allyAlive = false;
 			sprite.Play("ally_death_animation");
 		}
 		HealthRegen(delta);
 	}
-	public UnitLevel LevelUp(){
+	public UnitLevel LevelUp()
+	{
 		this.Level = LevellingUtil<UnitLevel>.LevelUp((int)this.Level);
 		return this.Level;
 	}
-	
-	private void HealthRegen(double delta){
-		if( allyAlive && (health.CurrentHealth < 100 || health.CurrentHealth > 0) ){
-			if(timeSinceLastHealthRegen > healthRegenCooldown){
+
+	private void HealthRegen(double delta)
+	{
+		if (allyAlive && (health.CurrentHealth < 100 || health.CurrentHealth > 0))
+		{
+			if (timeSinceLastHealthRegen > healthRegenCooldown)
+			{
 				health.Heal(HEALTH_REGEN_VAL);
 				timeSinceLastHealthRegen = 0.0f;
-			} else {
+			}
+			else
+			{
 				timeSinceLastHealthRegen += (float)delta;
 			}
 		}
 	}
-	
-	public override void _Input(InputEvent @event){				
-		if(Input.IsKeyPressed(Key.Q)){
+
+	public override void _Input(InputEvent @event)
+	{
+		if (Input.IsKeyPressed(Key.Q))
+		{
 			followPlayer = !followPlayer;
 		}
 	}
-	
+
 	// Called when a body enters the Area2D
 	private void OnBodyEnteredAttackArea(Node body)
 	{
@@ -190,15 +219,17 @@ public partial class Ally : CharacterBody2D, IUnit
 		{
 			playerInAttackRange = true;
 		}
-		
-		if(body.IsInGroup("Ally")){
+
+		if (body.IsInGroup("Ally"))
+		{
 			allyInAttackRange = true;
-			nearbyAllies.Add((Ally) body);
+			nearbyAllies.Add((Ally)body);
 		}
-		
-		if(body.IsInGroup("Enemy")){
+
+		if (body.IsInGroup("Enemy"))
+		{
 			enemyInAttackRange = true;
-			attackableEnemies.Add((Enemy) body);
+			attackableEnemies.Add((Enemy)body);
 		}
 	}
 
@@ -209,38 +240,48 @@ public partial class Ally : CharacterBody2D, IUnit
 		{
 			playerInAttackRange = false;
 		}
-		
-		if(body.IsInGroup("Ally")){
+
+		if (body.IsInGroup("Ally"))
+		{
 			allyInAttackRange = false;
 			nearbyAllies.Remove((Ally)body);
 		}
-		
-		if(body.IsInGroup("Enemy")){
+
+		if (body.IsInGroup("Enemy"))
+		{
 			enemyInAttackRange = false;
-			attackableEnemies.Remove((Enemy) body);
+			attackableEnemies.Remove((Enemy)body);
 		}
 	}
-	
-	private void OnBodyEnteredDetectionArea(Node body){
-		if(body.IsInGroup("Enemy")){
-			detectedEnemies.Add((Enemy) body);
+
+	private void OnBodyEnteredDetectionArea(Node body)
+	{
+		if (body.IsInGroup("Enemy"))
+		{
+			detectedEnemies.Add((Enemy)body);
 		}
 	}
-	
-	private void OnBodyExitedDetectionArea(Node body){		
-		if(body.IsInGroup("Enemy")){
-			detectedEnemies.Remove((Enemy) body);
+
+	private void OnBodyExitedDetectionArea(Node body)
+	{
+		if (body.IsInGroup("Enemy"))
+		{
+			detectedEnemies.Remove((Enemy)body);
 		}
 	}
-	
-	private void OnBodyEnteredPlayerDetectionArea(Node body){		
-		if(body.IsInGroup("Player")){
+
+	private void OnBodyEnteredPlayerDetectionArea(Node body)
+	{
+		if (body.IsInGroup("Player"))
+		{
 			playerDetected = true;
 		}
 	}
-	
-	private void OnBodyExitedPlayerDetectionArea(Node body){
-		if(body.IsInGroup("Player")){
+
+	private void OnBodyExitedPlayerDetectionArea(Node body)
+	{
+		if (body.IsInGroup("Player"))
+		{
 			playerDetected = false;
 		}
 	}

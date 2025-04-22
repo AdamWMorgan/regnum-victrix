@@ -13,7 +13,7 @@ public partial class AllySpawner : Node2D
 	public CharacterBody2D Player { get; set; }
 
 	private List<Vector2> _allySpawnedPositions = new List<Vector2>();
-	private List<Ally> allies = new List<Ally>();
+	private readonly List<Ally> allies = new();
 	public string baseId;
 
 	public override void _Ready()
@@ -21,53 +21,54 @@ public partial class AllySpawner : Node2D
 		Player = GetNode<CharacterBody2D>("/root/Main/Player");
 		CallDeferred(nameof(DeferredCheck));
 	}
-	
+
 	private void DeferredCheck()
-	{	
-	 	Node parent = GetParent();
-		AllyBase allyBase = parent as AllyBase;
-		
-		if(allyBase != null && allyBase.BaseID != null){
+	{
+		Node parent = GetParent();
+
+		if (parent is AllyBase allyBase && allyBase.BaseID != null)
+		{
 			baseId = allyBase.BaseID;
 			SpawnAllies();
 		}
 	}
-public void DespawnAlly(Node body){
-	RemoveChild(body);
-}
-private void SpawnAllies()
-{
-	Random random = new Random();
-
-	for (int i = 0; i < AllySpawnCount; i++)
+	public void DespawnAlly(Node body)
 	{
-		int attempt = 0;
-		int maxAttempt = 10;
-		Vector2 spawnPosition;
-
-		// Instantiate the ally scene
-		Ally ally = AllyScene.Instantiate<Ally>();
-		
-		// Randomize the spawn position
-		do
-		{
-			spawnPosition = (this.GlobalPosition + AllySpawnArea.Position + new Vector2(
-				(float)random.NextDouble() * AllySpawnArea.Size.X,
-				(float)random.NextDouble() * AllySpawnArea.Size.Y
-			));
-			attempt++;
-		} while (IsTooClose(spawnPosition) && attempt < maxAttempt);
-
-		ally.Position = spawnPosition;
-		ally.spawnPosition = spawnPosition;
-		
-		_allySpawnedPositions.Add(spawnPosition);
-
-		// Add the ally to the scene (parent it to the root or another node)
-		AddChild(ally);
-		GameManager.Instance.RegisterAllyWithBase(ally, baseId);
+		RemoveChild(body);
 	}
-}
+	private void SpawnAllies()
+	{
+		Random random = new Random();
+
+		for (int i = 0; i < AllySpawnCount; i++)
+		{
+			int attempt = 0;
+			int maxAttempt = 10;
+			Vector2 spawnPosition;
+
+			// Instantiate the ally scene
+			Ally ally = AllyScene.Instantiate<Ally>();
+
+			// Randomize the spawn position
+			do
+			{
+				spawnPosition = (this.GlobalPosition + AllySpawnArea.Position + new Vector2(
+					(float)random.NextDouble() * AllySpawnArea.Size.X,
+					(float)random.NextDouble() * AllySpawnArea.Size.Y
+				));
+				attempt++;
+			} while (IsTooClose(spawnPosition) && attempt < maxAttempt);
+
+			ally.Position = spawnPosition;
+			ally.spawnPosition = spawnPosition;
+
+			_allySpawnedPositions.Add(spawnPosition);
+
+			// Add the ally to the scene (parent it to the root or another node)
+			AddChild(ally);
+			GameManager.Instance.RegisterAllyWithBase(ally, baseId);
+		}
+	}
 
 	private bool IsTooClose(Vector2 position)
 	{
