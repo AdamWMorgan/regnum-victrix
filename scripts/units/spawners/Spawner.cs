@@ -14,7 +14,7 @@ public partial class Spawner : Node2D
 	public string baseId;
 	
 	private List<Vector2> _spawnedPositions = new List<Vector2>();
-	private List<Enemy> enemies = new List<Enemy>();
+	private readonly List<Enemy> enemies = new();
 
 	public override void _Ready()
 	{

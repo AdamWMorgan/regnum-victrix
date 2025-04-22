@@ -5,10 +5,10 @@ using System.Linq;
 
 public abstract partial class ResourceNode : Node2D
 {
-	public Resource resource {get; private set;}
-	public int generatingCapacity {get; private set;}
-	public int sendAmount {get; private set;}
-	public ResourceLevel level {get; private set;} = ResourceLevel.ONE;
+	public Resource Resource {get; private set;}
+	public int GeneratingCapacity {get; private set;}
+	public int SendAmount {get; private set;}
+	public ResourceLevel Level {get; private set;} = ResourceLevel.ONE;
 	public Base attachedBase;
 	// the number at which the resource should be sent to the associated base
 	private int DEFAULT_SEND_TRIGGER_CAPACITY = 50;
@@ -18,15 +18,15 @@ public abstract partial class ResourceNode : Node2D
 	public Label ownerLabel;
 	
 	public ResourceNode(Resource resource){
-		this.resource = resource;
-		this.generatingCapacity = 1;
-		this.sendAmount = DEFAULT_SEND_TRIGGER_CAPACITY;
+		this.Resource = resource;
+		this.GeneratingCapacity = 1;
+		this.SendAmount = DEFAULT_SEND_TRIGGER_CAPACITY;
 	}
 	
 	public ResourceNode(Resource resource, int generatingCapacity, int sendAmount ){
-		this.resource = resource;	
-		this.generatingCapacity = generatingCapacity;
-		this.sendAmount = sendAmount;
+		this.Resource = resource;	
+		this.GeneratingCapacity = generatingCapacity;
+		this.SendAmount = sendAmount;
 	}
 	
 	public override void _Ready(){
@@ -63,7 +63,7 @@ public abstract partial class ResourceNode : Node2D
 	public override void _Process(double delta)
 	{
 		if(timeSinceLastGen > DEFAULT_GENERATION_SPEED){
-			resource.IncrementResourceQuantity(generatingCapacity);
+			Resource.IncrementResourceQuantity(GeneratingCapacity);
 			timeSinceLastGen = 0.0f;
 		} else {
 			timeSinceLastGen += (float)delta;
@@ -72,18 +72,18 @@ public abstract partial class ResourceNode : Node2D
 	}
 	
 	public ResourceLevel LevelUp(){
-		this.level = LevellingUtil<ResourceLevel>.LevelUp((int)this.level);
-		return this.level;
+		this.Level = LevellingUtil<ResourceLevel>.LevelUp((int)this.Level);
+		return this.Level;
 	}
 	
 	private void sendResourceToBase(){
 		// assign here so that any additional resource generated whilst 
 		// executing if statement is not overwritten
-		int currResourceQuantity = resource.Quantity;
+		int currResourceQuantity = Resource.Quantity;
 		
-		if(currResourceQuantity >= sendAmount){
-			attachedBase.receiveResource(resource.Type, resource.Quantity);
-			resource.Quantity -= resource.Quantity;
+		if(currResourceQuantity >= SendAmount){
+			attachedBase.receiveResource(Resource.Type, Resource.Quantity);
+			Resource.Quantity -= Resource.Quantity;
 		}
 	}
 }

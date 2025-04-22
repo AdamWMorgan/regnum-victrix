@@ -7,7 +7,7 @@ public partial class Enemy : CharacterBody2D, IUnit
 {
 	
 	public String ID { get; private set; }
-	public UnitLevel level {get; private set;} = UnitLevel.VELITES;
+	public UnitLevel Level {get; private set;} = UnitLevel.VELITES;
 	// Reference to the Area2D node
 	[Export] public Area2D DetectionArea;
 	[Export] public Area2D AttackArea;
@@ -20,8 +20,8 @@ public partial class Enemy : CharacterBody2D, IUnit
 	public bool allyInAttackRange = false;
 	public bool playerInAttackRange = false;
 	public bool playerDetected = false;
-	private List<Ally> detectedAllies = new List<Ally>();
-	private List<Ally> attackableAllies = new List<Ally>();
+	private readonly List<Ally> detectedAllies = new();
+	private readonly List<Ally> attackableAllies = new();
 	private float attackCooldown = 1.2f; // Cooldown duration in seconds
 	private float timeSinceLastAttack = 1.2f;
 	private float timeSinceLastProcessed = 0.0f; // Tracks time since the last attack
@@ -31,8 +31,8 @@ public partial class Enemy : CharacterBody2D, IUnit
 	public Player player;	
 	public const float SPEED = 0.5f;
 	public const float DECELERATION = 5000.0f;
-	private const String ENEMY_IDLE_ANIMATION = "enemy_idle_animation";
-	private const String ENEMY_ATTACK_ANIMATION = "enemy_attack_animation";
+	private const string ENEMY_IDLE_ANIMATION = "enemy_idle_animation";
+	private const string ENEMY_ATTACK_ANIMATION = "enemy_attack_animation";
 
 	public Enemy(){
 		this.ID = Guid.NewGuid().ToString();
@@ -106,8 +106,8 @@ public partial class Enemy : CharacterBody2D, IUnit
 	}
 	
 	public UnitLevel LevelUp(){
-		this.level = LevellingUtil<UnitLevel>.LevelUp((int)this.level);
-		return this.level;
+		this.Level = LevellingUtil<UnitLevel>.LevelUp((int)this.Level);
+		return this.Level;
 	}
 	
 	private void HealthRegen(double delta){

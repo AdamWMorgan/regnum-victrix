@@ -6,7 +6,7 @@ using System.Linq;
 public partial class Ally : CharacterBody2D, IUnit
 {
 	public String ID { get; private set; }
-	public UnitLevel level {get; private set;} = UnitLevel.VELITES;
+	public UnitLevel Level {get; private set;} = UnitLevel.VELITES;
 	// Reference to the Area2D node
 	[Export] public Area2D DetectionArea;
 	[Export] public Area2D PlayerDetectionArea;
@@ -20,9 +20,9 @@ public partial class Ally : CharacterBody2D, IUnit
 	public bool playerInAttackRange = false;
 	public bool enemyInAttackRange = false;
 	public bool allyInAttackRange = false;
-	private List<Ally> nearbyAllies = new List<Ally>();
-	private List<Enemy> detectedEnemies = new List<Enemy>();
-	private List<Enemy> attackableEnemies = new List<Enemy>();
+	private readonly List<Ally> nearbyAllies = new List<Ally>();
+	private readonly List<Enemy> detectedEnemies = new List<Enemy>();
+	private readonly List<Enemy> attackableEnemies = new List<Enemy>();
 	public bool playerDetected = false;
 	private bool followPlayer = false;
 	private float attackCooldown = 1.2f; // Cooldown duration in seconds
@@ -34,8 +34,8 @@ public partial class Ally : CharacterBody2D, IUnit
 	public const float SPEED = 55.0f;
 	public const float DECELERATION = 5000.0f;
 	public const float ALLY_PLAYER_GAP = 50.0f;
-	private const String ALLY_IDLE_ANIMATION = "ally_idle_animation";
-	private const String ALLY_ATTACK_ANIMATION = "ally_attack_animation";
+	private const string ALLY_IDLE_ANIMATION = "ally_idle_animation";
+	private const string ALLY_ATTACK_ANIMATION = "ally_attack_animation";
 	
 	public Ally(){
 		this.ID = Guid.NewGuid().ToString();
@@ -162,8 +162,8 @@ public partial class Ally : CharacterBody2D, IUnit
 		HealthRegen(delta);
 	}
 	public UnitLevel LevelUp(){
-		this.level = LevellingUtil<UnitLevel>.LevelUp((int)this.level);
-		return this.level;
+		this.Level = LevellingUtil<UnitLevel>.LevelUp((int)this.Level);
+		return this.Level;
 	}
 	
 	private void HealthRegen(double delta){

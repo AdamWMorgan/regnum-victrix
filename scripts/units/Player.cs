@@ -6,7 +6,7 @@ using System.Linq;
 public partial class Player : CharacterBody2D
 {
 	[Export] public Health health;
-	public PlayerLevel level {get; private set;} = PlayerLevel.ONE;
+	public PlayerLevel Level {get; private set;} = PlayerLevel.ONE;
 	public const float SPEED = 100.0f;
 	public const float DECELERATION = 5000.0f;
 	public const int ATTACK_DAMAGE = 30;
@@ -17,15 +17,15 @@ public partial class Player : CharacterBody2D
 	public Area2D attackDetectionArea;
 	public CollisionShape2D attackArea;
 	private bool enemyInAttackArea = false;
-	private List<Enemy> enemiesInAttackArea = new List<Enemy>();
+	private readonly List<Enemy> enemiesInAttackArea = new();
 	private float attackCooldown = 0.8f; // Cooldown duration in seconds
 	private float timeSinceLastAttack = 0.8f; // Tracks time since the last attack	
 	private float timeSinceLastHealthRegen = 0f;
 	private float healthRegenCooldown = 20f;
 	private float attackPosX = 0.0f;
 	private float attackPosY = 0.0f;
-	private const String PLAYER_IDLE_ANIMATION = "idle_animation";
-	private const String PLAYER_ATTACK_ANIMATION = "attack_animation";
+	private const string PLAYER_IDLE_ANIMATION = "idle_animation";
+	private const string PLAYER_ATTACK_ANIMATION = "attack_animation";
 	
 	public override void _Ready()
 	{
@@ -125,8 +125,8 @@ public partial class Player : CharacterBody2D
 	}
 	
 	public PlayerLevel LevelUp(){
-		this.level = LevellingUtil<PlayerLevel>.LevelUp((int)this.level);
-		return this.level;
+		this.Level = LevellingUtil<PlayerLevel>.LevelUp((int)this.Level);
+		return this.Level;
 	}
 	
 	private void HealthRegen(double delta){
