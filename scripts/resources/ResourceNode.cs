@@ -5,6 +5,7 @@ using System.Linq;
 
 public abstract partial class ResourceNode : Node2D
 {
+	[Export] public CaptureProgress captureProgress;
 	public Resource Resource { get; private set; }
 	public int GeneratingCapacity { get; private set; }
 	public int SendAmount { get; private set; }
@@ -33,6 +34,7 @@ public abstract partial class ResourceNode : Node2D
 
 	public override void _Ready()
 	{
+		SetProgressBar();
 		// Get the position of this ResourceNode
 		Vector2 resourceNodePosition = this.GlobalPosition;
 
@@ -94,5 +96,26 @@ public abstract partial class ResourceNode : Node2D
 			attachedBase.receiveResource(Resource.Type, Resource.Quantity);
 			Resource.Quantity -= Resource.Quantity;
 		}
+	}
+
+	private void SetProgressBar()
+	{
+		var colour = ColourPalette.NEUTRAL.ToColor();
+
+		if (attachedBase.CurrentBaseOwner == Base.BaseOwner.ALLY)
+		{
+			colour = ColourPalette.ALLY.ToColor();
+		}
+		else if (attachedBase.CurrentBaseOwner == Base.BaseOwner.ENEMY)
+		{
+			colour = ColourPalette.ENEMY.ToColor();
+		}
+
+		var style = new StyleBoxFlat
+		{
+			BgColor = colour
+		};
+
+		captureProgress.ColourChange(style);
 	}
 }
