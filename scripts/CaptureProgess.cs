@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class CaptureProgessh : Node2D
+public partial class CaptureProgess : Node2D
 {
 	[Export] public int captureProgess = 100;
 	[Export] public StyleBoxFlat colour;

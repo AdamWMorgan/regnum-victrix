@@ -1,9 +1,13 @@
-[gd_scene load_steps=5 format=4 uid="uid://dunxqo17c10wb"]
+[gd_scene load_steps=7 format=4 uid="uid://dunxqo17c10wb"]
 
 [ext_resource type="TileSet" uid="uid://bon0tuqm31npn" path="res://Tilesets/game_tile_set.tres" id="1_i0vd7"]
 [ext_resource type="Script" path="res://scripts/bases/EnemyBase.cs" id="1_nge4g"]
 [ext_resource type="Script" path="res://scripts/units/spawners/Spawner.cs" id="2_o2p75"]
 [ext_resource type="PackedScene" uid="uid://floxwro1x75e" path="res://scenes/units/enemy.tscn" id="3_snjed"]
+[ext_resource type="PackedScene" uid="uid://cl8x0subioer6" path="res://scenes/capture_health.tscn" id="5_u41cl"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p1pge"]
+bg_color = Color(0.737255, 0, 0.0666667, 1)
 
 [node name="EnemyBase" type="Node2D"]
 position = Vector2(450, 247)
@@ -19,3 +23,7 @@ position = Vector2(0, 2)
 script = ExtResource("2_o2p75")
 EnemyScene = ExtResource("3_snjed")
 SpawnArea = Rect2(0, 0, 100, 100)
+
+[node name="CaptureProgress" parent="." instance=ExtResource("5_u41cl")]
+position = Vector2(1, -48)
+colour = SubResource("StyleBoxFlat_p1pge")
