@@ -9,8 +9,9 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jwf8q"]
 bg_color = Color(0, 0.631373, 0.976471, 1)
 
-[node name="AllyBase" type="Node2D"]
+[node name="AllyBase" type="Node2D" node_paths=PackedStringArray("captureProgress")]
 script = ExtResource("1_qis78")
+captureProgress = NodePath("CaptureProgress")
 
 [node name="AllyBaseStructure" type="TileMapLayer" parent="."]
 position = Vector2(-317, 32)

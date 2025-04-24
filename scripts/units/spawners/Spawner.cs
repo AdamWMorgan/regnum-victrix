@@ -13,7 +13,7 @@ public partial class Spawner : Node2D
 	public CharacterBody2D Player { get; set; }
 	public string baseId;
 
-	private List<Vector2> _spawnedPositions = new List<Vector2>();
+	private List<Vector2> _spawnedPositions = new();
 	private readonly List<Enemy> enemies = new();
 
 	public override void _Ready()
@@ -40,7 +40,7 @@ public partial class Spawner : Node2D
 	}
 	private void SpawnEnemies()
 	{
-		Random random = new Random();
+		Random random = new();
 
 		for (int i = 0; i < SpawnCount; i++)
 		{

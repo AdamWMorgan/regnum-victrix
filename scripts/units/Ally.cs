@@ -20,9 +20,9 @@ public partial class Ally : CharacterBody2D, IUnit
 	public bool playerInAttackRange = false;
 	public bool enemyInAttackRange = false;
 	public bool allyInAttackRange = false;
-	private readonly List<Ally> nearbyAllies = new List<Ally>();
-	private readonly List<Enemy> detectedEnemies = new List<Enemy>();
-	private readonly List<Enemy> attackableEnemies = new List<Enemy>();
+	private readonly List<Ally> nearbyAllies = new();
+	private readonly List<Enemy> detectedEnemies = new();
+	private readonly List<Enemy> attackableEnemies = new();
 	public bool playerDetected = false;
 	private bool followPlayer = false;
 	private float attackCooldown = 1.2f; // Cooldown duration in seconds

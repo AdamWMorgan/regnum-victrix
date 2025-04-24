@@ -74,7 +74,7 @@ public abstract partial class ResourceNode : Node2D
 		{
 			timeSinceLastGen += (float)delta;
 		}
-		sendResourceToBase();
+		SendResourceToBase();
 	}
 
 	public ResourceLevel LevelUp()
@@ -83,7 +83,7 @@ public abstract partial class ResourceNode : Node2D
 		return this.Level;
 	}
 
-	private void sendResourceToBase()
+	private void SendResourceToBase()
 	{
 		// assign here so that any additional resource generated whilst 
 		// executing if statement is not overwritten

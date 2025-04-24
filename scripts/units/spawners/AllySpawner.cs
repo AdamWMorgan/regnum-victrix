@@ -12,7 +12,7 @@ public partial class AllySpawner : Node2D
 
 	public CharacterBody2D Player { get; set; }
 
-	private List<Vector2> _allySpawnedPositions = new List<Vector2>();
+	private List<Vector2> _allySpawnedPositions = new();
 	private readonly List<Ally> allies = new();
 	public string baseId;
 
@@ -38,7 +38,7 @@ public partial class AllySpawner : Node2D
 	}
 	private void SpawnAllies()
 	{
-		Random random = new Random();
+		Random random = new();
 
 		for (int i = 0; i < AllySpawnCount; i++)
 		{

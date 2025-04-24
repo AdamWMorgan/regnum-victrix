@@ -3,7 +3,7 @@ using System;
 
 public partial class GoldMine : ResourceNode
 {
-	public String ID { get; private set; }
+	public string ID { get; private set; }
 	
 	public GoldMine() : base(new Resource(ResourceType.GOLD)){
 		this.ID = Guid.NewGuid().ToString();

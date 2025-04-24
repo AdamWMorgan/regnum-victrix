@@ -3,7 +3,7 @@ using System;
 
 public partial class WheatSource : ResourceNode
 {
-	public String ID { get; private set; }
+	public string ID { get; private set; }
 	
 	public WheatSource() : base(new Resource(ResourceType.WHEAT)){
 		this.ID = Guid.NewGuid().ToString();
