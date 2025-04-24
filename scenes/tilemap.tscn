@@ -28,10 +28,10 @@ position = Vector2(62, 24)
 platform_floor_layers = 4294967293
 
 [node name="EnemyBase" parent="." instance=ExtResource("7_38ejd")]
-position = Vector2(463, 560)
+position = Vector2(421, 560)
 
 [node name="AllyBase" parent="." instance=ExtResource("7_2s1wi")]
-position = Vector2(65, 112)
+position = Vector2(56, 133)
 
 [node name="AllyBase2" parent="." instance=ExtResource("7_2s1wi")]
 position = Vector2(714, 114)
@@ -45,12 +45,13 @@ EnemyScene = ExtResource("3_nxeek")
 position = Vector2(142, 15)
 
 [node name="IronMine2" parent="." instance=ExtResource("7_o2nhv")]
-position = Vector2(561, 56)
+position = Vector2(546, 59)
 
 [node name="IronMine3" parent="." instance=ExtResource("7_o2nhv")]
-position = Vector2(513, 483)
+position = Vector2(573, 455)
 
 [node name="GoldMine" parent="." instance=ExtResource("8_awi20")]
+position = Vector2(303, 56)
 
 [node name="WaterSource" parent="." instance=ExtResource("9_unb16")]
-position = Vector2(510, 19)
+position = Vector2(405, 21)

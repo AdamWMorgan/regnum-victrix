@@ -1,8 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://dd8lvnuod1hif"]
+[gd_scene load_steps=6 format=3 uid="uid://dd8lvnuod1hif"]
 
 [ext_resource type="Script" path="res://scripts/resources/GoldMine.cs" id="1_7vaj8"]
 [ext_resource type="TileSet" uid="uid://bon0tuqm31npn" path="res://Tilesets/game_tile_set.tres" id="2_rr6p4"]
 [ext_resource type="PackedScene" uid="uid://cl8x0subioer6" path="res://scenes/capture_health.tscn" id="3_ej833"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_xg2uk"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_x5csr"]
+radius = 75.326
 
 [node name="GoldMine" type="Node2D" node_paths=PackedStringArray("captureProgress")]
 script = ExtResource("1_7vaj8")
@@ -12,3 +17,17 @@ captureProgress = NodePath("CaptureProgress")
 tile_set = ExtResource("2_rr6p4")
 
 [node name="CaptureProgress" parent="." instance=ExtResource("3_ej833")]
+
+[node name="OwnerLabel" type="Label" parent="."]
+offset_left = -9.0
+offset_top = -26.0
+offset_right = 33.0
+offset_bottom = -3.0
+scale = Vector2(0.413799, 0.343821)
+text = "None"
+label_settings = SubResource("LabelSettings_xg2uk")
+
+[node name="CaptureArea" type="Area2D" parent="."]
+
+[node name="CaptureAreaCollision" type="CollisionShape2D" parent="CaptureArea"]
+shape = SubResource("CircleShape2D_x5csr")

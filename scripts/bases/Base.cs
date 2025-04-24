@@ -40,7 +40,7 @@ public partial class Base : Node2D
 		return Units;
 	}
 
-	public int receiveResource(ResourceType type, int quantity)
+	public int ReceiveResource(ResourceType type, int quantity)
 	{
 		Resource resource = Resources.Find(res => res.Type == type);
 		resource.Quantity += quantity;

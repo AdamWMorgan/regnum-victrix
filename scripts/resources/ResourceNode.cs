@@ -34,7 +34,6 @@ public abstract partial class ResourceNode : Node2D
 
 	public override void _Ready()
 	{
-		SetProgressBar();
 		// Get the position of this ResourceNode
 		Vector2 resourceNodePosition = this.GlobalPosition;
 
@@ -63,6 +62,7 @@ public abstract partial class ResourceNode : Node2D
 		captureArea = GetNode<Area2D>("CaptureArea");
 		ownerLabel = GetNode<Label>("OwnerLabel");
 		ownerLabel.Text = attachedBase.CurrentBaseOwner.ToString();
+		SetProgressBar();
 	}
 
 	public override void _Process(double delta)
@@ -93,7 +93,7 @@ public abstract partial class ResourceNode : Node2D
 
 		if (currResourceQuantity >= SendAmount)
 		{
-			attachedBase.receiveResource(Resource.Type, Resource.Quantity);
+			attachedBase.ReceiveResource(Resource.Type, Resource.Quantity);
 			Resource.Quantity -= Resource.Quantity;
 		}
 	}

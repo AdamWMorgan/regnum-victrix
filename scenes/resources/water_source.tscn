@@ -1,7 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://b5iimnslkfqcg"]
+[gd_scene load_steps=5 format=3 uid="uid://b5iimnslkfqcg"]
 
 [ext_resource type="Script" path="res://scripts/resources/WaterSource.cs" id="1_56yrs"]
 [ext_resource type="PackedScene" uid="uid://cl8x0subioer6" path="res://scenes/capture_health.tscn" id="2_2ogd3"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_25e46"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0purr"]
+radius = 75.326
 
 [node name="WaterSource" type="Node2D" node_paths=PackedStringArray("captureProgress")]
 script = ExtResource("1_56yrs")
@@ -10,3 +15,17 @@ captureProgress = NodePath("CaptureProgress")
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 
 [node name="CaptureProgress" parent="." instance=ExtResource("2_2ogd3")]
+
+[node name="OwnerLabel" type="Label" parent="."]
+offset_left = -9.0
+offset_top = -26.0
+offset_right = 33.0
+offset_bottom = -3.0
+scale = Vector2(0.413799, 0.343821)
+text = "None"
+label_settings = SubResource("LabelSettings_25e46")
+
+[node name="CaptureArea" type="Area2D" parent="."]
+
+[node name="CaptureAreaCollision" type="CollisionShape2D" parent="CaptureArea"]
+shape = SubResource("CircleShape2D_0purr")

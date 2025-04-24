@@ -12,10 +12,10 @@ z_index = 1000
 script = ExtResource("1_r08q7")
 
 [node name="CaptureProgressBar" type="ProgressBar" parent="."]
-offset_left = -128.0
-offset_top = -12.0
-offset_right = 127.0
-offset_bottom = 13.0
+offset_left = -41.0
+offset_top = -4.0
+offset_right = 42.0
+offset_bottom = 5.0
 theme_override_styles/background = SubResource("StyleBoxFlat_le43w")
 theme_override_styles/fill = SubResource("StyleBoxFlat_hetdr")
 value = 50.0
