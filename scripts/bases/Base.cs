@@ -7,9 +7,9 @@ public partial class Base : Node2D
 {
 	public string ID { get; private set; }
 	public BaseOwner CurrentBaseOwner { get; private set; } = BaseOwner.NONE;
-	public Vector2 Position { get; private set; }
+	public Vector2 BasePosition { get; private set; }
 	public BaseLevel level { get; private set; } = BaseLevel.ONE;
-	public string Name { get; private set; } = "Base";
+	public string BaseName { get; private set; } = "Base";
 	public List<IUnit> Units = new();
 	public List<Resource> Resources = new();
 
@@ -73,13 +73,13 @@ public partial class Base : Node2D
 
 		public Builder SetPosition(Vector2 position)
 		{
-			_base.Position = position;
+			_base.BasePosition = position;
 			return this;
 		}
 
 		public Builder SetName(string name)
 		{
-			_base.Name = name;
+			_base.BaseName = name;
 			return this;
 		}
 
