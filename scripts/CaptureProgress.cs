@@ -14,7 +14,6 @@ public partial class CaptureProgress : Node2D
 		captureProgessBar = GetNode<ProgressBar>("CaptureProgressBar");
 		captureProgessBar.Value = CurrentCaptureProgess;
 		captureProgessBar.MaxValue = CurrentCaptureProgess;
-		captureProgessBar.AddThemeStyleboxOverride("fill", colour);
 	}
 
 	public int Increase(int increaseValue)
