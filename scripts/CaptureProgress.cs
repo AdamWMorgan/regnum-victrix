@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Runtime.ConstrainedExecution;
 
 public partial class CaptureProgress : Node2D
 {
@@ -7,20 +8,20 @@ public partial class CaptureProgress : Node2D
 	[Export] public StyleBoxFlat colour;
 	private ProgressBar captureProgessBar;
 	public int CurrentCaptureProgess { get; private set; }
+	private int MAX_PROGRESS = 100;
 
 	public override void _Ready()
 	{
 		CurrentCaptureProgess = captureProgess;
 		captureProgessBar = GetNode<ProgressBar>("CaptureProgressBar");
 		captureProgessBar.Value = CurrentCaptureProgess;
-		captureProgessBar.MaxValue = 100;
+		captureProgessBar.MaxValue = MAX_PROGRESS;
 	}
 
 	public int Increase(int increaseValue)
 	{
-		CurrentCaptureProgess += Mathf.Clamp(CurrentCaptureProgess + increaseValue, 0, 100);
+		CurrentCaptureProgess += Mathf.Clamp(CurrentCaptureProgess + increaseValue, 0, MAX_PROGRESS);
 		captureProgessBar.Value = CurrentCaptureProgess;
-		GD.Print(CurrentCaptureProgess);
 		return CurrentCaptureProgess;
 	}
 
@@ -37,6 +38,6 @@ public partial class CaptureProgress : Node2D
 	}
 
 	public void ResetCapturePoint(){
-		Increase(100);
+		Increase(MAX_PROGRESS);
 	}
 }
