@@ -11,12 +11,16 @@ public abstract partial class ResourceNode : Node2D
 	public int SendAmount { get; private set; }
 	public ResourceLevel Level { get; private set; } = ResourceLevel.ONE;
 	public Base attachedBase;
+	public Faction currentOwner;
 	// the number at which the resource should be sent to the associated base
 	private int DEFAULT_SEND_TRIGGER_CAPACITY = 50;
 	private float DEFAULT_GENERATION_SPEED = 1f;
 	private float timeSinceLastGen = 0f;
 	public Area2D captureArea;
 	public Label ownerLabel;
+	private bool captureInProgress = false;
+	private float CAPTURE_SPEED = 1f;
+	private float timeSinceLastCaptureDeplete = 0f;
 
 	public ResourceNode(Resource resource)
 	{
@@ -60,23 +64,43 @@ public abstract partial class ResourceNode : Node2D
 		// Set the closest base if found
 		attachedBase = closestBase;
 		captureArea = GetNode<Area2D>("CaptureArea");
+		// Connect the body_entered and body_exited signals to the methods
+		captureArea.BodyEntered += OnBodyEnteredCaptureArea;
+		captureArea.BodyExited += OnBodyExitedCaptureArea;
 		ownerLabel = GetNode<Label>("OwnerLabel");
 		ownerLabel.Text = attachedBase.CurrentBaseOwner.ToString();
+		// initial setting of resource node ownership
+		currentOwner = attachedBase.CurrentBaseOwner;
 		SetProgressBar();
 	}
 
 	public override void _Process(double delta)
 	{
-		if (timeSinceLastGen > DEFAULT_GENERATION_SPEED)
+		if (!captureInProgress)
 		{
-			Resource.IncrementResourceQuantity(GeneratingCapacity);
-			timeSinceLastGen = 0.0f;
+			if (timeSinceLastGen > DEFAULT_GENERATION_SPEED)
+			{
+				Resource.IncrementResourceQuantity(GeneratingCapacity);
+				timeSinceLastGen = 0.0f;
+			}
+			else
+			{
+				timeSinceLastGen += (float)delta;
+			}
+			SendResourceToBase();
 		}
 		else
 		{
-			timeSinceLastGen += (float)delta;
+			if (timeSinceLastCaptureDeplete > CAPTURE_SPEED)
+			{
+				captureProgress.Decrease(10);
+				timeSinceLastCaptureDeplete = 0.0f;
+			}
+			else
+			{
+				timeSinceLastCaptureDeplete += (float)delta;
+			}
 		}
-		SendResourceToBase();
 	}
 
 	public ResourceLevel LevelUp()
@@ -102,11 +126,11 @@ public abstract partial class ResourceNode : Node2D
 	{
 		var colour = ColourPalette.NEUTRAL.ToColor();
 
-		if (attachedBase.CurrentBaseOwner == Base.BaseOwner.ALLY)
+		if (attachedBase.CurrentBaseOwner == Faction.ALLY)
 		{
 			colour = ColourPalette.ALLY.ToColor();
 		}
-		else if (attachedBase.CurrentBaseOwner == Base.BaseOwner.ENEMY)
+		else if (attachedBase.CurrentBaseOwner == Faction.ENEMY)
 		{
 			colour = ColourPalette.ENEMY.ToColor();
 		}
@@ -117,5 +141,31 @@ public abstract partial class ResourceNode : Node2D
 		};
 
 		captureProgress.ColourChange(style);
+	}
+
+	// Called when a body enters the Area2D
+	private void OnBodyEnteredCaptureArea(Node body)
+	{
+		if ((body.IsInGroup("Player") || body.IsInGroup("Ally")) && currentOwner != Faction.ALLY)
+		{
+			captureInProgress = true;
+		}
+		if (body.IsInGroup("Enemy") && currentOwner != Faction.ENEMY)
+		{
+			captureInProgress = true;
+		}
+	}
+
+	// Called when a body exits the Area2D
+	private void OnBodyExitedCaptureArea(Node body)
+	{
+		if ((body.IsInGroup("Player") || body.IsInGroup("Ally")) && currentOwner != Faction.ALLY)
+		{
+			captureInProgress = false;
+		}
+		if (body.IsInGroup("Enemy") && currentOwner != Faction.ENEMY)
+		{
+			captureInProgress = false;
+		}
 	}
 }

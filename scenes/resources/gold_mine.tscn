@@ -28,6 +28,8 @@ text = "None"
 label_settings = SubResource("LabelSettings_xg2uk")
 
 [node name="CaptureArea" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
 
 [node name="CaptureAreaCollision" type="CollisionShape2D" parent="CaptureArea"]
 shape = SubResource("CircleShape2D_x5csr")

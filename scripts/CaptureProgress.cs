@@ -18,14 +18,14 @@ public partial class CaptureProgress : Node2D
 
 	public int Increase(int increaseValue)
 	{
-		CurrentCaptureProgess -= Mathf.Clamp(increaseValue, 0, CurrentCaptureProgess);
+		CurrentCaptureProgess += Mathf.Clamp(increaseValue, 0, CurrentCaptureProgess);
 		captureProgessBar.Value = CurrentCaptureProgess;
 		return CurrentCaptureProgess;
 	}
 
 	public int Decrease(int decreaseValue)
 	{
-		CurrentCaptureProgess += Mathf.Clamp(decreaseValue, 0, CurrentCaptureProgess);
+		CurrentCaptureProgess -= Mathf.Clamp(decreaseValue, 0, CurrentCaptureProgess);
 		captureProgessBar.Value = CurrentCaptureProgess;
 		return CurrentCaptureProgess;
 	}

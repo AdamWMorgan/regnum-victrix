@@ -6,9 +6,9 @@ using System.Linq;
 public partial class Base : Node2D
 {
 	public string ID { get; private set; }
-	public BaseOwner CurrentBaseOwner { get; private set; } = BaseOwner.NONE;
+	public Faction CurrentBaseOwner { get; private set; } = Faction.NONE;
 	public Vector2 BasePosition { get; private set; }
-	public BaseLevel level { get; private set; } = BaseLevel.ONE;
+	public BaseLevel Level { get; private set; } = BaseLevel.ONE;
 	public string BaseName { get; private set; } = "Base";
 	public List<IUnit> Units = new();
 	public List<Resource> Resources = new();
@@ -50,22 +50,20 @@ public partial class Base : Node2D
 
 	public BaseLevel LevelUp()
 	{
-		this.level = LevellingUtil<BaseLevel>.LevelUp((int)this.level);
-		return this.level;
+		this.Level = LevellingUtil<BaseLevel>.LevelUp((int)this.Level);
+		return this.Level;
 	}
 
-	public enum BaseOwner
-	{
-		ALLY,
-		ENEMY,
-		NONE
+	public Faction ModifyBaseOwner(Faction newOwner){
+		this.CurrentBaseOwner = newOwner;
+		return CurrentBaseOwner;
 	}
 
 	public class Builder
 	{
 		private Base _base = new();
 
-		public Builder SetOwner(Base.BaseOwner owner)
+		public Builder SetOwner(Faction owner)
 		{
 			_base.CurrentBaseOwner = owner;
 			return this;

@@ -13,7 +13,7 @@ public partial class AllyBase : Node2D
 			BgColor = ColourPalette.ALLY.ToColor() 
 		};
 		captureProgress.ColourChange(style);
-		allyBase = new Base.Builder().SetOwner(Base.BaseOwner.ALLY).Build();
+		allyBase = new Base.Builder().SetOwner(Faction.ALLY).Build();
 		BaseID = GameManager.Instance.BaseRegister(allyBase);
 		AddChild(allyBase);
 	}

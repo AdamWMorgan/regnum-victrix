@@ -13,7 +13,7 @@ public partial class EnemyBase : Node2D
 			BgColor = ColourPalette.ENEMY.ToColor()
 		};
 		captureProgress.ColourChange(style);
-		enemyBase = new Base.Builder().SetOwner(Base.BaseOwner.ENEMY).Build();
+		enemyBase = new Base.Builder().SetOwner(Faction.ENEMY).Build();
 		BaseID = GameManager.Instance.BaseRegister(enemyBase);
 		AddChild(enemyBase);
 	}
