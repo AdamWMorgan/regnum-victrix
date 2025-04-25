@@ -91,6 +91,12 @@ public abstract partial class ResourceNode : Node2D
 		}
 		else
 		{
+			if (captureProgress.CurrentCaptureProgess == 0)
+			{
+				captureInProgress = false;
+				SwitchOwnership(currentOwner == Faction.ENEMY ? Faction.ALLY : Faction.ENEMY);
+			}
+
 			if (timeSinceLastCaptureDeplete > CAPTURE_SPEED)
 			{
 				captureProgress.Decrease(10);
@@ -150,7 +156,7 @@ public abstract partial class ResourceNode : Node2D
 		{
 			captureInProgress = true;
 		}
-		if (body.IsInGroup("Enemy") && currentOwner != Faction.ENEMY)
+		else if (body.IsInGroup("Enemy") && currentOwner != Faction.ENEMY)
 		{
 			captureInProgress = true;
 		}
@@ -167,5 +173,31 @@ public abstract partial class ResourceNode : Node2D
 		{
 			captureInProgress = false;
 		}
+	}
+
+	private void SwitchOwnership(Faction newOwner)
+	{
+		// todo: also need to switch the resource nodes ownership to the nearest capturers base
+		if (newOwner == Faction.ALLY)
+		{
+			currentOwner = Faction.ALLY;
+			UpdateStyleAfterCapture(ColourPalette.ALLY.ToColor());
+		}
+		else
+		{
+			currentOwner = Faction.ENEMY;
+			UpdateStyleAfterCapture(ColourPalette.ENEMY.ToColor());
+		}
+		ownerLabel.Text = currentOwner.ToString();
+	}
+
+	private void UpdateStyleAfterCapture(Color colour)
+	{
+		var style = new StyleBoxFlat
+		{
+			BgColor = colour
+		};
+		captureProgress.ColourChange(style);
+		captureProgress.ResetCapturePoint();
 	}
 }

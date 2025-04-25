@@ -13,13 +13,14 @@ public partial class CaptureProgress : Node2D
 		CurrentCaptureProgess = captureProgess;
 		captureProgessBar = GetNode<ProgressBar>("CaptureProgressBar");
 		captureProgessBar.Value = CurrentCaptureProgess;
-		captureProgessBar.MaxValue = CurrentCaptureProgess;
+		captureProgessBar.MaxValue = 100;
 	}
 
 	public int Increase(int increaseValue)
 	{
-		CurrentCaptureProgess += Mathf.Clamp(increaseValue, 0, CurrentCaptureProgess);
+		CurrentCaptureProgess += Mathf.Clamp(CurrentCaptureProgess + increaseValue, 0, 100);
 		captureProgessBar.Value = CurrentCaptureProgess;
+		GD.Print(CurrentCaptureProgess);
 		return CurrentCaptureProgess;
 	}
 
@@ -33,5 +34,9 @@ public partial class CaptureProgress : Node2D
 	public void ColourChange(StyleBoxFlat newColour){
 		colour = newColour;
 		captureProgessBar.AddThemeStyleboxOverride("fill", newColour);
+	}
+
+	public void ResetCapturePoint(){
+		Increase(100);
 	}
 }
