@@ -38,31 +38,7 @@ public abstract partial class ResourceNode : Node2D
 
 	public override void _Ready()
 	{
-		// Get the position of this ResourceNode
-		Vector2 resourceNodePosition = this.GlobalPosition;
-
-		// Initialize the closest base and distance tracker
-		Base closestBase = null;
-		float closestDistance = float.MaxValue; // Start with a very high distance
-
-		// Iterate through all the bases in the "Bases" group
-		foreach (Node node in GetTree().GetNodesInGroup("Bases"))
-		{
-			if (node is Base baseNode)
-			{
-				// Calculate the distance between the ResourceNode and the current base
-				float distance = resourceNodePosition.DistanceTo(baseNode.GlobalPosition);
-
-				// Check if this base is closer than the current closest
-				if (distance < closestDistance)
-				{
-					closestDistance = distance;
-					closestBase = baseNode;
-				}
-			}
-		}
-		// Set the closest base if found
-		attachedBase = closestBase;
+		attachedBase = CalculateClosestBase();
 		captureArea = GetNode<Area2D>("CaptureArea");
 		// Connect the body_entered and body_exited signals to the methods
 		captureArea.BodyEntered += OnBodyEnteredCaptureArea;
@@ -182,11 +158,13 @@ public abstract partial class ResourceNode : Node2D
 		{
 			currentOwner = Faction.ALLY;
 			UpdateStyleAfterCapture(ColourPalette.ALLY.ToColor());
+			attachedBase = CalculateClosestBase(Faction.ALLY);
 		}
 		else
 		{
 			currentOwner = Faction.ENEMY;
 			UpdateStyleAfterCapture(ColourPalette.ENEMY.ToColor());
+			attachedBase = CalculateClosestBase(Faction.ENEMY);
 		}
 		ownerLabel.Text = currentOwner.ToString();
 	}
@@ -199,5 +177,33 @@ public abstract partial class ResourceNode : Node2D
 		};
 		captureProgress.ColourChange(style);
 		captureProgress.ResetCapturePoint();
+	}
+
+	private Base CalculateClosestBase(Faction? faction = null)
+	{
+		// Initialize the closest base and distance tracker
+		Base closestBase = null;
+		float closestDistance = float.MaxValue; // Start with a very high distance
+
+		// Iterate through all the bases in the "Bases" group
+		foreach (Node node in GetTree().GetNodesInGroup("Bases"))
+		{
+			if (node is Base baseNode)
+			{
+				if (faction == null || baseNode.CurrentBaseOwner == faction)
+				{
+					// Calculate the distance between the ResourceNode and the current base
+					float distance = this.GlobalPosition.DistanceTo(baseNode.GlobalPosition);
+
+					// Check if this base is closer than the current closest
+					if (distance < closestDistance)
+					{
+						closestDistance = distance;
+						closestBase = baseNode;
+					}
+				}
+			}
+		}
+		return closestBase;
 	}
 }
