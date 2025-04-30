@@ -21,6 +21,7 @@ public abstract partial class ResourceNode : Node2D
 	private bool captureInProgress = false;
 	private float CAPTURE_SPEED = 1f;
 	private float timeSinceLastCaptureDeplete = 0f;
+	private int capturingUnits = 0;
 
 	public ResourceNode(Resource resource)
 	{
@@ -52,6 +53,8 @@ public abstract partial class ResourceNode : Node2D
 
 	public override void _Process(double delta)
 	{
+		if (capturingUnits != 0) { captureInProgress = true; } else { captureInProgress = false; }
+
 		if (!captureInProgress)
 		{
 			if (timeSinceLastGen > DEFAULT_GENERATION_SPEED)
@@ -70,6 +73,7 @@ public abstract partial class ResourceNode : Node2D
 			if (captureProgress.CurrentCaptureProgess == 0)
 			{
 				captureInProgress = false;
+				capturingUnits = 0;
 				SwitchOwnership(currentOwner == Faction.ENEMY ? Faction.ALLY : Faction.ENEMY);
 			}
 
@@ -130,12 +134,14 @@ public abstract partial class ResourceNode : Node2D
 	{
 		if ((body.IsInGroup("Player") || body.IsInGroup("Ally")) && currentOwner != Faction.ALLY)
 		{
-			captureInProgress = true;
+			GD.Print("CAPTURING...");
+			capturingUnits++;
 		}
 		else if (body.IsInGroup("Enemy") && currentOwner != Faction.ENEMY)
 		{
-			captureInProgress = true;
+			capturingUnits++;
 		}
+		GD.Print(capturingUnits);
 	}
 
 	// Called when a body exits the Area2D
@@ -143,12 +149,13 @@ public abstract partial class ResourceNode : Node2D
 	{
 		if ((body.IsInGroup("Player") || body.IsInGroup("Ally")) && currentOwner != Faction.ALLY)
 		{
-			captureInProgress = false;
+			capturingUnits--;
 		}
 		if (body.IsInGroup("Enemy") && currentOwner != Faction.ENEMY)
 		{
-			captureInProgress = false;
+			capturingUnits--;
 		}
+		GD.Print(capturingUnits);
 	}
 
 	private void SwitchOwnership(Faction newOwner)
