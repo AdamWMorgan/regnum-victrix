@@ -134,7 +134,6 @@ public abstract partial class ResourceNode : Node2D
 	{
 		if ((body.IsInGroup("Player") || body.IsInGroup("Ally")) && currentOwner != Faction.ALLY)
 		{
-			GD.Print("CAPTURING...");
 			capturingUnits++;
 		}
 		else if (body.IsInGroup("Enemy") && currentOwner != Faction.ENEMY)
@@ -155,7 +154,6 @@ public abstract partial class ResourceNode : Node2D
 		{
 			capturingUnits--;
 		}
-		GD.Print(capturingUnits);
 	}
 
 	private void SwitchOwnership(Faction newOwner)
@@ -186,6 +184,7 @@ public abstract partial class ResourceNode : Node2D
 		captureProgress.ResetCapturePoint();
 	}
 
+	// Returns closest base by distance. Can filter by particular faction if necessary by passing Faction enum value as param.
 	private Base CalculateClosestBase(Faction? faction = null)
 	{
 		// Initialize the closest base and distance tracker
