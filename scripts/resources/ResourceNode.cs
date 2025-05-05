@@ -192,6 +192,7 @@ public abstract partial class ResourceNode : Node2D
 		float closestDistance = float.MaxValue; // Start with a very high distance
 
 		// Iterate through all the bases in the "Bases" group
+		// todo: should be able to get this from GameManager
 		foreach (Node node in GetTree().GetNodesInGroup("Bases"))
 		{
 			if (node is Base baseNode)
