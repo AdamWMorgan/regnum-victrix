@@ -53,22 +53,22 @@ public partial class ResourceStats : RichTextLabel
 
 			if (water != null)
 			{
-				AppendText($"[img]res://game/assets/materials/water.png[/img] {(water.Quantity > 999 ? "999+" : water.Quantity)}");
+				AppendText($" [img]res://game/assets/materials/water.png[/img] {(water.Quantity > 999 ? "999+" : water.Quantity)}");
 			}
 
 			if (wheat != null)
 			{
-				AppendText($"[img]res://game/assets/materials/wheat.png[/img] {(wheat.Quantity > 999 ? "999+" : wheat.Quantity)}");
+				AppendText($" [img]res://game/assets/materials/wheat.png[/img] {(wheat.Quantity > 999 ? "999+" : wheat.Quantity)}");
 			}
 
 			if (wood != null)
 			{
-				AppendText($"[img]res://game/assets/materials/wood.png[/img] {(wood.Quantity > 999 ? "999+" : wood.Quantity)}");
+				AppendText($" [img]res://game/assets/materials/wood.png[/img] {(wood.Quantity > 999 ? "999+" : wood.Quantity)}");
 			}
 
 			if (iron != null)
 			{
-				AppendText($"[img]res://game/assets/materials/iron.png[/img] {(iron.Quantity > 999 ? "999+" : iron.Quantity)}");
+				AppendText($" [img]res://game/assets/materials/iron.png[/img] {(iron.Quantity > 999 ? "999+" : iron.Quantity)}");
 			}
 		}
 	}
