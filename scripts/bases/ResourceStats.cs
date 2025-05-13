@@ -48,27 +48,27 @@ public partial class ResourceStats : RichTextLabel
 
 			if (gold != null)
 			{
-				AppendText($"[img]res://game/assets/materials/gold.png[/img] {gold.Quantity}");
+				AppendText($"[img]res://game/assets/materials/gold.png[/img] {(gold.Quantity > 999 ? "999+" : gold.Quantity)}");
 			}
 
 			if (water != null)
 			{
-				AppendText($"[img]res://game/assets/materials/water.png[/img] {water.Quantity}");
+				AppendText($"[img]res://game/assets/materials/water.png[/img] {(water.Quantity > 999 ? "999+" : water.Quantity)}");
 			}
 
 			if (wheat != null)
 			{
-				AppendText($"[img]res://game/assets/materials/wheat.png[/img] {wheat.Quantity}");
+				AppendText($"[img]res://game/assets/materials/wheat.png[/img] {(wheat.Quantity > 999 ? "999+" : wheat.Quantity)}");
 			}
 
 			if (wood != null)
 			{
-				AppendText($"[img]res://game/assets/materials/wood.png[/img] {wood.Quantity}");
+				AppendText($"[img]res://game/assets/materials/wood.png[/img] {(wood.Quantity > 999 ? "999+" : wood.Quantity)}");
 			}
 
 			if (iron != null)
 			{
-				AppendText($"[img]res://game/assets/materials/iron.png[/img] {iron.Quantity}");
+				AppendText($"[img]res://game/assets/materials/iron.png[/img] {(iron.Quantity > 999 ? "999+" : iron.Quantity)}");
 			}
 		}
 	}
