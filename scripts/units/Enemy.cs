@@ -75,7 +75,7 @@ public partial class Enemy : CharacterBody2D, IUnit
 				{
 					sprite.Play(ENEMY_ATTACK_ANIMATION);
 				}
-				attackableAllies[0].health.Damage(ATTACK_DAMAGE);
+				attackableAllies[0].health.Damage(Combat.CalculateAttackDamage(ATTACK_DAMAGE));
 				timeSinceLastAttack = 0.0f;
 			}
 			else if (playerInAttackRange && timeSinceLastAttack >= attackCooldown)
@@ -235,7 +235,7 @@ public partial class Enemy : CharacterBody2D, IUnit
 		// Also it only takes into account 1 swing per time the player enters 
 		// the attack zone currently. 
 		sprite.Play(ENEMY_ATTACK_ANIMATION);
-		player.health.Damage(ATTACK_DAMAGE);
+		player.health.Damage(Combat.CalculateAttackDamage(ATTACK_DAMAGE));
 	}
 
 	private void NormalState()

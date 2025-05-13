@@ -97,7 +97,7 @@ public partial class Player : CharacterBody2D
 					Enemy enemy = enemies[i];
 					if (enemiesInAttackArea.Any(e => e == enemy))
 					{
-						enemy.health.Damage(ATTACK_DAMAGE);
+						enemy.health.Damage(Combat.CalculateAttackDamage(ATTACK_DAMAGE));
 					}
 				}
 				timeSinceLastAttack = 0.0f;

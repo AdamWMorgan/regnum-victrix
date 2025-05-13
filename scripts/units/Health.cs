@@ -19,6 +19,7 @@ public partial class Health : Node2D
 
 	public int Damage(int damageValue)
 	{
+		GD.Print("Damage: " + damageValue);
 		CurrentHealth -= Mathf.Clamp(damageValue, 0, CurrentHealth);
 		healthBar.Value = CurrentHealth;
 		return CurrentHealth;

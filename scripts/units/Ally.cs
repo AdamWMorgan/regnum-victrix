@@ -88,7 +88,7 @@ public partial class Ally : CharacterBody2D, IUnit
 					{
 						sprite.Play(ALLY_ATTACK_ANIMATION);
 					}
-					attackableEnemies[0].health.Damage(ATTACK_DAMAGE);
+					attackableEnemies[0].health.Damage(Combat.CalculateAttackDamage(ATTACK_DAMAGE));
 					timeSinceLastAttack = 0.0f;
 				}
 				else if (attackableEnemies.Count == 0)
