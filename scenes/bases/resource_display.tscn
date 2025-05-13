@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://vowefb5gr84m"]
+
+[ext_resource type="Script" path="res://scripts/bases/ResourceStats.cs" id="1_v2s81"]
+
+[node name="ResourceDisplay" type="Node2D"]
+
+[node name="ResourceStats" type="RichTextLabel" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_v2s81")

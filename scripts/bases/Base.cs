@@ -35,8 +35,7 @@ public partial class Base : Node2D
 
 	public List<IUnit> RemoveUnit(IUnit unit)
 	{
-		Units.Remove((IUnit)unit);
-		this.Resources.ForEach(res => GD.Print(res.Type));
+		Units.Remove(unit);
 		return Units;
 	}
 
@@ -44,7 +43,6 @@ public partial class Base : Node2D
 	{
 		Resource resource = Resources.Find(res => res.Type == type);
 		resource.Quantity += quantity;
-		GD.Print("Base " + ID + " now has " + resource.Quantity + " " + resource.Type);
 		return resource.Quantity;
 	}
 

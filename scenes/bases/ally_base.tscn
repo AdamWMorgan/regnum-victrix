@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=4 uid="uid://coeuknkpeyvk3"]
+[gd_scene load_steps=8 format=4 uid="uid://coeuknkpeyvk3"]
 
 [ext_resource type="Script" path="res://scripts/bases/AllyBase.cs" id="1_qis78"]
 [ext_resource type="TileSet" uid="uid://bon0tuqm31npn" path="res://Tilesets/game_tile_set.tres" id="1_u5dyn"]
 [ext_resource type="Script" path="res://scripts/units/spawners/AllySpawner.cs" id="2_64lto"]
 [ext_resource type="PackedScene" uid="uid://drtu1nxxs28rm" path="res://scenes/units/ally.tscn" id="3_ru2op"]
 [ext_resource type="PackedScene" uid="uid://cl8x0subioer6" path="res://scenes/capture_health.tscn" id="5_c6hof"]
+[ext_resource type="PackedScene" uid="uid://vowefb5gr84m" path="res://scenes/bases/resource_display.tscn" id="6_mlren"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jwf8q"]
 bg_color = Color(0, 0.631373, 0.976471, 1)
@@ -28,3 +29,5 @@ AllySpawnArea = Rect2(0, 0, 200, 100)
 [node name="CaptureProgress" parent="." instance=ExtResource("5_c6hof")]
 position = Vector2(0, -92)
 colour = SubResource("StyleBoxFlat_jwf8q")
+
+[node name="ResourceDisplay" parent="." instance=ExtResource("6_mlren")]

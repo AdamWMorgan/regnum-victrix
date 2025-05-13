@@ -1,10 +1,10 @@
 using Godot;
 
-public partial class EnemyBase : Node2D
+public partial class EnemyBase : Node2D, IBaseProvider
 {
 	[Export] public CaptureProgress captureProgress;
 	public string BaseID;
-	private Base enemyBase;
+	private Base attachedBase;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -13,9 +13,13 @@ public partial class EnemyBase : Node2D
 			BgColor = ColourPalette.ENEMY.ToColor()
 		};
 		captureProgress.ColourChange(style);
-		enemyBase = new Base.Builder().SetOwner(Faction.ENEMY).Build();
-		BaseID = GameManager.Instance.BaseRegister(enemyBase);
-		AddChild(enemyBase);
+		attachedBase = new Base.Builder().SetOwner(Faction.ENEMY).Build();
+		BaseID = GameManager.Instance.BaseRegister(attachedBase);
+		AddChild(attachedBase);
+	}
+
+	public Base GetAttachedBase(){
+		return attachedBase;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -140,7 +140,6 @@ public abstract partial class ResourceNode : Node2D
 		{
 			capturingUnits++;
 		}
-		GD.Print(capturingUnits);
 	}
 
 	// Called when a body exits the Area2D

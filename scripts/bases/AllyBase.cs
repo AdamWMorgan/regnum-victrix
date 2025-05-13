@@ -1,10 +1,10 @@
 using Godot;
 
-public partial class AllyBase : Node2D
+public partial class AllyBase : Node2D, IBaseProvider
 {
 	[Export] public CaptureProgress captureProgress;
 	public string BaseID;
-	private Base allyBase;
+	private Base attachedBase;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -13,9 +13,13 @@ public partial class AllyBase : Node2D
 			BgColor = ColourPalette.ALLY.ToColor() 
 		};
 		captureProgress.ColourChange(style);
-		allyBase = new Base.Builder().SetOwner(Faction.ALLY).Build();
-		BaseID = GameManager.Instance.BaseRegister(allyBase);
-		AddChild(allyBase);
+		attachedBase = new Base.Builder().SetOwner(Faction.ALLY).Build();
+		BaseID = GameManager.Instance.BaseRegister(attachedBase);
+		AddChild(attachedBase);
+	}
+	
+	public Base GetAttachedBase(){
+		return attachedBase;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
