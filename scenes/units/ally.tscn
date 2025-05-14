@@ -1,74 +1,74 @@
 [gd_scene load_steps=26 format=3 uid="uid://drtu1nxxs28rm"]
 
-[ext_resource type="Texture2D" uid="uid://b8b5ai0rjq1a0" path="res://game/assets/characters/Soldier.png" id="1_3cvss"]
-[ext_resource type="Script" path="res://scripts/Ally.cs" id="1_52uys"]
-[ext_resource type="PackedScene" uid="uid://pp8iho8f2wo6" path="res://scenes/health.tscn" id="3_sqe0c"]
+[ext_resource type="Script" path="res://scripts/units/Ally.cs" id="1_qot8f"]
+[ext_resource type="Texture2D" uid="uid://b8b5ai0rjq1a0" path="res://game/assets/characters/Soldier.png" id="2_r8ijy"]
+[ext_resource type="PackedScene" uid="uid://pp8iho8f2wo6" path="res://scenes/health.tscn" id="3_awrdc"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bxwqc"]
 radius = 316.356
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ndrp7"]
-atlas = ExtResource("1_3cvss")
+atlas = ExtResource("2_r8ijy")
 region = Rect2(0, 200, 100, 100)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_asoor"]
-atlas = ExtResource("1_3cvss")
+atlas = ExtResource("2_r8ijy")
 region = Rect2(100, 200, 100, 100)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_axpu3"]
-atlas = ExtResource("1_3cvss")
+atlas = ExtResource("2_r8ijy")
 region = Rect2(200, 200, 100, 100)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_f2455"]
-atlas = ExtResource("1_3cvss")
+atlas = ExtResource("2_r8ijy")
 region = Rect2(300, 200, 100, 100)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lbgmf"]
-atlas = ExtResource("1_3cvss")
+atlas = ExtResource("2_r8ijy")
 region = Rect2(400, 200, 100, 100)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_a16qd"]
-atlas = ExtResource("1_3cvss")
+atlas = ExtResource("2_r8ijy")
 region = Rect2(500, 200, 100, 100)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uahg1"]
-atlas = ExtResource("1_3cvss")
+atlas = ExtResource("2_r8ijy")
 region = Rect2(0, 600, 100, 100)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8e5nh"]
-atlas = ExtResource("1_3cvss")
+atlas = ExtResource("2_r8ijy")
 region = Rect2(100, 600, 100, 100)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_obt0r"]
-atlas = ExtResource("1_3cvss")
+atlas = ExtResource("2_r8ijy")
 region = Rect2(200, 600, 100, 100)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bewih"]
-atlas = ExtResource("1_3cvss")
+atlas = ExtResource("2_r8ijy")
 region = Rect2(300, 600, 100, 100)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_s55h6"]
-atlas = ExtResource("1_3cvss")
+atlas = ExtResource("2_r8ijy")
 region = Rect2(0, 0, 100, 100)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mbpu8"]
-atlas = ExtResource("1_3cvss")
+atlas = ExtResource("2_r8ijy")
 region = Rect2(100, 0, 100, 100)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wvhru"]
-atlas = ExtResource("1_3cvss")
+atlas = ExtResource("2_r8ijy")
 region = Rect2(200, 0, 100, 100)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1mnu8"]
-atlas = ExtResource("1_3cvss")
+atlas = ExtResource("2_r8ijy")
 region = Rect2(300, 0, 100, 100)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lv34i"]
-atlas = ExtResource("1_3cvss")
+atlas = ExtResource("2_r8ijy")
 region = Rect2(400, 0, 100, 100)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u2yuf"]
-atlas = ExtResource("1_3cvss")
+atlas = ExtResource("2_r8ijy")
 region = Rect2(500, 0, 100, 100)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_k3qvp"]
@@ -153,7 +153,7 @@ bg_color = Color(1.92523e-07, 0.630648, 0.976216, 1)
 collision_layer = 2
 collision_mask = 2
 platform_floor_layers = 4294967293
-script = ExtResource("1_52uys")
+script = ExtResource("1_qot8f")
 DetectionArea = NodePath("DetectionArea")
 PlayerDetectionArea = NodePath("PlayerDetectionArea")
 AttackArea = NodePath("AttackArea")
@@ -194,6 +194,6 @@ collision_mask = 2
 [node name="DetectionRange" type="CollisionShape2D" parent="DetectionArea"]
 shape = SubResource("CircleShape2D_u1nxu")
 
-[node name="Health" parent="." instance=ExtResource("3_sqe0c")]
+[node name="Health" parent="." instance=ExtResource("3_awrdc")]
 health = 80
 colour = SubResource("StyleBoxFlat_64b1t")

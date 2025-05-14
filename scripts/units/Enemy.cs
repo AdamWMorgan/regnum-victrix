@@ -1,29 +1,48 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
-public partial class Enemy : CharacterBody2D
+public partial class Enemy : CharacterBody2D, IUnit
 {
+
+	public String ID { get; private set; }
+	public UnitLevel Level { get; private set; } = UnitLevel.VELITES;
 	// Reference to the Area2D node
 	[Export] public Area2D DetectionArea;
 	[Export] public Area2D AttackArea;
 	[Export] public CollisionShape2D collisionShape;
 	[Export] public Health health;
 	public const int ATTACK_DAMAGE = 10;
+	public const int HEALTH_REGEN_VAL = 10;
 	private const float FAST_PROCESS_SECONDS = 0.5f;
 	public bool enemyAlive = true;
 	public bool allyInAttackRange = false;
 	public bool playerInAttackRange = false;
 	public bool playerDetected = false;
-	private List<Ally> detectedAllies = new List<Ally>();
-	private List<Ally> attackableAllies = new List<Ally>();
+	private readonly List<Ally> detectedAllies = new();
+	private readonly List<Ally> attackableAllies = new();
 	private float attackCooldown = 1.2f; // Cooldown duration in seconds
 	private float timeSinceLastAttack = 1.2f;
 	private float timeSinceLastProcessed = 0.0f; // Tracks time since the last attack
+	private float timeSinceLastHealthRegen = 0f;
+	private float healthRegenCooldown = 20f;
 	public AnimatedSprite2D sprite;
-	public Player player;	
+	public Player player;
 	public const float SPEED = 0.5f;
 	public const float DECELERATION = 5000.0f;
+	private const string ENEMY_IDLE_ANIMATION = "enemy_idle_animation";
+	private const string ENEMY_ATTACK_ANIMATION = "enemy_attack_animation";
+
+	public Enemy()
+	{
+		this.ID = Guid.NewGuid().ToString();
+	}
+
+	public string GetId()
+	{
+		return ID;
+	}
 
 	public override void _Ready()
 	{
@@ -33,42 +52,49 @@ public partial class Enemy : CharacterBody2D
 		AttackArea.BodyExited += OnBodyExitedAttackArea;
 		DetectionArea.BodyEntered += OnBodyEnteredDetectionArea;
 		DetectionArea.BodyExited += OnBodyExitedDetectionArea;
-		sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");  
+		sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		player = GetNode<Player>("/root/Main/Player");
 	}
-	
+
 	public override void _PhysicsProcess(double delta)
-	{		
-		if(enemyAlive){
-			
-		timeSinceLastAttack += (float)delta;
-		timeSinceLastProcessed += (float)delta;
-		
-		if (attackableAllies.Count == 0 && !playerInAttackRange && sprite.Animation == "enemy_attack_animation")
+	{
+		if (enemyAlive)
 		{
-			NormalState();
-		}
-			
-		if(attackableAllies.Count > 0 && attackableAllies[0].health.CurrentHealth > 0 && timeSinceLastAttack >= attackCooldown){
-				if (!sprite.IsPlaying() || sprite.Animation != "enemy_attack_animation")
+
+			timeSinceLastAttack += (float)delta;
+			timeSinceLastProcessed += (float)delta;
+
+			if (attackableAllies.Count == 0 && !playerInAttackRange && sprite.Animation == ENEMY_ATTACK_ANIMATION)
+			{
+				NormalState();
+			}
+
+			if (attackableAllies.Count > 0 && attackableAllies[0].health.CurrentHealth > 0 && timeSinceLastAttack >= attackCooldown)
+			{
+				if (!sprite.IsPlaying() || sprite.Animation != ENEMY_ATTACK_ANIMATION)
 				{
-					sprite.Play("enemy_attack_animation");
+					sprite.Play(ENEMY_ATTACK_ANIMATION);
 				}
-				attackableAllies[0].health.Damage(ATTACK_DAMAGE);
+				attackableAllies[0].health.Damage(Combat.CalculateAttackDamage(ATTACK_DAMAGE));
 				timeSinceLastAttack = 0.0f;
-			} else if(playerInAttackRange && timeSinceLastAttack >= attackCooldown){
+			}
+			else if (playerInAttackRange && timeSinceLastAttack >= attackCooldown)
+			{
 				AttackPlayer(player);
 				timeSinceLastAttack = 0.0f;
 			}
-			
-		if(timeSinceLastProcessed >= FAST_PROCESS_SECONDS){
-		// Update velocity and move the character
-			Velocity = calculateMovePosition();
-			timeSinceLastProcessed = 0.0f;
+
+			if (timeSinceLastProcessed >= FAST_PROCESS_SECONDS)
+			{
+				// Update velocity and move the character
+				Velocity = calculateMovePosition();
+				timeSinceLastProcessed = 0.0f;
+			}
+			MoveAndSlide();
+
 		}
-		MoveAndSlide();
-		
-		} else {
+		else
+		{
 			GameManager.Instance.UnregisterEnemy(this);
 			collisionShape.Disabled = true;
 			//GetParent().RemoveChild(this);
@@ -79,50 +105,85 @@ public partial class Enemy : CharacterBody2D
 	{
 		detectedAllies.RemoveAll(ally => ally.health.CurrentHealth <= 0);
 		attackableAllies.RemoveAll(ally => ally.health.CurrentHealth <= 0);
-		
-		if(health.CurrentHealth <= 0 && enemyAlive){
+
+		if (health.CurrentHealth <= 0 && enemyAlive)
+		{
 			enemyAlive = false;
 			sprite.Play("enemy_death_animation");
 		}
+
+		HealthRegen(delta);
 	}
-	
-	private Vector2 calculateMovePosition(){
-		if(detectedAllies.Count > 0){
+
+	public UnitLevel LevelUp()
+	{
+		this.Level = LevellingUtil<UnitLevel>.LevelUp((int)this.Level);
+		return this.Level;
+	}
+
+	private void HealthRegen(double delta)
+	{
+		if (enemyAlive && (health.CurrentHealth < 100 || health.CurrentHealth > 0))
+		{
+			if (timeSinceLastHealthRegen > healthRegenCooldown)
+			{
+				health.Heal(HEALTH_REGEN_VAL);
+				timeSinceLastHealthRegen = 0.0f;
+			}
+			else
+			{
+				timeSinceLastHealthRegen += (float)delta;
+			}
+		}
+	}
+
+	private Vector2 calculateMovePosition()
+	{
+		if (detectedAllies.Count > 0)
+		{
 			Vector2 directionToAlly = detectedAllies[0].GlobalPosition - GlobalPosition;
-			
-			if(directionToAlly.X > 0){
+
+			if (directionToAlly.X > 0)
+			{
 				sprite.FlipH = false;
 			}
-			else if (directionToAlly.X < 0){
-				sprite.FlipH = true;	
+			else if (directionToAlly.X < 0)
+			{
+				sprite.FlipH = true;
 			}
 			// move towards ally node
 			return directionToAlly * SPEED;
-		} else if(playerDetected){
+		}
+		else if (playerDetected)
+		{
 			Vector2 directionToPlayer = player.GlobalPosition - GlobalPosition;
-			if(directionToPlayer.X > 0){
+			if (directionToPlayer.X > 0)
+			{
 				sprite.FlipH = false;
 			}
-			else if (directionToPlayer.X < 0){
-				sprite.FlipH = true;	
+			else if (directionToPlayer.X < 0)
+			{
+				sprite.FlipH = true;
 			}
 			// move towards player node
 			return directionToPlayer * SPEED;
-		} 
-		 else{
+		}
+		else
+		{
 			// do not move
 			return Vector2.Zero;
 		}
 	}
-	
+
 	// Called when a body enters the Area2D
 	private void OnBodyEnteredAttackArea(Node body)
 	{
 		if (body.IsInGroup("Player"))
 		{
 			playerInAttackRange = true;
-		}		
-		if(body.IsInGroup("Ally")){
+		}
+		if (body.IsInGroup("Ally"))
+		{
 			allyInAttackRange = true;
 			attackableAllies.Add((Ally)body);
 		}
@@ -134,29 +195,35 @@ public partial class Enemy : CharacterBody2D
 		if (body.IsInGroup("Player"))
 		{
 			playerInAttackRange = false;
-		}		
-		if(body.IsInGroup("Ally")){
+		}
+		if (body.IsInGroup("Ally"))
+		{
 			allyInAttackRange = false;
 			attackableAllies.Remove((Ally)body);
 		}
 	}
-	
+
 	private void OnBodyEnteredDetectionArea(Node body)
 	{
-		if(body.IsInGroup("Player")){
+		if (body.IsInGroup("Player"))
+		{
 			playerDetected = true;
-		}		
-		if(body.IsInGroup("Ally")){
-			detectedAllies.Add((Ally) body);
+		}
+		if (body.IsInGroup("Ally"))
+		{
+			detectedAllies.Add((Ally)body);
 		}
 	}
-	
-	private void OnBodyExitedDetectionArea(Node body){
-		if(body.IsInGroup("Player")){
+
+	private void OnBodyExitedDetectionArea(Node body)
+	{
+		if (body.IsInGroup("Player"))
+		{
 			playerDetected = false;
 		}
-		if(body.IsInGroup("Ally")){
-			detectedAllies.Remove((Ally) body);
+		if (body.IsInGroup("Ally"))
+		{
+			detectedAllies.Remove((Ally)body);
 		}
 	}
 
@@ -167,12 +234,12 @@ public partial class Enemy : CharacterBody2D
 		// swing is finished that health is taken.
 		// Also it only takes into account 1 swing per time the player enters 
 		// the attack zone currently. 
-		sprite.Play("enemy_attack_animation");
-		player.health.Damage(ATTACK_DAMAGE);
+		sprite.Play(ENEMY_ATTACK_ANIMATION);
+		player.health.Damage(Combat.CalculateAttackDamage(ATTACK_DAMAGE));
 	}
 
 	private void NormalState()
 	{
-		sprite.Play("enemy_idle_animation");
+		sprite.Play(ENEMY_IDLE_ANIMATION);
 	}
 }

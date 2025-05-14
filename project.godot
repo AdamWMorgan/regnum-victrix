@@ -20,8 +20,8 @@ GameManager="*res://scripts/GameManager.cs"
 
 [display]
 
-window/size/viewport_width=640
-window/size/viewport_height=360
+window/size/viewport_width=900
+window/size/viewport_height=450
 window/stretch/mode="viewport"
 window/stretch/aspect="keep_height"
 window/stretch/scale_mode="integer"
@@ -34,6 +34,12 @@ project/assembly_name="Regnum Victrix"
 
 version_control/plugin_name="GitPlugin"
 version_control/autoload_on_startup=true
+
+[importer_defaults]
+
+animation_library={
+"animation/fps": 60.0
+}
 
 [input]
 

@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://dxy8xb66n8wse"]
+
+[ext_resource type="Script" path="res://scripts/resources/WheatSource.cs" id="1_wof3y"]
+[ext_resource type="PackedScene" uid="uid://cl8x0subioer6" path="res://scenes/capture_health.tscn" id="2_rfc76"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_grmup"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_st2ma"]
+radius = 75.326
+
+[node name="WheatSource" type="Node2D" node_paths=PackedStringArray("captureProgress")]
+script = ExtResource("1_wof3y")
+captureProgress = NodePath("CaptureProgress")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+
+[node name="CaptureProgress" parent="." instance=ExtResource("2_rfc76")]
+
+[node name="OwnerLabel" type="Label" parent="."]
+offset_left = -9.0
+offset_top = -26.0
+offset_right = 33.0
+offset_bottom = -3.0
+scale = Vector2(0.413799, 0.343821)
+text = "None"
+label_settings = SubResource("LabelSettings_grmup")
+
+[node name="CaptureArea" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CaptureAreaCollision" type="CollisionShape2D" parent="CaptureArea"]
+shape = SubResource("CircleShape2D_st2ma")

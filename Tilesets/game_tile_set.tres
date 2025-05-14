@@ -1,8 +1,9 @@
-[gd_resource type="TileSet" load_steps=7 format=3 uid="uid://bon0tuqm31npn"]
+[gd_resource type="TileSet" load_steps=10 format=3 uid="uid://bon0tuqm31npn"]
 
 [ext_resource type="Texture2D" uid="uid://ceg12ehnshfqn" path="res://game/assets/tilesets/fences.png" id="1_qnnmw"]
 [ext_resource type="Texture2D" uid="uid://c3tenlg4fdesq" path="res://game/assets/tilesets/water.png" id="1_wlr76"]
 [ext_resource type="Texture2D" uid="uid://kvfhykl66k7h" path="res://game/assets/tilesets/grass.png" id="2_nsdxg"]
+[ext_resource type="Texture2D" uid="uid://dc4af6oefol8s" path="res://game/assets/tilesets/wooden_house_walls_tilset.png" id="2_qcuol"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3e6ka"]
 texture = ExtResource("1_qnnmw")
@@ -68,6 +69,70 @@ texture = ExtResource("1_qnnmw")
 2:3/0/terrains_peering_bit/left_side = 2
 3:3/0 = 0
 3:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_rqo3v"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7hgyn"]
+texture = ExtResource("2_qcuol")
+0:0/0 = 0
+0:0/0/terrain_set = 0
+1:0/0 = 0
+1:0/0/terrain_set = 0
+2:0/0 = 0
+2:0/0/terrain_set = 0
+3:0/0 = 0
+3:0/0/material = SubResource("CanvasItemMaterial_rqo3v")
+3:0/0/terrain_set = 0
+3:0/0/terrain = 3
+3:0/0/terrains_peering_bit/right_side = 3
+3:0/0/terrains_peering_bit/bottom_right_corner = 3
+3:0/0/terrains_peering_bit/bottom_side = 3
+3:0/0/terrains_peering_bit/bottom_left_corner = 3
+3:0/0/terrains_peering_bit/top_left_corner = 3
+3:0/0/terrains_peering_bit/top_right_corner = 3
+4:0/0 = 0
+4:0/0/material = SubResource("CanvasItemMaterial_rqo3v")
+4:0/0/terrain_set = 0
+4:0/0/terrain = 3
+4:0/0/terrains_peering_bit/bottom_right_corner = 3
+4:0/0/terrains_peering_bit/bottom_side = 3
+4:0/0/terrains_peering_bit/bottom_left_corner = 3
+4:0/0/terrains_peering_bit/left_side = 3
+4:0/0/terrains_peering_bit/top_left_corner = 3
+4:0/0/terrains_peering_bit/top_right_corner = 3
+0:1/0 = 0
+0:1/0/terrain_set = 0
+1:1/0 = 0
+2:1/0 = 0
+2:1/0/terrain_set = 0
+3:1/0 = 0
+3:1/0/material = SubResource("CanvasItemMaterial_rqo3v")
+3:1/0/terrain_set = 0
+3:1/0/terrain = 3
+3:1/0/terrains_peering_bit/right_side = 3
+3:1/0/terrains_peering_bit/bottom_right_corner = 3
+3:1/0/terrains_peering_bit/bottom_left_corner = 3
+3:1/0/terrains_peering_bit/top_left_corner = 3
+3:1/0/terrains_peering_bit/top_side = 3
+3:1/0/terrains_peering_bit/top_right_corner = 3
+4:1/0 = 0
+4:1/0/material = SubResource("CanvasItemMaterial_rqo3v")
+4:1/0/terrain_set = 0
+4:1/0/terrain = 3
+4:1/0/terrains_peering_bit/bottom_right_corner = 3
+4:1/0/terrains_peering_bit/bottom_left_corner = 3
+4:1/0/terrains_peering_bit/left_side = 3
+4:1/0/terrains_peering_bit/top_left_corner = 3
+4:1/0/terrains_peering_bit/top_side = 3
+4:1/0/terrains_peering_bit/top_right_corner = 3
+0:2/0 = 0
+0:2/0/terrain_set = 0
+1:2/0 = 0
+1:2/0/terrain_set = 0
+2:2/0 = 0
+2:2/0/terrain_set = 0
+3:2/0 = 0
+3:2/0/terrain_set = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bxkem"]
 texture = ExtResource("2_nsdxg")
@@ -230,6 +295,9 @@ terrain_set_0/terrain_1/name = "Water"
 terrain_set_0/terrain_1/color = Color(0, 0.447561, 0.790341, 1)
 terrain_set_0/terrain_2/name = "fences"
 terrain_set_0/terrain_2/color = Color(0.175, 0.21, 0, 1)
+terrain_set_0/terrain_3/name = "Wall"
+terrain_set_0/terrain_3/color = Color(0.39119, 0.252723, 0, 1)
 sources/3 = SubResource("TileSetAtlasSource_bxkem")
 sources/5 = SubResource("TileSetAtlasSource_li30e")
 sources/0 = SubResource("TileSetAtlasSource_3e6ka")
+sources/1 = SubResource("TileSetAtlasSource_7hgyn")

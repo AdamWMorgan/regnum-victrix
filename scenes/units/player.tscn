@@ -1,6 +1,6 @@
 [gd_scene load_steps=24 format=3 uid="uid://cb0rtekr02b04"]
 
-[ext_resource type="Script" path="res://scripts/Player.cs" id="1_ewjmd"]
+[ext_resource type="Script" path="res://scripts/units/Player.cs" id="1_ewjmd"]
 [ext_resource type="Texture2D" uid="uid://b8b5ai0rjq1a0" path="res://game/assets/characters/Soldier.png" id="2_1t0wy"]
 [ext_resource type="PackedScene" uid="uid://pp8iho8f2wo6" path="res://scenes/health.tscn" id="3_1yasj"]
 
