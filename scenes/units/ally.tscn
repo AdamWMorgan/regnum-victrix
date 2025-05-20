@@ -172,7 +172,7 @@ shape = SubResource("CircleShape2D_bxwqc")
 
 [node name="AllySprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_k3qvp")
-animation = &"ally_idle_animation"
+animation = &"ally_attack_animation"
 autoplay = "ally_idle_animation"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
