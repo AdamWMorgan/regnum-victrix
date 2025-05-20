@@ -1,10 +1,11 @@
-[gd_scene load_steps=20 format=3 uid="uid://cb0rtekr02b04"]
+[gd_scene load_steps=23 format=3 uid="uid://cb0rtekr02b04"]
 
 [ext_resource type="Script" path="res://scripts/units/Player.cs" id="1_ewjmd"]
 [ext_resource type="Texture2D" uid="uid://b8b5ai0rjq1a0" path="res://game/assets/characters/Soldier.png" id="2_1t0wy"]
 [ext_resource type="Texture2D" uid="uid://dk78v1swdpte" path="res://game/assets/characters/player_attack_animation.png" id="2_giy1i"]
 [ext_resource type="PackedScene" uid="uid://pp8iho8f2wo6" path="res://scenes/health.tscn" id="3_1yasj"]
 [ext_resource type="Texture2D" uid="uid://bgttockges4p5" path="res://game/assets/characters/idle_animation.png" id="3_5ps0w"]
+[ext_resource type="Texture2D" uid="uid://cuw5mmsak6ggu" path="res://game/assets/characters/player_running_animation.png" id="5_ftg3d"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nbhi7"]
 atlas = ExtResource("2_giy1i")
@@ -44,6 +45,14 @@ region = Rect2(0, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pe2po"]
 atlas = ExtResource("3_5ps0w")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0438a"]
+atlas = ExtResource("5_ftg3d")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eeooa"]
+atlas = ExtResource("5_ftg3d")
 region = Rect2(64, 0, 64, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_3bocj"]
@@ -92,6 +101,17 @@ animations = [{
 "loop": true,
 "name": &"idle_animation",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.5,
+"texture": SubResource("AtlasTexture_0438a")
+}, {
+"duration": 1.5,
+"texture": SubResource("AtlasTexture_eeooa")
+}],
+"loop": true,
+"name": &"run_animation",
+"speed": 6.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_apauy"]
@@ -112,13 +132,10 @@ health = NodePath("Health")
 
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-position = Vector2(-4.76837e-07, -2)
 scale = Vector2(0.4375, 0.4375)
 sprite_frames = SubResource("SpriteFrames_3bocj")
-animation = &"attack_animation"
+animation = &"idle_animation"
 autoplay = "idle_animation"
-frame = 3
-frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_apauy")
