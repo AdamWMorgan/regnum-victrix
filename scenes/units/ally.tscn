@@ -1,10 +1,10 @@
-[gd_scene load_steps=20 format=3 uid="uid://drtu1nxxs28rm"]
+[gd_scene load_steps=22 format=3 uid="uid://drtu1nxxs28rm"]
 
 [ext_resource type="Script" path="res://scripts/units/Ally.cs" id="1_qot8f"]
 [ext_resource type="Texture2D" uid="uid://53brsxu1hrgh" path="res://game/assets/characters/ally_attack_slowed-Sheet.png" id="2_3uifu"]
-[ext_resource type="Texture2D" uid="uid://dlgdk3lsixht" path="res://game/assets/characters/ally_attack_animation-Sheet.png" id="2_d7kup"]
 [ext_resource type="Texture2D" uid="uid://b8b5ai0rjq1a0" path="res://game/assets/characters/Soldier.png" id="2_r8ijy"]
 [ext_resource type="PackedScene" uid="uid://pp8iho8f2wo6" path="res://scenes/health.tscn" id="3_awrdc"]
+[ext_resource type="Texture2D" uid="uid://0b5riddg4133" path="res://game/assets/characters/ally_idle_animation.png" id="4_7x7gt"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bxwqc"]
 radius = 316.356
@@ -37,9 +37,17 @@ region = Rect2(200, 600, 100, 100)
 atlas = ExtResource("2_r8ijy")
 region = Rect2(300, 600, 100, 100)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_sqbje"]
-atlas = ExtResource("2_d7kup")
+[sub_resource type="AtlasTexture" id="AtlasTexture_307d5"]
+atlas = ExtResource("4_7x7gt")
 region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3ix1d"]
+atlas = ExtResource("4_7x7gt")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2bba5"]
+atlas = ExtResource("4_7x7gt")
+region = Rect2(128, 0, 64, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_k3qvp"]
 animations = [{
@@ -76,7 +84,13 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_sqbje")
+"texture": SubResource("AtlasTexture_307d5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3ix1d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2bba5")
 }],
 "loop": true,
 "name": &"ally_idle_animation",
@@ -120,7 +134,7 @@ shape = SubResource("CircleShape2D_bxwqc")
 position = Vector2(-0.500001, -5.5)
 scale = Vector2(0.484375, 0.484375)
 sprite_frames = SubResource("SpriteFrames_k3qvp")
-animation = &"ally_attack_animation"
+animation = &"ally_idle_animation"
 autoplay = "ally_idle_animation"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
