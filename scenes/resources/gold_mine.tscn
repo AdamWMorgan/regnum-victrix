@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/resources/GoldMine.cs" id="1_7vaj8"]
 [ext_resource type="PackedScene" uid="uid://cl8x0subioer6" path="res://scenes/capture_health.tscn" id="3_ej833"]
-[ext_resource type="Texture2D" uid="uid://b332afyk8syju" path="res://game/assets/materials/gold_mine.png" id="3_pv8kv"]
+[ext_resource type="Texture2D" uid="uid://7usrt54aad3v" path="res://game/assets/materials/gold_mine.png" id="3_pv8kv"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_xg2uk"]
 
