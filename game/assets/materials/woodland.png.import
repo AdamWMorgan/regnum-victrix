@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://do70rbeg2g4qd"
-path="res://.godot/imported/water_well_sprite.png-b54b6d3d5a99e0fbc2d945ff428cf1c5.ctex"
+uid="uid://di1t6fsp7jmfi"
+path="res://.godot/imported/woodland.png-d3ec86c84c2f554e970a99bd5fe9126e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/assets/materials/water_well_sprite.png"
-dest_files=["res://.godot/imported/water_well_sprite.png-b54b6d3d5a99e0fbc2d945ff428cf1c5.ctex"]
+source_file="res://game/assets/materials/woodland.png"
+dest_files=["res://.godot/imported/woodland.png-d3ec86c84c2f554e970a99bd5fe9126e.ctex"]
 
 [params]
 

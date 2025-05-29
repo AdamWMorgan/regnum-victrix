@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://dxy8xb66n8wse"]
+[gd_scene load_steps=6 format=3 uid="uid://dxy8xb66n8wse"]
 
 [ext_resource type="Script" path="res://scripts/resources/WheatSource.cs" id="1_wof3y"]
 [ext_resource type="PackedScene" uid="uid://cl8x0subioer6" path="res://scenes/capture_health.tscn" id="2_rfc76"]
+[ext_resource type="Texture2D" uid="uid://ewg18qyo4r6n" path="res://game/assets/materials/wheat_resource.png" id="3_cu6h0"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_grmup"]
 
@@ -15,12 +16,13 @@ captureProgress = NodePath("CaptureProgress")
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 
 [node name="CaptureProgress" parent="." instance=ExtResource("2_rfc76")]
+position = Vector2(-2, 88)
 
 [node name="OwnerLabel" type="Label" parent="."]
-offset_left = -9.0
-offset_top = -26.0
-offset_right = 33.0
-offset_bottom = -3.0
+offset_left = -12.0
+offset_top = 62.0
+offset_right = 30.0
+offset_bottom = 85.0
 scale = Vector2(0.413799, 0.343821)
 text = "None"
 label_settings = SubResource("LabelSettings_grmup")
@@ -30,4 +32,10 @@ collision_layer = 2
 collision_mask = 2
 
 [node name="CaptureAreaCollision" type="CollisionShape2D" parent="CaptureArea"]
+position = Vector2(4, -3)
 shape = SubResource("CircleShape2D_st2ma")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-0.5, -18.9643)
+scale = Vector2(0.601563, 0.656808)
+texture = ExtResource("3_cu6h0")
