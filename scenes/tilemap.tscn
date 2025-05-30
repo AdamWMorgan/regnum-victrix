@@ -33,7 +33,7 @@ platform_floor_layers = 4294967293
 position = Vector2(421, 560)
 
 [node name="AllyBase" parent="." instance=ExtResource("7_2s1wi")]
-position = Vector2(56, 133)
+position = Vector2(122, 144)
 
 [node name="AllyBase2" parent="." instance=ExtResource("7_2s1wi")]
 position = Vector2(714, 114)
@@ -62,4 +62,4 @@ position = Vector2(405, 21)
 position = Vector2(335, 226)
 
 [node name="WheatSource" parent="." instance=ExtResource("11_i2esp")]
-position = Vector2(91, 239)
+position = Vector2(453, 150)

@@ -15,9 +15,9 @@ captureProgress = NodePath("CaptureProgress")
 
 [node name="OwnerLabel" type="Label" parent="."]
 offset_left = -9.0
-offset_top = 46.0
+offset_top = 34.0
 offset_right = 33.0
-offset_bottom = 69.0
+offset_bottom = 57.0
 scale = Vector2(0.413799, 0.343821)
 text = "None"
 label_settings = SubResource("LabelSettings_8xg83")
@@ -30,7 +30,8 @@ collision_mask = 2
 shape = SubResource("CircleShape2D_ihl7c")
 
 [node name="CaptureProgress" parent="." instance=ExtResource("3_bqe7k")]
-position = Vector2(0, 58)
+position = Vector2(0, 46)
+scale = Vector2(0.4, 0.4)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("3_mxjws")

@@ -16,13 +16,14 @@ captureProgress = NodePath("CaptureProgress")
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 
 [node name="CaptureProgress" parent="." instance=ExtResource("2_rfc76")]
-position = Vector2(-2, 88)
+position = Vector2(-2, 39)
+scale = Vector2(0.4, 0.4)
 
 [node name="OwnerLabel" type="Label" parent="."]
-offset_left = -12.0
-offset_top = 62.0
-offset_right = 30.0
-offset_bottom = 85.0
+offset_left = -9.0
+offset_top = 26.0
+offset_right = 33.0
+offset_bottom = 49.0
 scale = Vector2(0.413799, 0.343821)
 text = "None"
 label_settings = SubResource("LabelSettings_grmup")

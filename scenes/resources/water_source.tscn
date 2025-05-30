@@ -57,13 +57,14 @@ script = ExtResource("1_56yrs")
 captureProgress = NodePath("CaptureProgress")
 
 [node name="CaptureProgress" parent="." instance=ExtResource("2_2ogd3")]
-position = Vector2(-1, 50)
+position = Vector2(-1, 47)
+scale = Vector2(0.4, 0.4)
 
 [node name="OwnerLabel" type="Label" parent="."]
 offset_left = -9.0
-offset_top = 37.0
+offset_top = 32.0
 offset_right = 33.0
-offset_bottom = 60.0
+offset_bottom = 55.0
 scale = Vector2(0.413799, 0.343821)
 text = "None"
 label_settings = SubResource("LabelSettings_25e46")
