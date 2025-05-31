@@ -77,8 +77,7 @@ collision_mask = 2
 shape = SubResource("CircleShape2D_0purr")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(4.76837e-07, 4.76837e-07)
-scale = Vector2(0.882813, 0.882813)
+scale = Vector2(0.457032, 0.457032)
 sprite_frames = SubResource("SpriteFrames_0ivtd")
 animation = &"water_well_animation"
 autoplay = "water_well_animation"

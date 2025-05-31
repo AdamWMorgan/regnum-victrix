@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://drtu1nxxs28rm" path="res://scenes/units/ally.tscn" id="3_ru2op"]
 [ext_resource type="PackedScene" uid="uid://cl8x0subioer6" path="res://scenes/capture_health.tscn" id="5_c6hof"]
 [ext_resource type="PackedScene" uid="uid://vowefb5gr84m" path="res://scenes/bases/resource_display.tscn" id="6_mlren"]
-[ext_resource type="Texture2D" uid="uid://d1l2ytdesljg" path="res://game/assets/materials/roman_fort.png" id="6_wl017"]
+[ext_resource type="Texture2D" uid="uid://dtpmcvbeq0v2e" path="res://game/assets/materials/roman_fort.png" id="6_wl017"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jwf8q"]
 bg_color = Color(0, 0.631373, 0.976471, 1)
