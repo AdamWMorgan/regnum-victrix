@@ -1,11 +1,11 @@
-[gd_scene load_steps=8 format=4 uid="uid://dunxqo17c10wb"]
+[gd_scene load_steps=8 format=3 uid="uid://dunxqo17c10wb"]
 
-[ext_resource type="TileSet" uid="uid://bon0tuqm31npn" path="res://Tilesets/game_tile_set.tres" id="1_i0vd7"]
 [ext_resource type="Script" path="res://scripts/bases/EnemyBase.cs" id="1_nge4g"]
 [ext_resource type="Script" path="res://scripts/units/spawners/Spawner.cs" id="2_o2p75"]
 [ext_resource type="PackedScene" uid="uid://floxwro1x75e" path="res://scenes/units/enemy.tscn" id="3_snjed"]
 [ext_resource type="PackedScene" uid="uid://cl8x0subioer6" path="res://scenes/capture_health.tscn" id="5_u41cl"]
 [ext_resource type="PackedScene" uid="uid://vowefb5gr84m" path="res://scenes/bases/resource_display.tscn" id="6_5aqx3"]
+[ext_resource type="Texture2D" uid="uid://bah5eb7qsasbo" path="res://game/assets/materials/celtic_fort.png" id="6_e32vj"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p1pge"]
 bg_color = Color(0.737255, 0, 0.0666667, 1)
@@ -15,11 +15,6 @@ position = Vector2(450, 247)
 script = ExtResource("1_nge4g")
 captureProgress = NodePath("CaptureProgress")
 
-[node name="EnemyBaseStructure" type="TileMapLayer" parent="."]
-position = Vector2(67, 41)
-tile_map_data = PackedByteArray("AAD9//7/AAADAAIAAAD9//3/AAADAAIAAAD9//z/AAADAAAAAAD8//7/AAACAAMAAAD8//z/AAADAAAAAAD7//7/AAACAAMAAAD7//z/AAADAAAAAAD6//7/AAABAAIAAAD6//3/AAAAAAEAAAD6//z/AAABAAAAAAA=")
-tile_set = ExtResource("1_i0vd7")
-
 [node name="EnemySpawner" type="Node2D" parent="."]
 position = Vector2(0, 2)
 script = ExtResource("2_o2p75")
@@ -27,8 +22,14 @@ EnemyScene = ExtResource("3_snjed")
 SpawnArea = Rect2(0, 0, 100, 100)
 
 [node name="CaptureProgress" parent="." instance=ExtResource("5_u41cl")]
-position = Vector2(3, -35)
+position = Vector2(0, 105)
 scale = Vector2(0.7, 0.7)
 colour = SubResource("StyleBoxFlat_p1pge")
 
 [node name="ResourceDisplay" parent="." instance=ExtResource("6_5aqx3")]
+position = Vector2(-45, 90)
+scale = Vector2(0.5, 0.5)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 1)
+texture = ExtResource("6_e32vj")
