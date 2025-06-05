@@ -20,7 +20,7 @@ GameManager="*res://scripts/GameManager.cs"
 
 [display]
 
-window/size/viewport_width=900
+window/size/viewport_width=640
 window/size/viewport_height=450
 window/stretch/mode="viewport"
 window/stretch/aspect="keep_height"

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/resources/WheatSource.cs" id="1_wof3y"]
 [ext_resource type="PackedScene" uid="uid://cl8x0subioer6" path="res://scenes/capture_health.tscn" id="2_rfc76"]
-[ext_resource type="Texture2D" uid="uid://ewg18qyo4r6n" path="res://game/assets/materials/wheat_resource.png" id="3_cu6h0"]
+[ext_resource type="Texture2D" uid="uid://knh01bdqahew" path="res://game/assets/materials/wheat_resource_redone.png" id="3_om0fv"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_grmup"]
 
@@ -37,6 +37,6 @@ position = Vector2(4, -3)
 shape = SubResource("CircleShape2D_st2ma")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(-0.5, -18.9643)
-scale = Vector2(0.601563, 0.656808)
-texture = ExtResource("3_cu6h0")
+position = Vector2(0.406233, -0.382979)
+scale = Vector2(0.0421753, 0.0460485)
+texture = ExtResource("3_om0fv")
