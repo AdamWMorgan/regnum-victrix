@@ -27,6 +27,7 @@ public partial class CaptureProgress : Node2D
 
 	public int Decrease(int decreaseValue)
 	{
+		// todo: there is currently an issue where it may not decrease when an enemy is capturing
 		CurrentCaptureProgess -= Mathf.Clamp(decreaseValue, 0, CurrentCaptureProgess);
 		captureProgessBar.Value = CurrentCaptureProgess;
 		return CurrentCaptureProgess;
