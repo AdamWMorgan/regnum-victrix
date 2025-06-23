@@ -1,35 +1,25 @@
-[gd_scene load_steps=26 format=3 uid="uid://drtu1nxxs28rm"]
+[gd_scene load_steps=22 format=3 uid="uid://drtu1nxxs28rm"]
 
 [ext_resource type="Script" path="res://scripts/units/Ally.cs" id="1_qot8f"]
+[ext_resource type="Texture2D" uid="uid://53brsxu1hrgh" path="res://game/assets/characters/ally_attack_slowed-Sheet.png" id="2_3uifu"]
 [ext_resource type="Texture2D" uid="uid://b8b5ai0rjq1a0" path="res://game/assets/characters/Soldier.png" id="2_r8ijy"]
 [ext_resource type="PackedScene" uid="uid://pp8iho8f2wo6" path="res://scenes/health.tscn" id="3_awrdc"]
+[ext_resource type="Texture2D" uid="uid://0b5riddg4133" path="res://game/assets/characters/ally_idle_animation.png" id="4_7x7gt"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bxwqc"]
 radius = 316.356
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ndrp7"]
-atlas = ExtResource("2_r8ijy")
-region = Rect2(0, 200, 100, 100)
+[sub_resource type="AtlasTexture" id="AtlasTexture_pemes"]
+atlas = ExtResource("2_3uifu")
+region = Rect2(0, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_asoor"]
-atlas = ExtResource("2_r8ijy")
-region = Rect2(100, 200, 100, 100)
+[sub_resource type="AtlasTexture" id="AtlasTexture_ncfd5"]
+atlas = ExtResource("2_3uifu")
+region = Rect2(64, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_axpu3"]
-atlas = ExtResource("2_r8ijy")
-region = Rect2(200, 200, 100, 100)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_f2455"]
-atlas = ExtResource("2_r8ijy")
-region = Rect2(300, 200, 100, 100)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_lbgmf"]
-atlas = ExtResource("2_r8ijy")
-region = Rect2(400, 200, 100, 100)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_a16qd"]
-atlas = ExtResource("2_r8ijy")
-region = Rect2(500, 200, 100, 100)
+[sub_resource type="AtlasTexture" id="AtlasTexture_4lkhw"]
+atlas = ExtResource("2_3uifu")
+region = Rect2(128, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uahg1"]
 atlas = ExtResource("2_r8ijy")
@@ -47,52 +37,31 @@ region = Rect2(200, 600, 100, 100)
 atlas = ExtResource("2_r8ijy")
 region = Rect2(300, 600, 100, 100)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_s55h6"]
-atlas = ExtResource("2_r8ijy")
-region = Rect2(0, 0, 100, 100)
+[sub_resource type="AtlasTexture" id="AtlasTexture_307d5"]
+atlas = ExtResource("4_7x7gt")
+region = Rect2(0, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_mbpu8"]
-atlas = ExtResource("2_r8ijy")
-region = Rect2(100, 0, 100, 100)
+[sub_resource type="AtlasTexture" id="AtlasTexture_3ix1d"]
+atlas = ExtResource("4_7x7gt")
+region = Rect2(64, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wvhru"]
-atlas = ExtResource("2_r8ijy")
-region = Rect2(200, 0, 100, 100)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1mnu8"]
-atlas = ExtResource("2_r8ijy")
-region = Rect2(300, 0, 100, 100)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_lv34i"]
-atlas = ExtResource("2_r8ijy")
-region = Rect2(400, 0, 100, 100)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_u2yuf"]
-atlas = ExtResource("2_r8ijy")
-region = Rect2(500, 0, 100, 100)
+[sub_resource type="AtlasTexture" id="AtlasTexture_2bba5"]
+atlas = ExtResource("4_7x7gt")
+region = Rect2(128, 0, 64, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_k3qvp"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ndrp7")
+"texture": SubResource("AtlasTexture_pemes")
+}, {
+"duration": 0.4,
+"texture": SubResource("AtlasTexture_ncfd5")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_asoor")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_axpu3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_f2455")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lbgmf")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_a16qd")
+"texture": SubResource("AtlasTexture_4lkhw")
 }],
-"loop": false,
+"loop": true,
 "name": &"ally_attack_animation",
 "speed": 5.0
 }, {
@@ -115,22 +84,13 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_s55h6")
+"texture": SubResource("AtlasTexture_307d5")
 }, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_mbpu8")
+"duration": 0.7,
+"texture": SubResource("AtlasTexture_3ix1d")
 }, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wvhru")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_1mnu8")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lv34i")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_u2yuf")
+"duration": 1.3,
+"texture": SubResource("AtlasTexture_2bba5")
 }],
 "loop": true,
 "name": &"ally_idle_animation",
@@ -171,6 +131,8 @@ position = Vector2(1, -4)
 shape = SubResource("CircleShape2D_bxwqc")
 
 [node name="AllySprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(-0.500001, -5.5)
+scale = Vector2(0.484375, 0.484375)
 sprite_frames = SubResource("SpriteFrames_k3qvp")
 animation = &"ally_idle_animation"
 autoplay = "ally_idle_animation"

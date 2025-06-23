@@ -7,112 +7,106 @@ public partial class Player : CharacterBody2D
 {
 	[Export] public Health health;
 	public PlayerLevel Level { get; private set; } = PlayerLevel.ONE;
+
 	public const float SPEED = 100.0f;
 	public const float DECELERATION = 5000.0f;
 	public const int ATTACK_DAMAGE = 30;
 	public const int HEALTH_REGEN_VAL = 10;
+
 	public bool playerAlive = true;
+
 	private AnimatedSprite2D sprite;
 	public List<Enemy> enemies;
+
 	public Area2D attackDetectionArea;
 	public CollisionShape2D attackArea;
-	private bool enemyInAttackArea = false;
+
 	private readonly List<Enemy> enemiesInAttackArea = new();
-	private float attackCooldown = 0.8f; // Cooldown duration in seconds
-	private float timeSinceLastAttack = 0.8f; // Tracks time since the last attack	
+	private bool enemyInAttackArea = false;
+
+	private float attackCooldown = 0.8f;
+	private float timeSinceLastAttack = 0.8f;
+
 	private float timeSinceLastHealthRegen = 0f;
 	private float healthRegenCooldown = 20f;
-	private float attackPosX = 0.0f;
-	private float attackPosY = 0.0f;
+
+	private Vector2 originalAttackAreaPosition;
+
 	private const string PLAYER_IDLE_ANIMATION = "idle_animation";
+	private const string PLAYER_RUN_ANIMATION = "run_animation";
 	private const string PLAYER_ATTACK_ANIMATION = "attack_animation";
 
 	public override void _Ready()
 	{
 		AddToGroup("Player");
+
 		sprite = GetNode<AnimatedSprite2D>("PlayerSprite");
-		// this doesn't get enemies from spawner
 		enemies = GameManager.Instance.AllEnemies;
+
 		attackDetectionArea = GetNode<Area2D>("DetectionArea");
 		attackArea = GetNode<CollisionShape2D>("DetectionArea/AttackArea");
-		attackPosX = attackArea.Position.X;
-		attackPosY = attackArea.Position.Y;
-		// Connect signals for the detection area
+		originalAttackAreaPosition = attackArea.Position;
+
 		attackDetectionArea.Connect("body_entered", new Callable(this, nameof(OnBodyEntered)));
 		attackDetectionArea.Connect("body_exited", new Callable(this, nameof(OnBodyExited)));
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
-		if (playerAlive)
+		if (!playerAlive)
+			return;
+
+		Vector2 velocity = Velocity;
+		timeSinceLastAttack += (float)delta;
+
+		Vector2 direction = Input.GetVector("left", "right", "up", "down");
+
+		if (direction != Vector2.Zero)
 		{
-			Vector2 velocity = Velocity;
-			timeSinceLastAttack += (float)delta;
-			// Get the input direction
-			Vector2 direction = Input.GetVector("left", "right", "up", "down");
+			if (sprite.Animation != PLAYER_ATTACK_ANIMATION)
+				sprite.Play(PLAYER_RUN_ANIMATION);
 
-			// Apply movement if input is detected
-			if (direction != Vector2.Zero)
+			velocity = direction * SPEED;
+
+			if (direction.X != 0)
 			{
-				velocity = direction * SPEED;
-				// Flip the sprite based on movement direction
-				if (direction.X != 0)
-				{
-					float directionSign = Mathf.Sign(direction.X);
-					sprite.Scale = new Vector2(directionSign, sprite.Scale.Y);
-					float currX = attackArea.Position.X;
-					float currY = attackArea.Position.Y;
+				sprite.FlipH = direction.X < 0;
 
-					// Attack working in both directions by moving attack area
-					if (direction.X < 0)
-					{
-						attackPosX = -Math.Abs(attackPosX);
-						attackPosY = -Math.Abs(attackPosY);
-						attackArea.Position = new Vector2(attackPosX, attackPosY);
-					}
-					else
-					{
-						attackPosX = +Math.Abs(attackPosX);
-						attackPosY = +Math.Abs(attackPosY);
-						attackArea.Position = new Vector2(attackPosX, attackPosY);
-					}
-				}
+				Vector2 flippedAttackPos = originalAttackAreaPosition;
+				flippedAttackPos.X = Mathf.Abs(originalAttackAreaPosition.X) * (sprite.FlipH ? -1 : 1);
+				attackArea.Position = flippedAttackPos;
 			}
-			else
-			{
-				// Decelerate smoothly when no input is detected
-				velocity.X = Mathf.MoveToward(velocity.X, 0, DECELERATION * (float)delta);
-				velocity.Y = Mathf.MoveToward(velocity.Y, 0, DECELERATION * (float)delta);
-			}
-
-			// Play attack animation when the attack action is pressed
-			if (Input.IsActionJustPressed("attack") && timeSinceLastAttack >= attackCooldown)
-			{
-				if (!sprite.IsPlaying() || sprite.Animation != PLAYER_ATTACK_ANIMATION)
-				{
-					sprite.Play(PLAYER_ATTACK_ANIMATION);
-				}
-				for (int i = 0; i < enemies.Count; i++)
-				{
-					Enemy enemy = enemies[i];
-					if (enemiesInAttackArea.Any(e => e == enemy))
-					{
-						enemy.health.Damage(Combat.CalculateAttackDamage(ATTACK_DAMAGE));
-					}
-				}
-				timeSinceLastAttack = 0.0f;
-			}
-
-			// If attack animation finishes, return to idle animation
-			if (sprite.Animation == PLAYER_ATTACK_ANIMATION && !sprite.IsPlaying())
-			{
-				sprite.Play(PLAYER_IDLE_ANIMATION);
-			}
-
-			// Update velocity and move the character
-			Velocity = velocity;
-			MoveAndSlide();
 		}
+		else
+		{
+			if (sprite.Animation == PLAYER_RUN_ANIMATION)
+				sprite.Play(PLAYER_IDLE_ANIMATION);
+
+			velocity.X = Mathf.MoveToward(velocity.X, 0, DECELERATION * (float)delta);
+			velocity.Y = Mathf.MoveToward(velocity.Y, 0, DECELERATION * (float)delta);
+		}
+
+		if (Input.IsActionJustPressed("attack") && timeSinceLastAttack >= attackCooldown)
+		{
+			if (sprite.Animation != PLAYER_ATTACK_ANIMATION)
+				sprite.Play(PLAYER_ATTACK_ANIMATION);
+
+			foreach (var enemy in enemies)
+			{
+				if (enemiesInAttackArea.Contains(enemy))
+				{
+					enemy.health.Damage(Combat.CalculateAttackDamage(ATTACK_DAMAGE));
+				}
+			}
+
+			timeSinceLastAttack = 0f;
+		}
+
+		if (sprite.Animation == PLAYER_ATTACK_ANIMATION && !sprite.IsPlaying())
+			sprite.Play(PLAYER_IDLE_ANIMATION);
+
+		Velocity = velocity;
+		MoveAndSlide();
 	}
 
 	public override void _Process(double delta)
@@ -121,9 +115,24 @@ public partial class Player : CharacterBody2D
 		{
 			sprite.Play("death_animation");
 			playerAlive = false;
-			// Todo: will either need block control input here or straight into respawn
+			// TODO: block input or trigger respawn
 		}
+
 		HealthRegen(delta);
+	}
+
+	private void HealthRegen(double delta)
+	{
+		if (playerAlive && health.CurrentHealth < 100 && health.CurrentHealth > 0)
+		{
+			timeSinceLastHealthRegen += (float)delta;
+
+			if (timeSinceLastHealthRegen > healthRegenCooldown)
+			{
+				health.Heal(HEALTH_REGEN_VAL);
+				timeSinceLastHealthRegen = 0f;
+			}
+		}
 	}
 
 	public PlayerLevel LevelUp()
@@ -132,27 +141,9 @@ public partial class Player : CharacterBody2D
 		return this.Level;
 	}
 
-	private void HealthRegen(double delta)
-	{
-		if (playerAlive && (health.CurrentHealth < 100 || health.CurrentHealth > 0))
-		{
-			if (timeSinceLastHealthRegen > healthRegenCooldown)
-			{
-				health.Heal(HEALTH_REGEN_VAL);
-				timeSinceLastHealthRegen = 0.0f;
-			}
-			else
-			{
-				timeSinceLastHealthRegen += (float)delta;
-			}
-		}
-	}
-
 	private void OnBodyEntered(Node body)
 	{
-		Enemy enemy = body as Enemy;
-
-		if (enemy != null)
+		if (body is Enemy enemy)
 		{
 			enemiesInAttackArea.Add(enemy);
 		}
@@ -160,8 +151,7 @@ public partial class Player : CharacterBody2D
 
 	private void OnBodyExited(Node body)
 	{
-		Enemy enemy = body as Enemy;
-		if (enemy != null)
+		if (body is Enemy enemy)
 		{
 			enemiesInAttackArea.Remove(enemy);
 		}

@@ -1,12 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://b5b2g1txc0hi"]
+[gd_scene load_steps=6 format=3 uid="uid://b5b2g1txc0hi"]
 
 [ext_resource type="Script" path="res://scripts/resources/WoodSource.cs" id="1_7six0"]
 [ext_resource type="PackedScene" uid="uid://cl8x0subioer6" path="res://scenes/capture_health.tscn" id="2_3jl8s"]
+[ext_resource type="Texture2D" uid="uid://de7do1oy3n4y8" path="res://game/assets/materials/tree.png" id="3_n3qji"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_vcld3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7uh5g"]
-radius = 75.326
+radius = 91.0494
 
 [node name="WoodSource" type="Node2D" node_paths=PackedStringArray("captureProgress")]
 script = ExtResource("1_7six0")
@@ -15,19 +16,28 @@ captureProgress = NodePath("CaptureProgress")
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 
 [node name="CaptureProgress" parent="." instance=ExtResource("2_3jl8s")]
+position = Vector2(0, 71)
+scale = Vector2(0.4, 0.4)
 
 [node name="OwnerLabel" type="Label" parent="."]
-offset_left = -9.0
-offset_top = -26.0
+offset_left = -8.99998
+offset_top = 58.0
 offset_right = 33.0
-offset_bottom = -3.0
+offset_bottom = 81.0
 scale = Vector2(0.413799, 0.343821)
 text = "None"
 label_settings = SubResource("LabelSettings_vcld3")
 
 [node name="CaptureArea" type="Area2D" parent="."]
+position = Vector2(-34, 177)
 collision_layer = 2
 collision_mask = 2
 
 [node name="CaptureAreaCollision" type="CollisionShape2D" parent="CaptureArea"]
+position = Vector2(31, -189)
 shape = SubResource("CircleShape2D_7uh5g")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(1.90735e-06, 1)
+scale = Vector2(0.0987549, 0.0992945)
+texture = ExtResource("3_n3qji")

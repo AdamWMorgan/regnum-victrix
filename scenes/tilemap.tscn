@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://ddgpd7ae3v778"]
+[gd_scene load_steps=12 format=4 uid="uid://ddgpd7ae3v778"]
 
 [ext_resource type="TileSet" uid="uid://bon0tuqm31npn" path="res://Tilesets/game_tile_set.tres" id="1_tjwv8"]
 [ext_resource type="PackedScene" uid="uid://cb0rtekr02b04" path="res://scenes/units/player.tscn" id="2_i68oy"]
@@ -9,6 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://di4b2677tr3s8" path="res://scenes/resources/iron_mine.tscn" id="7_o2nhv"]
 [ext_resource type="PackedScene" uid="uid://dd8lvnuod1hif" path="res://scenes/resources/gold_mine.tscn" id="8_awi20"]
 [ext_resource type="PackedScene" uid="uid://b5iimnslkfqcg" path="res://scenes/resources/water_source.tscn" id="9_unb16"]
+[ext_resource type="PackedScene" uid="uid://b5b2g1txc0hi" path="res://scenes/resources/wood_source.tscn" id="10_arwwv"]
+[ext_resource type="PackedScene" uid="uid://dxy8xb66n8wse" path="res://scenes/resources/wheat_source.tscn" id="11_i2esp"]
 
 [node name="Main" type="Node2D"]
 position = Vector2(-139, -147)
@@ -28,10 +30,10 @@ position = Vector2(62, 24)
 platform_floor_layers = 4294967293
 
 [node name="EnemyBase" parent="." instance=ExtResource("7_38ejd")]
-position = Vector2(421, 560)
+position = Vector2(461, 355)
 
 [node name="AllyBase" parent="." instance=ExtResource("7_2s1wi")]
-position = Vector2(56, 133)
+position = Vector2(122, 144)
 
 [node name="AllyBase2" parent="." instance=ExtResource("7_2s1wi")]
 position = Vector2(714, 114)
@@ -55,3 +57,9 @@ position = Vector2(303, 56)
 
 [node name="WaterSource" parent="." instance=ExtResource("9_unb16")]
 position = Vector2(405, 21)
+
+[node name="WoodSource" parent="." instance=ExtResource("10_arwwv")]
+position = Vector2(335, 226)
+
+[node name="WheatSource" parent="." instance=ExtResource("11_i2esp")]
+position = Vector2(453, 150)
