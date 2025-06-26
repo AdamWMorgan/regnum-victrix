@@ -67,7 +67,7 @@ public partial class Spawner : Node2D
 			// Randomize the spawn position
 			do
 			{
-				spawnPosition = SpawnArea.Position + new Vector2(
+				spawnPosition = GlobalPosition + SpawnArea.Position + new Vector2(
 					(float)random.NextDouble() * SpawnArea.Size.X,
 					(float)random.NextDouble() * SpawnArea.Size.Y
 				);
@@ -83,6 +83,7 @@ public partial class Spawner : Node2D
 				enemy.Position = spawnPosition;
 				// Add the enemy to the scene (parent it to the root or another node)
 				AddChild(enemy);
+				GD.Print("base: " + baseId + " spawn: " + spawnPosition);
 				GameManager.Instance.RegisterEnemyWithBase(enemy, baseId);
 			}
 			else if (Faction.ALLY == spawnerFaction)
@@ -91,8 +92,6 @@ public partial class Spawner : Node2D
 				Ally ally = Scene.Instantiate<Ally>();
 				ally.Position = spawnPosition;
 				ally.spawnPosition = spawnPosition;
-
-				_spawnedPositions.Add(spawnPosition);
 
 				// Add the ally to the scene (parent it to the root or another node)
 				AddChild(ally);
