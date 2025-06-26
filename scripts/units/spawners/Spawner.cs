@@ -31,15 +31,13 @@ public partial class Spawner : Node2D
 
 		if (Faction.ENEMY == spawnerFaction)
 		{
-			EnemyBase enemyBase = parent as EnemyBase;
-
-			if (enemyBase != null && enemyBase.BaseID != null)
+			if (parent is EnemyBase enemyBase && enemyBase.BaseID != null)
 			{
 				baseId = enemyBase.BaseID;
 				Spawn();
 			}
 		}
-		if (Faction.ALLY == spawnerFaction)
+		else if (Faction.ALLY == spawnerFaction)
 		{
 			if (parent is AllyBase allyBase && allyBase.BaseID != null)
 			{
@@ -83,7 +81,6 @@ public partial class Spawner : Node2D
 				enemy.Position = spawnPosition;
 				// Add the enemy to the scene (parent it to the root or another node)
 				AddChild(enemy);
-				GD.Print("base: " + baseId + " spawn: " + spawnPosition);
 				GameManager.Instance.RegisterEnemyWithBase(enemy, baseId);
 			}
 			else if (Faction.ALLY == spawnerFaction)
