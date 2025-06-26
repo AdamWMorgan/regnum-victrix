@@ -16,7 +16,6 @@ script = ExtResource("1_nge4g")
 captureProgress = NodePath("CaptureProgress")
 
 [node name="EnemySpawner" type="Node2D" parent="."]
-position = Vector2(0, 2)
 script = ExtResource("2_10y7k")
 Scene = ExtResource("3_v701h")
 SpawnArea = Rect2(0, 0, 100, 100)

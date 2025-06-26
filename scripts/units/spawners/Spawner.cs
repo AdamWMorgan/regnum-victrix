@@ -51,6 +51,10 @@ public partial class Spawner : Node2D
 	{
 		RemoveChild(body);
 	}
+	public override void _Draw()
+	{
+		DrawRect(SpawnArea, new Color(1, 1, 0, 0.4f), false); // Yellow outline
+	}
 	private void Spawn()
 	{
 		Random random = new();
@@ -60,7 +64,6 @@ public partial class Spawner : Node2D
 			int attempt = 0;
 			int maxAttempt = 10;
 			Vector2 spawnPosition;
-
 
 			// Randomize the spawn position
 			do
@@ -78,7 +81,7 @@ public partial class Spawner : Node2D
 			{
 				// Instantiate the enemy scene
 				Enemy enemy = Scene.Instantiate<Enemy>();
-				enemy.Position = spawnPosition;
+				enemy.GlobalPosition  = spawnPosition;
 				// Add the enemy to the scene (parent it to the root or another node)
 				AddChild(enemy);
 				GameManager.Instance.RegisterEnemyWithBase(enemy, baseId);
@@ -87,7 +90,7 @@ public partial class Spawner : Node2D
 			{
 				// Instantiate the ally scene
 				Ally ally = Scene.Instantiate<Ally>();
-				ally.Position = spawnPosition;
+				ally.GlobalPosition  = spawnPosition;
 				ally.spawnPosition = spawnPosition;
 
 				// Add the ally to the scene (parent it to the root or another node)
