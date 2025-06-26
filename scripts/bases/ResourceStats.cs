@@ -46,6 +46,7 @@ public partial class ResourceStats : RichTextLabel
 			var iron = provider.GetAttachedBase().Resources
 				.Find(resource => resource.Type == ResourceType.IRON);
 
+// todo: this needs to come in from a game config file
 			if (gold != null)
 			{
 				AppendText($"[img]res://game/assets/materials/gold.png[/img] {(gold.Quantity > 999 ? "999+" : gold.Quantity)}");
