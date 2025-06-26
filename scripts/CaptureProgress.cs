@@ -1,6 +1,4 @@
 using Godot;
-using System;
-using System.Runtime.ConstrainedExecution;
 
 public partial class CaptureProgress : Node2D
 {

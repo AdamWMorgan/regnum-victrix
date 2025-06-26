@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/bases/AllyBase.cs" id="1_qis78"]
 [ext_resource type="Script" path="res://scripts/units/spawners/AllySpawner.cs" id="2_64lto"]
-[ext_resource type="PackedScene" uid="uid://drtu1nxxs28rm" path="res://scenes/units/ally.tscn" id="3_ru2op"]
+[ext_resource type="PackedScene" uid="uid://drtu1nxxs28rm" path="res://scenes/units/ally.tscn" id="3_q3iyn"]
 [ext_resource type="PackedScene" uid="uid://cl8x0subioer6" path="res://scenes/capture_health.tscn" id="5_c6hof"]
 [ext_resource type="PackedScene" uid="uid://vowefb5gr84m" path="res://scenes/bases/resource_display.tscn" id="6_mlren"]
 [ext_resource type="Texture2D" uid="uid://dtpmcvbeq0v2e" path="res://game/assets/materials/roman_fort.png" id="6_wl017"]
@@ -17,9 +17,8 @@ captureProgress = NodePath("CaptureProgress")
 [node name="AllySpawner" type="Node2D" parent="."]
 position = Vector2(-2, -4)
 script = ExtResource("2_64lto")
-AllyScene = ExtResource("3_ru2op")
-AllySpawnCount = 10
-AllySpawnArea = Rect2(0, 0, 200, 100)
+Scene = ExtResource("3_q3iyn")
+SpawnArea = Rect2(0, 0, 200, 100)
 
 [node name="CaptureProgress" parent="." instance=ExtResource("5_c6hof")]
 position = Vector2(-1, 98)

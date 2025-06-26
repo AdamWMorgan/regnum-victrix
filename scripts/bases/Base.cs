@@ -20,6 +20,7 @@ public partial class Base : Node2D
 		{
 			this.Resources.Add(new Resource(type, 0));
 		}
+		GameManager.Instance.BaseRegister(this);
 	}
 
 	public override void _Ready()

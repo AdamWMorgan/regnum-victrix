@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://dunxqo17c10wb"]
 
 [ext_resource type="Script" path="res://scripts/bases/EnemyBase.cs" id="1_nge4g"]
-[ext_resource type="Script" path="res://scripts/units/spawners/Spawner.cs" id="2_o2p75"]
-[ext_resource type="PackedScene" uid="uid://floxwro1x75e" path="res://scenes/units/enemy.tscn" id="3_snjed"]
+[ext_resource type="Script" path="res://scripts/units/spawners/EnemySpawner.cs" id="2_10y7k"]
+[ext_resource type="PackedScene" uid="uid://floxwro1x75e" path="res://scenes/units/enemy.tscn" id="3_v701h"]
 [ext_resource type="PackedScene" uid="uid://cl8x0subioer6" path="res://scenes/capture_health.tscn" id="5_u41cl"]
 [ext_resource type="PackedScene" uid="uid://vowefb5gr84m" path="res://scenes/bases/resource_display.tscn" id="6_5aqx3"]
 [ext_resource type="Texture2D" uid="uid://bah5eb7qsasbo" path="res://game/assets/materials/celtic_fort.png" id="6_e32vj"]
@@ -17,8 +17,8 @@ captureProgress = NodePath("CaptureProgress")
 
 [node name="EnemySpawner" type="Node2D" parent="."]
 position = Vector2(0, 2)
-script = ExtResource("2_o2p75")
-EnemyScene = ExtResource("3_snjed")
+script = ExtResource("2_10y7k")
+Scene = ExtResource("3_v701h")
 SpawnArea = Rect2(0, 0, 100, 100)
 
 [node name="CaptureProgress" parent="." instance=ExtResource("5_u41cl")]

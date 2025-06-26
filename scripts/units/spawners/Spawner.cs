@@ -4,41 +4,56 @@ using System.Collections.Generic;
 
 public partial class Spawner : Node2D
 {
-	[Export] public PackedScene EnemyScene { get; set; }
+	[Export] public PackedScene Scene { get; set; }
 	[Export] public int SpawnCount { get; set; } = 10;
 	[Export] public Rect2 SpawnArea { get; set; }
 	[Export] public float MinSpawnDistance { get; set; } = 0.2f;
 	[Export] public float MaxSpawnDistance { get; set; } = 0.5f;
 
-	public CharacterBody2D Player { get; set; }
 	public string baseId;
 
 	private List<Vector2> _spawnedPositions = new();
-	private readonly List<Enemy> enemies = new();
+	private Faction spawnerFaction;
+
+	public Spawner(Faction faction)
+	{
+		this.spawnerFaction = faction;
+	}
 
 	public override void _Ready()
 	{
-		Player = GetNode<CharacterBody2D>("/root/Main/Player");
 		CallDeferred(nameof(DeferredCheck));
 	}
 
 	private void DeferredCheck()
 	{
 		Node parent = GetParent();
-		EnemyBase enemyBase = parent as EnemyBase;
 
-		if (enemyBase != null && enemyBase.BaseID != null)
+		if (Faction.ENEMY == spawnerFaction)
 		{
-			baseId = enemyBase.BaseID;
-			SpawnEnemies();
+			EnemyBase enemyBase = parent as EnemyBase;
+
+			if (enemyBase != null && enemyBase.BaseID != null)
+			{
+				baseId = enemyBase.BaseID;
+				Spawn();
+			}
+		}
+		if (Faction.ALLY == spawnerFaction)
+		{
+			if (parent is AllyBase allyBase && allyBase.BaseID != null)
+			{
+				baseId = allyBase.BaseID;
+				Spawn();
+			}
 		}
 	}
 
-	public void DespawnEnemy(Node body)
+	public void Despawn(Node body)
 	{
 		RemoveChild(body);
 	}
-	private void SpawnEnemies()
+	private void Spawn()
 	{
 		Random random = new();
 
@@ -48,8 +63,6 @@ public partial class Spawner : Node2D
 			int maxAttempt = 10;
 			Vector2 spawnPosition;
 
-			// Instantiate the enemy scene
-			Enemy enemy = EnemyScene.Instantiate<Enemy>();
 
 			// Randomize the spawn position
 			do
@@ -61,13 +74,31 @@ public partial class Spawner : Node2D
 				attempt++;
 			} while (IsTooClose(spawnPosition) && attempt < maxAttempt);
 
-			enemy.Position = spawnPosition;
-
 			_spawnedPositions.Add(spawnPosition);
 
-			// Add the enemy to the scene (parent it to the root or another node)
-			AddChild(enemy);
-			GameManager.Instance.RegisterEnemyWithBase(enemy, baseId);
+			if (Faction.ENEMY == spawnerFaction)
+			{
+				// Instantiate the enemy scene
+				Enemy enemy = Scene.Instantiate<Enemy>();
+				enemy.Position = spawnPosition;
+				// Add the enemy to the scene (parent it to the root or another node)
+				AddChild(enemy);
+				GameManager.Instance.RegisterEnemyWithBase(enemy, baseId);
+			}
+			else if (Faction.ALLY == spawnerFaction)
+			{
+				// Instantiate the ally scene
+				Ally ally = Scene.Instantiate<Ally>();
+				ally.Position = spawnPosition;
+				ally.spawnPosition = spawnPosition;
+
+				_spawnedPositions.Add(spawnPosition);
+
+				// Add the ally to the scene (parent it to the root or another node)
+				AddChild(ally);
+				GameManager.Instance.RegisterAllyWithBase(ally, baseId);
+			}
+
 		}
 	}
 
