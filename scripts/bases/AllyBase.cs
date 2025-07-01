@@ -4,7 +4,6 @@ public partial class AllyBase : Base, IBaseProvider
 {
 	public override void _Ready()
 	{
-		GD.Print("ello");
 		base._Ready(); // Initialize shared base logic
 
 		var style = new StyleBoxFlat

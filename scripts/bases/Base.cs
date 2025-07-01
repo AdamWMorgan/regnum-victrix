@@ -21,7 +21,6 @@ public abstract partial class Base : Node2D
 
 	public override void _Ready()
 	{
-		GD.Print(captureProgress.CurrentCaptureProgess);
 		captureArea = GetNode<Area2D>("CaptureArea");
 		captureArea.BodyEntered += OnBodyEnteredCaptureArea;
 		captureArea.BodyExited += OnBodyExitedCaptureArea;
@@ -86,9 +85,6 @@ public abstract partial class Base : Node2D
 				? ColourPalette.ENEMY.ToColor()
 				: ColourPalette.ALLY.ToColor();
 		}
-
-		// Optionally: Notify GameManager
-		GD.Print($"Base {ID} captured by {newOwner}");
 	}
 
 	public List<IUnit> AddUnit(IUnit unit)

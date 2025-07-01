@@ -49,7 +49,6 @@ public partial class GameManager : Node
 
 	public void RegisterAllyWithBase(Ally ally, string baseId)
 	{
-		GD.Print("I am born");
 		AllAllies.Add(ally);
 		Base targetBase = AllBases.Find(b => b.ID == baseId);
 		targetBase.AddUnit(ally);
@@ -104,7 +103,6 @@ public partial class GameManager : Node
 
 		if (newBase != null)
 		{
-			GD.Print(currBase.Position);
 			newBase.GlobalPosition = currBase.GlobalPosition;
 			newBase.ZIndex = 10;
 			AddChild(newBase);
