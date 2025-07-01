@@ -9,15 +9,17 @@ public partial class Spawner : Node2D
 	[Export] public Rect2 SpawnArea { get; set; }
 	[Export] public float MinSpawnDistance { get; set; } = 0.2f;
 	[Export] public float MaxSpawnDistance { get; set; } = 0.5f;
+	[Export] public Faction spawnerFaction { get; set; } = Faction.ENEMY;
 
 	public string baseId;
-
 	private List<Vector2> _spawnedPositions = new();
-	private Faction spawnerFaction;
 
-	public Spawner(Faction faction)
+	// Required for Godot
+	public Spawner() { }
+
+	public void Init(Faction faction)
 	{
-		this.spawnerFaction = faction;
+		spawnerFaction = faction;
 	}
 
 	public override void _Ready()
@@ -29,21 +31,15 @@ public partial class Spawner : Node2D
 	{
 		Node parent = GetParent();
 
-		if (Faction.ENEMY == spawnerFaction)
+		if (spawnerFaction == Faction.ENEMY && parent is EnemyBase enemyBase)
 		{
-			if (parent is EnemyBase enemyBase && enemyBase.ID != null)
-			{
-				baseId = enemyBase.ID;
-				Spawn();
-			}
+			baseId = enemyBase.ID;
+			Spawn();
 		}
-		else if (Faction.ALLY == spawnerFaction)
+		else if (spawnerFaction == Faction.ALLY && parent is AllyBase allyBase)
 		{
-			if (parent is AllyBase allyBase && allyBase.ID != null)
-			{
-				baseId = allyBase.ID;
-				Spawn();
-			}
+			baseId = allyBase.ID;
+			Spawn();
 		}
 	}
 
@@ -51,10 +47,12 @@ public partial class Spawner : Node2D
 	{
 		RemoveChild(body);
 	}
+
 	public override void _Draw()
 	{
-		DrawRect(SpawnArea, new Color(1, 1, 0, 0.4f), false); // Yellow outline
+		DrawRect(SpawnArea, new Color(1, 1, 0, 0.4f), false);
 	}
+
 	private void Spawn()
 	{
 		Random random = new();
@@ -65,7 +63,6 @@ public partial class Spawner : Node2D
 			int maxAttempt = 10;
 			Vector2 spawnPosition;
 
-			// Randomize the spawn position
 			do
 			{
 				spawnPosition = GlobalPosition + SpawnArea.Position + new Vector2(
@@ -77,27 +74,21 @@ public partial class Spawner : Node2D
 
 			_spawnedPositions.Add(spawnPosition);
 
-			if (Faction.ENEMY == spawnerFaction)
+			if (spawnerFaction == Faction.ENEMY)
 			{
-				// Instantiate the enemy scene
 				Enemy enemy = Scene.Instantiate<Enemy>();
-				enemy.GlobalPosition  = spawnPosition;
-				// Add the enemy to the scene (parent it to the root or another node)
+				enemy.GlobalPosition = spawnPosition;
 				AddChild(enemy);
 				GameManager.Instance.RegisterEnemyWithBase(enemy, baseId);
 			}
-			else if (Faction.ALLY == spawnerFaction)
+			else if (spawnerFaction == Faction.ALLY)
 			{
-				// Instantiate the ally scene
 				Ally ally = Scene.Instantiate<Ally>();
-				ally.GlobalPosition  = spawnPosition;
+				ally.GlobalPosition = spawnPosition;
 				ally.spawnPosition = spawnPosition;
-
-				// Add the ally to the scene (parent it to the root or another node)
 				AddChild(ally);
 				GameManager.Instance.RegisterAllyWithBase(ally, baseId);
 			}
-
 		}
 	}
 

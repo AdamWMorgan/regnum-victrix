@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public abstract partial class Base : Node2D
 {
+	[Export] public CaptureProgress captureProgress;
 	public string ID { get; private set; }
 	public Faction CurrentBaseOwner { get; protected set; } = Faction.NONE;
 	public Vector2 BasePosition { get; protected set; }
@@ -11,9 +12,16 @@ public abstract partial class Base : Node2D
 	public string BaseName { get; protected set; } = "Base";
 	public List<IUnit> Units { get; private set; } = new();
 	public List<Resource> Resources { get; private set; } = new();
+	public Area2D captureArea;
+	public Label ownerLabel;
+	private bool captureInProgress = false;
+	private float CAPTURE_SPEED = 1f;
+	private float timeSinceLastCaptureDeplete = 0f;
+	private int capturingUnits = 0;
 
 	public override void _Ready()
 	{
+		captureArea = GetNode<Area2D>("CaptureArea");
 		ID = Guid.NewGuid().ToString();
 		foreach (ResourceType type in Enum.GetValues(typeof(ResourceType)))
 		{
@@ -21,6 +29,64 @@ public abstract partial class Base : Node2D
 		}
 		GameManager.Instance.BaseRegister(this);
 		AddToGroup("Bases");
+	}
+
+	public override void _Process(double delta)
+	{
+		if (capturingUnits != 0) { captureInProgress = true; } else { captureInProgress = false; }
+
+		if (captureInProgress)
+		{
+			if (captureProgress.CurrentCaptureProgess == 0)
+			{
+				captureInProgress = false;
+				capturingUnits = 0;
+				SwitchOwnership(CurrentBaseOwner == Faction.ENEMY ? Faction.ALLY : Faction.ENEMY);
+			}
+
+			if (timeSinceLastCaptureDeplete > CAPTURE_SPEED)
+			{
+				captureProgress.Decrease(10);
+				timeSinceLastCaptureDeplete = 0.0f;
+			}
+			else
+			{
+				timeSinceLastCaptureDeplete += (float)delta;
+			}
+		}
+	}
+
+	private void SwitchOwnership(Faction newOwner)
+	{
+		// Update ownership state
+		CurrentBaseOwner = newOwner;
+
+		// Reset capture progress bar
+
+		captureProgress.ResetCapturePoint();
+
+		// Update UI color
+		var style = new StyleBoxFlat
+		{
+			BgColor = newOwner == Faction.ENEMY
+				? ColourPalette.ENEMY.ToColor()
+				: ColourPalette.ALLY.ToColor()
+		};
+		captureProgress.ColourChange(style);
+
+		// Update owner label if present
+		if (ownerLabel != null)
+		{
+			ownerLabel.Text = $"{newOwner} Base";
+			ownerLabel.Modulate = newOwner == Faction.ENEMY
+				? ColourPalette.ENEMY.ToColor()
+				: ColourPalette.ALLY.ToColor();
+		}
+
+		// Optionally: Notify GameManager
+		GD.Print($"Base {ID} captured by {newOwner}");
+
+		// Optionally: Change behavior of defending/spawning units here
 	}
 
 	public List<IUnit> AddUnit(IUnit unit)

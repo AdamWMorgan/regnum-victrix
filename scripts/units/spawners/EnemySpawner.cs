@@ -2,5 +2,9 @@ using Godot;
 
 public partial class EnemySpawner : Spawner
 {
-    public EnemySpawner() : base(Faction.ENEMY) { }
+    public override void _Ready()
+    {
+        Init(Faction.ENEMY);
+        base._Ready();
+    }
 }
