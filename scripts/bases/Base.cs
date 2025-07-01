@@ -61,6 +61,7 @@ public abstract partial class Base : Node2D
 
 	private void SwitchOwnership(Faction newOwner)
 	{
+		GameManager.Instance.BaseSwitch(this);
 		// Update ownership state
 		ModifyBaseOwner(newOwner);
 

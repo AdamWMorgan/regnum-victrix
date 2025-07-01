@@ -49,6 +49,7 @@ public partial class GameManager : Node
 
 	public void RegisterAllyWithBase(Ally ally, string baseId)
 	{
+		GD.Print("I am born");
 		AllAllies.Add(ally);
 		Base targetBase = AllBases.Find(b => b.ID == baseId);
 		targetBase.AddUnit(ally);
@@ -63,6 +64,53 @@ public partial class GameManager : Node
 	{
 		AllBases.Add(newBase);
 		return newBase.ID;
+	}
+
+	public void BaseUnregister(Base removalBase)
+	{
+		AllBases.Remove(removalBase);
+	}
+
+	public void BaseSwitch(Base currBase)
+	{
+		Base newBase = null;
+
+		if (currBase.CurrentBaseOwner == Faction.ENEMY)
+		{
+			// Load the AllyBase scene
+			PackedScene allyBaseScene = ResourceLoader.Load<PackedScene>("res://scenes/bases/ally_base.tscn");
+			if (allyBaseScene == null)
+			{
+				GD.PrintErr("Failed to load AllyBase.tscn");
+				return;
+			}
+
+			// Instantiate and add to the scene
+			newBase = allyBaseScene.Instantiate<AllyBase>();
+		}
+		else if (currBase.CurrentBaseOwner == Faction.ALLY)
+		{
+			// Load the EnemyBase scene
+			PackedScene enemyBaseScene = ResourceLoader.Load<PackedScene>("res://scenes/bases/enemy_base.tscn");
+			if (enemyBaseScene == null)
+			{
+				GD.PrintErr("Failed to load EnemyBase.tscn");
+				return;
+			}
+
+			// Instantiate and add to the scene
+			newBase = enemyBaseScene.Instantiate<EnemyBase>();
+		}
+
+		if (newBase != null)
+		{
+			GD.Print(currBase.Position);
+			newBase.GlobalPosition = currBase.GlobalPosition;
+			newBase.ZIndex = 10;
+			AddChild(newBase);
+			BaseUnregister(currBase);
+			currBase.QueueFree();
+		}
 	}
 
 	// Resource State

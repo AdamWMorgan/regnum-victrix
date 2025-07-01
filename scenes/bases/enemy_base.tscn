@@ -14,14 +14,15 @@ bg_color = Color(0.737255, 0, 0.0666667, 1)
 radius = 148.0
 
 [node name="EnemyBase" type="Node2D" node_paths=PackedStringArray("captureProgress")]
-position = Vector2(450, 247)
+position = Vector2(0, 1)
 script = ExtResource("1_nge4g")
 captureProgress = NodePath("CaptureProgress")
 
 [node name="EnemySpawner" type="Node2D" parent="."]
+position = Vector2(-99, -79)
 script = ExtResource("2_10y7k")
 Scene = ExtResource("3_v701h")
-SpawnArea = Rect2(0, 0, 100, 100)
+SpawnArea = Rect2(0, 0, 200, 200)
 
 [node name="CaptureProgress" parent="." instance=ExtResource("5_u41cl")]
 position = Vector2(0, 105)
