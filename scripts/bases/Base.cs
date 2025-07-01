@@ -21,7 +21,10 @@ public abstract partial class Base : Node2D
 
 	public override void _Ready()
 	{
+		GD.Print(captureProgress.CurrentCaptureProgess);
 		captureArea = GetNode<Area2D>("CaptureArea");
+		captureArea.BodyEntered += OnBodyEnteredCaptureArea;
+		captureArea.BodyExited += OnBodyExitedCaptureArea;
 		ID = Guid.NewGuid().ToString();
 		foreach (ResourceType type in Enum.GetValues(typeof(ResourceType)))
 		{
@@ -59,7 +62,7 @@ public abstract partial class Base : Node2D
 	private void SwitchOwnership(Faction newOwner)
 	{
 		// Update ownership state
-		CurrentBaseOwner = newOwner;
+		ModifyBaseOwner(newOwner);
 
 		// Reset capture progress bar
 
@@ -85,8 +88,6 @@ public abstract partial class Base : Node2D
 
 		// Optionally: Notify GameManager
 		GD.Print($"Base {ID} captured by {newOwner}");
-
-		// Optionally: Change behavior of defending/spawning units here
 	}
 
 	public List<IUnit> AddUnit(IUnit unit)
@@ -118,5 +119,30 @@ public abstract partial class Base : Node2D
 	{
 		this.CurrentBaseOwner = newOwner;
 		return CurrentBaseOwner;
+	}
+
+	private void OnBodyEnteredCaptureArea(Node body)
+	{
+		if ((body.IsInGroup("Player") || body.IsInGroup("Ally")) && CurrentBaseOwner != Faction.ALLY)
+		{
+			capturingUnits++;
+		}
+		else if (body.IsInGroup("Enemy") && CurrentBaseOwner != Faction.ENEMY)
+		{
+			capturingUnits++;
+		}
+	}
+
+	// Called when a body exits the Area2D
+	private void OnBodyExitedCaptureArea(Node body)
+	{
+		if ((body.IsInGroup("Player") || body.IsInGroup("Ally")) && CurrentBaseOwner != Faction.ALLY)
+		{
+			capturingUnits--;
+		}
+		if (body.IsInGroup("Enemy") && CurrentBaseOwner != Faction.ENEMY)
+		{
+			capturingUnits--;
+		}
 	}
 }

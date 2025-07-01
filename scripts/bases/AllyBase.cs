@@ -2,8 +2,6 @@ using Godot;
 
 public partial class AllyBase : Base, IBaseProvider
 {
-	[Export] public CaptureProgress captureProgress;
-
 	public override void _Ready()
 	{
 		base._Ready(); // Initialize shared base logic

@@ -2,8 +2,6 @@ using Godot;
 
 public partial class EnemyBase : Base, IBaseProvider
 {
-	[Export] public CaptureProgress captureProgress;
-
 	public override void _Ready()
 	{
 		base._Ready(); // Call shared logic from Base
