@@ -31,17 +31,17 @@ public partial class Spawner : Node2D
 
 		if (Faction.ENEMY == spawnerFaction)
 		{
-			if (parent is EnemyBase enemyBase && enemyBase.BaseID != null)
+			if (parent is EnemyBase enemyBase && enemyBase.ID != null)
 			{
-				baseId = enemyBase.BaseID;
+				baseId = enemyBase.ID;
 				Spawn();
 			}
 		}
 		else if (Faction.ALLY == spawnerFaction)
 		{
-			if (parent is AllyBase allyBase && allyBase.BaseID != null)
+			if (parent is AllyBase allyBase && allyBase.ID != null)
 			{
-				baseId = allyBase.BaseID;
+				baseId = allyBase.ID;
 				Spawn();
 			}
 		}

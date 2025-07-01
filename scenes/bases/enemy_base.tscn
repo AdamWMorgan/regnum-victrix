@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dunxqo17c10wb"]
+[gd_scene load_steps=9 format=3 uid="uid://dunxqo17c10wb"]
 
 [ext_resource type="Script" path="res://scripts/bases/EnemyBase.cs" id="1_nge4g"]
 [ext_resource type="Script" path="res://scripts/units/spawners/EnemySpawner.cs" id="2_10y7k"]
@@ -9,6 +9,9 @@
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p1pge"]
 bg_color = Color(0.737255, 0, 0.0666667, 1)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_e80jy"]
+radius = 148.0
 
 [node name="EnemyBase" type="Node2D" node_paths=PackedStringArray("captureProgress")]
 position = Vector2(450, 247)
@@ -32,3 +35,9 @@ scale = Vector2(0.5, 0.5)
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, 1)
 texture = ExtResource("6_e32vj")
+
+[node name="CaptureArea" type="Area2D" parent="."]
+
+[node name="CaptureAreaCollisions" type="CollisionShape2D" parent="CaptureArea"]
+position = Vector2(2, 1)
+shape = SubResource("CircleShape2D_e80jy")
