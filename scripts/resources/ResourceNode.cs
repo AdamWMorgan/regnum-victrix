@@ -165,14 +165,12 @@ public abstract partial class ResourceNode : Node2D
 		// todo: also need to switch the resource nodes ownership to the nearest capturers base
 		if (newOwner == Faction.ALLY)
 		{
-			GD.Print("Switch to ally");
 			currentOwner = Faction.ALLY;
 			UpdateStyleAfterCapture(ColourPalette.ALLY.ToColor());
 			attachedBase = CalculateClosestBase(Faction.ALLY);
 		}
 		else
 		{
-			GD.Print("Switch to enemy");
 			currentOwner = Faction.ENEMY;
 			UpdateStyleAfterCapture(ColourPalette.ENEMY.ToColor());
 			attachedBase = CalculateClosestBase(Faction.ENEMY);
