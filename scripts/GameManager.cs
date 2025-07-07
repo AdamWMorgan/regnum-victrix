@@ -7,6 +7,7 @@ public partial class GameManager : Node
 	public List<Enemy> AllEnemies { get; private set; } = new List<Enemy>();
 	public List<Ally> AllAllies { get; private set; } = new List<Ally>();
 	public List<Base> AllBases { get; set; } = new List<Base>();
+	public List<ResourceNode> ResourceNodes { get; set; } = new List<ResourceNode>();
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -72,10 +73,12 @@ public partial class GameManager : Node
 
 	public void BaseSwitch(Base currBase)
 	{
+		GD.Print("Switch base");
 		Base newBase = null;
 
 		if (currBase.CurrentBaseOwner == Faction.ENEMY)
 		{
+			GD.Print("ally captured it");
 			// Load the AllyBase scene
 			PackedScene allyBaseScene = ResourceLoader.Load<PackedScene>("res://scenes/bases/ally_base.tscn");
 			if (allyBaseScene == null)
@@ -89,6 +92,7 @@ public partial class GameManager : Node
 		}
 		else if (currBase.CurrentBaseOwner == Faction.ALLY)
 		{
+			GD.Print("enemy captured it");
 			// Load the EnemyBase scene
 			PackedScene enemyBaseScene = ResourceLoader.Load<PackedScene>("res://scenes/bases/enemy_base.tscn");
 			if (enemyBaseScene == null)
@@ -103,12 +107,30 @@ public partial class GameManager : Node
 
 		if (newBase != null)
 		{
+			GD.Print("should work");
 			newBase.GlobalPosition = currBase.GlobalPosition;
 			newBase.ZIndex = 10;
 			AddChild(newBase);
+			ResourceNodeSwitch(currBase, newBase);
 			BaseUnregister(currBase);
 			currBase.QueueFree();
 		}
+	}
+
+	public void RegisterResourceNode(ResourceNode resourceNode)
+	{
+		ResourceNodes.Add(resourceNode);
+	}
+
+	private void ResourceNodeSwitch(Base oldBase, Base newBase)
+	{
+			GD.Print("switcheroo");
+		GD.Print(ResourceNodes);
+		ResourceNodes.FindAll(node => node.attachedBase.ID == oldBase.ID).ForEach(node =>
+		{
+			GD.Print("updates resource nodes TO = " + newBase.CurrentBaseOwner);
+			node.SwitchOwnership(newBase.CurrentBaseOwner);
+		});
 	}
 
 	// Resource State

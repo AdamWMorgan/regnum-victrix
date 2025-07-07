@@ -6,6 +6,7 @@ using System.Linq;
 public abstract partial class ResourceNode : Node2D
 {
 	[Export] public CaptureProgress captureProgress;
+	public string ID { get; private set; }
 	public Resource Resource { get; private set; }
 	public int GeneratingCapacity { get; private set; }
 	public int SendAmount { get; private set; }
@@ -39,6 +40,7 @@ public abstract partial class ResourceNode : Node2D
 
 	public override void _Ready()
 	{
+		ID = Guid.NewGuid().ToString();
 		attachedBase = CalculateClosestBase();
 		captureArea = GetNode<Area2D>("CaptureArea");
 		// Connect the body_entered and body_exited signals to the methods
@@ -49,6 +51,7 @@ public abstract partial class ResourceNode : Node2D
 		// initial setting of resource node ownership
 		currentOwner = attachedBase.CurrentBaseOwner;
 		SetProgressBar();
+		GameManager.Instance.RegisterResourceNode(this);
 	}
 
 	public override void _Process(double delta)
@@ -132,6 +135,7 @@ public abstract partial class ResourceNode : Node2D
 	// Called when a body enters the Area2D
 	private void OnBodyEnteredCaptureArea(Node body)
 	{
+		// TODO: Bug here somewhere where an ally can capture the base for the enemy?!
 		if ((body.IsInGroup("Player") || body.IsInGroup("Ally")) && currentOwner != Faction.ALLY)
 		{
 			capturingUnits++;
@@ -145,27 +149,30 @@ public abstract partial class ResourceNode : Node2D
 	// Called when a body exits the Area2D
 	private void OnBodyExitedCaptureArea(Node body)
 	{
+		// TODO: Bug here somewhere where an ally can capture the base for the enemy?!
 		if ((body.IsInGroup("Player") || body.IsInGroup("Ally")) && currentOwner != Faction.ALLY)
 		{
 			capturingUnits--;
 		}
-		if (body.IsInGroup("Enemy") && currentOwner != Faction.ENEMY)
+		else if (body.IsInGroup("Enemy") && currentOwner != Faction.ENEMY)
 		{
 			capturingUnits--;
 		}
 	}
 
-	private void SwitchOwnership(Faction newOwner)
+	public void SwitchOwnership(Faction newOwner)
 	{
 		// todo: also need to switch the resource nodes ownership to the nearest capturers base
 		if (newOwner == Faction.ALLY)
 		{
+			GD.Print("Switch to ally");
 			currentOwner = Faction.ALLY;
 			UpdateStyleAfterCapture(ColourPalette.ALLY.ToColor());
 			attachedBase = CalculateClosestBase(Faction.ALLY);
 		}
 		else
 		{
+			GD.Print("Switch to enemy");
 			currentOwner = Faction.ENEMY;
 			UpdateStyleAfterCapture(ColourPalette.ENEMY.ToColor());
 			attachedBase = CalculateClosestBase(Faction.ENEMY);
