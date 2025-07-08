@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://dd8lvnuod1hif"]
 
 [ext_resource type="Script" path="res://scripts/resources/GoldMine.cs" id="1_7vaj8"]
+[ext_resource type="Texture2D" uid="uid://beq8bki37iq20" path="res://game/assets/materials/gold_mine_improved.png" id="3_2868c"]
 [ext_resource type="PackedScene" uid="uid://cl8x0subioer6" path="res://scenes/capture_health.tscn" id="3_ej833"]
-[ext_resource type="Texture2D" uid="uid://7usrt54aad3v" path="res://game/assets/materials/gold_mine.png" id="3_pv8kv"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_x5csr"]
 radius = 75.326
@@ -12,8 +12,8 @@ script = ExtResource("1_7vaj8")
 captureProgress = NodePath("CaptureProgress")
 
 [node name="CaptureProgress" parent="." instance=ExtResource("3_ej833")]
-position = Vector2(0, 47)
-scale = Vector2(0.4, 0.4)
+position = Vector2(0, 28)
+scale = Vector2(0.2, 0.2)
 
 [node name="CaptureArea" type="Area2D" parent="."]
 collision_layer = 2
@@ -23,4 +23,6 @@ collision_mask = 2
 shape = SubResource("CircleShape2D_x5csr")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("3_pv8kv")
+position = Vector2(-1.19209e-07, -1.19209e-07)
+scale = Vector2(0.0531006, 0.0531006)
+texture = ExtResource("3_2868c")

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://de7do1oy3n4y8"
-path="res://.godot/imported/tree.png-a3f325859afee983e99e1e3adab973ca.ctex"
+uid="uid://dq2fx8ojiopn1"
+path="res://.godot/imported/iron_mine_improved.png-e439094300e7ed9a1f9daa5869057147.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/assets/materials/tree.png"
-dest_files=["res://.godot/imported/tree.png-a3f325859afee983e99e1e3adab973ca.ctex"]
+source_file="res://game/assets/materials/iron_mine_improved.png"
+dest_files=["res://.godot/imported/iron_mine_improved.png-e439094300e7ed9a1f9daa5869057147.ctex"]
 
 [params]
 

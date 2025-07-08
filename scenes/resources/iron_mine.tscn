@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://di4b2677tr3s8"]
 
 [ext_resource type="Script" path="res://scripts/resources/IronMine.cs" id="1_6rycr"]
-[ext_resource type="Texture2D" uid="uid://67cimycoimg5" path="res://game/assets/materials/iron_resource_new.png" id="3_4uk7t"]
 [ext_resource type="PackedScene" uid="uid://cl8x0subioer6" path="res://scenes/capture_health.tscn" id="3_bqe7k"]
+[ext_resource type="Texture2D" uid="uid://dq2fx8ojiopn1" path="res://game/assets/materials/iron_mine_improved.png" id="3_r4vgq"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ihl7c"]
 radius = 75.326
@@ -19,8 +19,10 @@ collision_mask = 2
 shape = SubResource("CircleShape2D_ihl7c")
 
 [node name="CaptureProgress" parent="." instance=ExtResource("3_bqe7k")]
-position = Vector2(0, 46)
-scale = Vector2(0.4, 0.4)
+position = Vector2(0, 29)
+scale = Vector2(0.2, 0.2)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("3_4uk7t")
+position = Vector2(9.53674e-07, 0)
+scale = Vector2(0.0571289, 0.0571289)
+texture = ExtResource("3_r4vgq")
