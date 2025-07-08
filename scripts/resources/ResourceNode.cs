@@ -18,7 +18,6 @@ public abstract partial class ResourceNode : Node2D
 	private float DEFAULT_GENERATION_SPEED = 1f;
 	private float timeSinceLastGen = 0f;
 	public Area2D captureArea;
-	public Label ownerLabel;
 	private bool captureInProgress = false;
 	private float CAPTURE_SPEED = 1f;
 	private float timeSinceLastCaptureDeplete = 0f;
@@ -46,8 +45,6 @@ public abstract partial class ResourceNode : Node2D
 		// Connect the body_entered and body_exited signals to the methods
 		captureArea.BodyEntered += OnBodyEnteredCaptureArea;
 		captureArea.BodyExited += OnBodyExitedCaptureArea;
-		ownerLabel = GetNode<Label>("OwnerLabel");
-		ownerLabel.Text = attachedBase.CurrentBaseOwner.ToString();
 		// initial setting of resource node ownership
 		currentOwner = attachedBase.CurrentBaseOwner;
 		SetProgressBar();
@@ -175,7 +172,6 @@ public abstract partial class ResourceNode : Node2D
 			UpdateStyleAfterCapture(ColourPalette.ENEMY.ToColor());
 			attachedBase = CalculateClosestBase(Faction.ENEMY);
 		}
-		ownerLabel.Text = currentOwner.ToString();
 	}
 
 	private void UpdateStyleAfterCapture(Color colour)

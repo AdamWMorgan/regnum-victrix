@@ -13,7 +13,6 @@ public abstract partial class Base : Node2D
 	public List<IUnit> Units { get; private set; } = new();
 	public List<Resource> Resources { get; private set; } = new();
 	public Area2D captureArea;
-	public Label ownerLabel;
 	private bool captureInProgress = false;
 	private float CAPTURE_SPEED = 1f;
 	private float timeSinceLastCaptureDeplete = 0f;
@@ -76,15 +75,6 @@ public abstract partial class Base : Node2D
 				: ColourPalette.ALLY.ToColor()
 		};
 		captureProgress.ColourChange(style);
-
-		// Update owner label if present
-		if (ownerLabel != null)
-		{
-			ownerLabel.Text = $"{newOwner} Base";
-			ownerLabel.Modulate = newOwner == Faction.ENEMY
-				? ColourPalette.ENEMY.ToColor()
-				: ColourPalette.ALLY.ToColor();
-		}
 	}
 
 	public List<IUnit> AddUnit(IUnit unit)

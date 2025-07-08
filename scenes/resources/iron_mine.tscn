@@ -1,10 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://di4b2677tr3s8"]
+[gd_scene load_steps=5 format=3 uid="uid://di4b2677tr3s8"]
 
 [ext_resource type="Script" path="res://scripts/resources/IronMine.cs" id="1_6rycr"]
 [ext_resource type="Texture2D" uid="uid://67cimycoimg5" path="res://game/assets/materials/iron_resource_new.png" id="3_4uk7t"]
 [ext_resource type="PackedScene" uid="uid://cl8x0subioer6" path="res://scenes/capture_health.tscn" id="3_bqe7k"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_8xg83"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ihl7c"]
 radius = 75.326
@@ -12,15 +10,6 @@ radius = 75.326
 [node name="IronMine" type="Node2D" node_paths=PackedStringArray("captureProgress")]
 script = ExtResource("1_6rycr")
 captureProgress = NodePath("CaptureProgress")
-
-[node name="OwnerLabel" type="Label" parent="."]
-offset_left = -9.0
-offset_top = 34.0
-offset_right = 33.0
-offset_bottom = 57.0
-scale = Vector2(0.413799, 0.343821)
-text = "None"
-label_settings = SubResource("LabelSettings_8xg83")
 
 [node name="CaptureArea" type="Area2D" parent="."]
 collision_layer = 2
