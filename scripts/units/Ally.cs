@@ -5,7 +5,7 @@ using System.Linq;
 
 public partial class Ally : CharacterBody2D, IUnit
 {
-	public String ID { get; private set; }
+	public string ID { get; private set; }
 	public UnitLevel Level { get; private set; } = UnitLevel.VELITES;
 	// Reference to the Area2D node
 	[Export] public Area2D DetectionArea;
@@ -13,7 +13,7 @@ public partial class Ally : CharacterBody2D, IUnit
 	[Export] public Area2D AttackArea;
 	[Export] public CollisionShape2D collisionShape;
 	[Export] public Health health;
-	[Export] public Vector2 spawnPosition;
+	public Vector2 spawnPosition;
 	public const int ATTACK_DAMAGE = 10;
 	public const int HEALTH_REGEN_VAL = 10;
 	public bool allyAlive = true;
@@ -49,6 +49,7 @@ public partial class Ally : CharacterBody2D, IUnit
 
 	public override void _Ready()
 	{
+		spawnPosition = GlobalPosition;
 		AddToGroup("Ally");
 		// Connect the body_entered and body_exited signals to the methods
 		AttackArea.BodyEntered += OnBodyEnteredAttackArea;

@@ -62,7 +62,7 @@ public partial class Spawner : Node2D
 			int attempt = 0;
 			int maxAttempt = 10;
 			Vector2 spawnPosition;
-
+			
 			do
 			{
 				spawnPosition = GlobalPosition + SpawnArea.Position + new Vector2(
@@ -77,16 +77,16 @@ public partial class Spawner : Node2D
 			if (spawnerFaction == Faction.ENEMY)
 			{
 				Enemy enemy = Scene.Instantiate<Enemy>();
-				enemy.GlobalPosition = spawnPosition;
 				AddChild(enemy);
+				enemy.GlobalPosition = spawnPosition;
 				GameManager.Instance.RegisterEnemyWithBase(enemy, baseId);
 			}
 			else if (spawnerFaction == Faction.ALLY)
 			{
 				Ally ally = Scene.Instantiate<Ally>();
+				AddChild(ally);
 				ally.GlobalPosition = spawnPosition;
 				ally.spawnPosition = spawnPosition;
-				AddChild(ally);
 				GameManager.Instance.RegisterAllyWithBase(ally, baseId);
 			}
 		}
