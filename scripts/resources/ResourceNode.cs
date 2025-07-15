@@ -13,6 +13,7 @@ public abstract partial class ResourceNode : Node2D
 	public ResourceLevel Level { get; private set; } = ResourceLevel.ONE;
 	public Base attachedBase;
 	public Faction currentOwner;
+	public int lifetimeResourceCreation = 0;
 	// the number at which the resource should be sent to the associated base
 	private int DEFAULT_SEND_TRIGGER_CAPACITY = 50;
 	private float DEFAULT_GENERATION_SPEED = 1f;
@@ -37,6 +38,8 @@ public abstract partial class ResourceNode : Node2D
 		this.SendAmount = sendAmount;
 	}
 
+	public abstract void levelUp();
+
 	public override void _Ready()
 	{
 		ID = Guid.NewGuid().ToString();
@@ -53,6 +56,7 @@ public abstract partial class ResourceNode : Node2D
 
 	public override void _Process(double delta)
 	{
+		levelUp();
 		if (capturingUnits != 0) { captureInProgress = true; } else { captureInProgress = false; }
 
 		if (!captureInProgress)
@@ -60,6 +64,8 @@ public abstract partial class ResourceNode : Node2D
 			if (timeSinceLastGen > DEFAULT_GENERATION_SPEED)
 			{
 				Resource.IncrementResourceQuantity(GeneratingCapacity);
+				GD.Print(lifetimeResourceCreation);
+				lifetimeResourceCreation += GeneratingCapacity;
 				timeSinceLastGen = 0.0f;
 			}
 			else

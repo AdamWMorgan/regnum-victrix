@@ -4,8 +4,10 @@ using System;
 public partial class GoldMine : ResourceNode
 {
 	public string ID { get; private set; }
-	
-	public GoldMine() : base(new Resource(ResourceType.GOLD)){
+	private int levelUpThreshold = 50;
+
+	public GoldMine() : base(new Resource(ResourceType.GOLD))
+	{
 		this.ID = Guid.NewGuid().ToString();
 	}
 
@@ -14,4 +16,14 @@ public partial class GoldMine : ResourceNode
 	{
 		base._Process(delta);
 	}
+
+	public override void levelUp()
+	{
+		if (lifetimeResourceCreation % 50 == 0)
+		{
+			LevelUp();
+			GD.Print("gold level up = " + Level);
+		}
+	}
+
 }

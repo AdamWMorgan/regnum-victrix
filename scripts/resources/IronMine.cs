@@ -4,8 +4,10 @@ using System;
 public partial class IronMine : ResourceNode
 {
 	public string ID { get; private set; }
-	
-	public IronMine() : base(new Resource(ResourceType.IRON)){
+	private int levelUpThreshold = 50;
+
+	public IronMine() : base(new Resource(ResourceType.IRON))
+	{
 		this.ID = Guid.NewGuid().ToString();
 	}
 
@@ -13,5 +15,14 @@ public partial class IronMine : ResourceNode
 	public override void _Process(double delta)
 	{
 		base._Process(delta);
+	}
+	
+	public override void levelUp()
+	{
+		if (lifetimeResourceCreation % 50 == 0)
+		{
+			LevelUp();
+			GD.Print("iron level up = " + Level);
+		}
 	}
 }

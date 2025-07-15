@@ -48,11 +48,6 @@ public partial class Spawner : Node2D
 		RemoveChild(body);
 	}
 
-	public override void _Draw()
-	{
-		DrawRect(SpawnArea, new Color(1, 1, 0, 0.4f), false);
-	}
-
 	private void Spawn()
 	{
 		Random random = new();

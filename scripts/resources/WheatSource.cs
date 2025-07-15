@@ -4,8 +4,10 @@ using System;
 public partial class WheatSource : ResourceNode
 {
 	public string ID { get; private set; }
-	
-	public WheatSource() : base(new Resource(ResourceType.WHEAT)){
+	private int levelUpThreshold = 50;
+
+	public WheatSource() : base(new Resource(ResourceType.WHEAT))
+	{
 		this.ID = Guid.NewGuid().ToString();
 	}
 
@@ -13,5 +15,14 @@ public partial class WheatSource : ResourceNode
 	public override void _Process(double delta)
 	{
 		base._Process(delta);
+	}
+	
+	public override void levelUp()
+	{
+		if (lifetimeResourceCreation % 50 == 0)
+		{
+			LevelUp();
+			GD.Print("wheat level up = " + Level);
+		}
 	}
 }
