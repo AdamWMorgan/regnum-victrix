@@ -104,37 +104,46 @@ public partial class Ally : CharacterBody2D, IUnit
 			{
 				sprite.Play(ALLY_IDLE_ANIMATION);
 			}
-			else if (playerDetected && player.GlobalPosition.DistanceTo(GlobalPosition) > ALLY_PLAYER_GAP && followPlayer)
+			if (playerDetected)
 			{
-				// If attack animation finishes, return to idle animation
-				if (sprite.Animation == ALLY_ATTACK_ANIMATION)
+				if (player.followPlayer)
 				{
-					sprite.Play(ALLY_IDLE_ANIMATION);
+					followPlayer = true;
+				}
+				else
+				{
+					followPlayer = false;
+					if (this.GlobalPosition.DistanceTo(this.spawnPosition) > 5.0f)
+					{
+						Vector2 directionToSpawn = this.spawnPosition - this.GlobalPosition;
+						velocity += directionToSpawn * SPEED;
+
+						if (directionToSpawn.X > 0)
+						{
+							sprite.FlipH = false;
+						}
+						else if (directionToSpawn.X < 0)
+						{
+							sprite.FlipH = true;
+						}
+					}
 				}
 
-				Vector2 directionToPlayer = (player.GlobalPosition - GlobalPosition).Normalized();
-				velocity += directionToPlayer * SPEED;
-				if (directionToPlayer.X > 0)
+				if (player.GlobalPosition.DistanceTo(GlobalPosition) > ALLY_PLAYER_GAP && followPlayer)
 				{
-					sprite.FlipH = false;
-				}
-				else if (directionToPlayer.X < 0)
-				{
-					sprite.FlipH = true;
-				}
-			}
-			else
-			{
-				if (!followPlayer && this.GlobalPosition.DistanceTo(this.spawnPosition) > 5.0f)
-				{
-					Vector2 directionToSpawn = (this.spawnPosition - this.GlobalPosition);
-					velocity += directionToSpawn * SPEED;
+					// If attack animation finishes, return to idle animation
+					if (sprite.Animation == ALLY_ATTACK_ANIMATION)
+					{
+						sprite.Play(ALLY_IDLE_ANIMATION);
+					}
 
-					if (directionToSpawn.X > 0)
+					Vector2 directionToPlayer = (player.GlobalPosition - GlobalPosition).Normalized();
+					velocity += directionToPlayer * SPEED;
+					if (directionToPlayer.X > 0)
 					{
 						sprite.FlipH = false;
 					}
-					else if (directionToSpawn.X < 0)
+					else if (directionToPlayer.X < 0)
 					{
 						sprite.FlipH = true;
 					}
@@ -182,6 +191,7 @@ public partial class Ally : CharacterBody2D, IUnit
 		}
 		HealthRegen(delta);
 	}
+
 	public UnitLevel LevelUp()
 	{
 		this.Level = LevellingUtil<UnitLevel>.LevelUp((int)this.Level);
@@ -201,14 +211,6 @@ public partial class Ally : CharacterBody2D, IUnit
 			{
 				timeSinceLastHealthRegen += (float)delta;
 			}
-		}
-	}
-
-	public override void _Input(InputEvent @event)
-	{
-		if (Input.IsKeyPressed(Key.Q))
-		{
-			followPlayer = !followPlayer;
 		}
 	}
 
