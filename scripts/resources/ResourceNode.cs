@@ -16,12 +16,14 @@ public abstract partial class ResourceNode : Node2D
 	public int lifetimeResourceCreation = 0;
 	// the number at which the resource should be sent to the associated base
 	private int DEFAULT_SEND_TRIGGER_CAPACITY = 50;
+	
 	private float DEFAULT_GENERATION_SPEED = 1f;
 	private float timeSinceLastGen = 0f;
 	public Area2D captureArea;
 	private bool captureInProgress = false;
 	private float CAPTURE_SPEED = 1f;
 	private float timeSinceLastCaptureDeplete = 0f;
+	
 	private int capturingUnits = 0;
 
 	public ResourceNode(Resource resource)
@@ -38,7 +40,7 @@ public abstract partial class ResourceNode : Node2D
 		this.SendAmount = sendAmount;
 	}
 
-	public abstract void levelUp();
+	public abstract void levelUp(double delta);
 
 	public override void _Ready()
 	{
@@ -56,7 +58,7 @@ public abstract partial class ResourceNode : Node2D
 
 	public override void _Process(double delta)
 	{
-		levelUp();
+		levelUp(delta);
 		if (capturingUnits != 0) { captureInProgress = true; } else { captureInProgress = false; }
 
 		if (!captureInProgress)
