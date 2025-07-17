@@ -66,7 +66,6 @@ public abstract partial class ResourceNode : Node2D
 			if (timeSinceLastGen > DEFAULT_GENERATION_SPEED)
 			{
 				Resource.IncrementResourceQuantity(GeneratingCapacity);
-				GD.Print(lifetimeResourceCreation);
 				lifetimeResourceCreation += GeneratingCapacity;
 				timeSinceLastGen = 0.0f;
 			}

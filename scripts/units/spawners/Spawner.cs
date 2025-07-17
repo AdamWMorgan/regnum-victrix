@@ -10,12 +10,13 @@ public partial class Spawner : Node2D
 	[Export] public float MinSpawnDistance { get; set; } = 0.2f;
 	[Export] public float MaxSpawnDistance { get; set; } = 0.5f;
 	[Export] public Faction spawnerFaction { get; set; } = Faction.ENEMY;
+	[Export] public Area2D PlayerDetectionArea;
 
 	public string baseId;
 	private List<Vector2> _spawnedPositions = new();
 
 	// Required for Godot
-	public Spawner() { }
+	public Spawner(){}
 
 	public void Init(Faction faction)
 	{
@@ -24,11 +25,27 @@ public partial class Spawner : Node2D
 
 	public override void _Ready()
 	{
+
 		CallDeferred(nameof(DeferredCheck));
+	}
+
+	public override void _Draw()
+	{
+		DrawRect(SpawnArea, new Color(1, 1, 0, 0.4f), false);
 	}
 
 	private void DeferredCheck()
 	{
+				if (PlayerDetectionArea != null)
+		{
+			PlayerDetectionArea.BodyEntered += OnBodyEnteredDetectionArea;
+			PlayerDetectionArea.BodyExited += OnBodyExitedDetectionArea;
+		}
+		else
+		{
+			GD.PrintErr("PlayerDetectionArea is not set or missing in the scene!");
+		}
+
 		Node parent = GetParent();
 
 		if (spawnerFaction == Faction.ENEMY && parent is EnemyBase enemyBase)
@@ -57,7 +74,7 @@ public partial class Spawner : Node2D
 			int attempt = 0;
 			int maxAttempt = 10;
 			Vector2 spawnPosition;
-			
+
 			do
 			{
 				spawnPosition = GlobalPosition + SpawnArea.Position + new Vector2(
@@ -98,4 +115,21 @@ public partial class Spawner : Node2D
 		}
 		return false;
 	}
+
+	private void OnBodyEnteredDetectionArea(Node body)
+	{
+		if (body.IsInGroup("Player"))
+		{
+			GD.Print("in area");
+		}
+	}
+
+	private void OnBodyExitedDetectionArea(Node body)
+	{
+		if (body.IsInGroup("Player"))
+		{
+			GD.Print("out area");
+		}
+	}
+	
 }
