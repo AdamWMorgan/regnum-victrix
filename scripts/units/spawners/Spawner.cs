@@ -36,7 +36,7 @@ public partial class Spawner : Node2D
 
 	private void DeferredCheck()
 	{
-				if (PlayerDetectionArea != null)
+		if (PlayerDetectionArea != null)
 		{
 			PlayerDetectionArea.BodyEntered += OnBodyEnteredDetectionArea;
 			PlayerDetectionArea.BodyExited += OnBodyExitedDetectionArea;
