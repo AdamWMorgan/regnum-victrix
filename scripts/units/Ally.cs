@@ -36,6 +36,7 @@ public partial class Ally : CharacterBody2D, IUnit
 	public const float ALLY_PLAYER_GAP = 50.0f;
 	private const string ALLY_IDLE_ANIMATION = "ally_idle_animation";
 	private const string ALLY_ATTACK_ANIMATION = "ally_attack_animation";
+	private bool inFormation = false;
 
 	public Ally()
 	{
@@ -109,10 +110,27 @@ public partial class Ally : CharacterBody2D, IUnit
 			{
 				if (player.followPlayer)
 				{
+					Vector2 directionToPlayer = (player.GlobalPosition - GlobalPosition).Normalized();
+					
+					if (directionToPlayer.X > 0)
+					{
+						sprite.FlipH = false;
+					}
+					else if (directionToPlayer.X < 0)
+					{
+						sprite.FlipH = true;
+					}
+					
 					followPlayer = true;
+					if (!inFormation && BoxFormation.Instance != null)
+					{
+						BoxFormation.Instance.registerAlly(this);
+						inFormation = true;
+					}
 				}
 				else
 				{
+					BoxFormation.Instance.deRegisterAlly(this);
 					followPlayer = false;
 					if (this.GlobalPosition.DistanceTo(this.spawnPosition) > 5.0f)
 					{
@@ -130,32 +148,32 @@ public partial class Ally : CharacterBody2D, IUnit
 					}
 				}
 
-				if (player.GlobalPosition.DistanceTo(GlobalPosition) > ALLY_PLAYER_GAP && followPlayer)
-				{
-					// If attack animation finishes, return to idle animation
-					if (sprite.Animation == ALLY_ATTACK_ANIMATION)
-					{
-						sprite.Play(ALLY_IDLE_ANIMATION);
-					}
+				// if (player.GlobalPosition.DistanceTo(GlobalPosition) > ALLY_PLAYER_GAP && followPlayer)
+				// {
+				// 	// If attack animation finishes, return to idle animation
+				// 	if (sprite.Animation == ALLY_ATTACK_ANIMATION)
+				// 	{
+				// 		sprite.Play(ALLY_IDLE_ANIMATION);
+				// 	}
 
-					Vector2 directionToPlayer = (player.GlobalPosition - GlobalPosition).Normalized();
-					velocity += directionToPlayer * SPEED;
-					if (directionToPlayer.X > 0)
-					{
-						sprite.FlipH = false;
-					}
-					else if (directionToPlayer.X < 0)
-					{
-						sprite.FlipH = true;
-					}
-				}
+				// 	Vector2 directionToPlayer = (player.GlobalPosition - GlobalPosition).Normalized();
+				// 	velocity += directionToPlayer * SPEED;
+				// 	if (directionToPlayer.X > 0)
+				// 	{
+				// 		sprite.FlipH = false;
+				// 	}
+				// 	else if (directionToPlayer.X < 0)
+				// 	{
+				// 		sprite.FlipH = true;
+				// 	}
+				// }
 			}
 
-			foreach (Ally otherAlly in nearbyAllies)
-			{
-				Vector2 moveAway = (GlobalPosition - otherAlly.GlobalPosition).Normalized();
-				velocity += moveAway * (SPEED * 0.7f); // Reduce weight so it doesn't overpower player movement
-			}
+			// foreach (Ally otherAlly in nearbyAllies)
+			// {
+			// 	Vector2 moveAway = (GlobalPosition - otherAlly.GlobalPosition).Normalized();
+			// 	velocity += moveAway * (SPEED * 0.7f); // Reduce weight so it doesn't overpower player movement
+			// }
 
 			if (velocity.Length() > SPEED)
 			{

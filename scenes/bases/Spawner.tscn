@@ -7,7 +7,6 @@ radius = 290.395
 
 [node name="Spawner" type="Node2D" node_paths=PackedStringArray("PlayerDetectionArea")]
 script = ExtResource("1_nj7by")
-Scene = null
 PlayerDetectionArea = NodePath("PlayerDetectionArea")
 
 [node name="PlayerDetectionArea" type="Area2D" parent="."]
