@@ -12,7 +12,6 @@ public partial class BoxFormation : Node
 
 	public override void _Ready()
 	{
-		GD.Print("Loaded");
 		if (Instance != null)
 		{
 			QueueFree();
@@ -36,7 +35,6 @@ public partial class BoxFormation : Node
 			int i = 0;
 
 			int rows = (int)Math.Ceiling((double)allies.Count/rowWidth);
-			GD.Print(rows);
 
 			for (int y = 0; y < rowWidth; y++)
 			{
@@ -64,7 +62,7 @@ public partial class BoxFormation : Node
 	{
 		allies.Add(ally);
 	}
-	
+
 	public void deRegisterAlly(Ally ally)
 	{
 		allies.Remove(ally);

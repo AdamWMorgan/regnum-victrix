@@ -111,7 +111,7 @@ public partial class Ally : CharacterBody2D, IUnit
 				if (player.followPlayer)
 				{
 					Vector2 directionToPlayer = (player.GlobalPosition - GlobalPosition).Normalized();
-					
+
 					if (directionToPlayer.X > 0)
 					{
 						sprite.FlipH = false;
@@ -120,7 +120,7 @@ public partial class Ally : CharacterBody2D, IUnit
 					{
 						sprite.FlipH = true;
 					}
-					
+
 					followPlayer = true;
 					if (!inFormation && BoxFormation.Instance != null)
 					{
@@ -195,6 +195,12 @@ public partial class Ally : CharacterBody2D, IUnit
 		}
 		else
 		{
+			if (inFormation)
+			{
+				BoxFormation.Instance.deRegisterAlly(this);
+				inFormation = false;
+				followPlayer = false;
+			}
 			GameManager.Instance.UnregisterAlly(this);
 			collisionShape.Disabled = true;
 			//GetParent().RemoveChild(this);
