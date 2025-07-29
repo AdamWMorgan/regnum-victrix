@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Godot;
 
@@ -5,7 +6,7 @@ public partial class BoxFormation : Node
 {
 	public static BoxFormation Instance { get; private set; }
 	private Player player;
-	private int rows = 3;
+	private int rowWidth = 5;
 	private float spacing = 20f;
 	private List<Ally> allies = new List<Ally>();
 
@@ -24,33 +25,36 @@ public partial class BoxFormation : Node
 
 	public override void _Process(double delta)
 	{
-		base._Process(delta);       
-				
-		int totalNeeded = rows * rows;
-		if (allies.Count < totalNeeded) return;
-		Vector2 playerPos = player.GlobalPosition;
-		
-		float distanceBehind = 100f;
-		Vector2 formationCenter = playerPos + new Vector2(-distanceBehind, 0); 
-
-		int i = 0;
-
-		for (int y = 0; y < rows; y++)
+		base._Process(delta);
+		if (allies.Count > 0)
 		{
-			for (int x = 0; x < rows; x++)
+			Vector2 playerPos = player.GlobalPosition;
+
+			float distanceBehind = 100f;
+			Vector2 formationCenter = playerPos + new Vector2(-distanceBehind, 0);
+
+			int i = 0;
+
+			int rows = (int)Math.Ceiling((double)allies.Count/rowWidth);
+			GD.Print(rows);
+
+			for (int y = 0; y < rowWidth; y++)
 			{
-				if (i >= allies.Count) break;
+				for (int x = 0; x < rows; x++)
+				{
+					if (i >= allies.Count) break;
 
-				// Calculate offset from center in formation
-				float offsetX = (x - (rows - 1) / 2f) * spacing;
-				float offsetY = (y - (rows - 1) / 2f) * spacing;
-				Vector2 offset = new Vector2(offsetX, offsetY);
+					// Calculate offset from center in formation
+					float offsetX = (x - (rows - 1) / 2f) * spacing;
+					float offsetY = (y - (rows - 1) / 2f) * spacing;
+					Vector2 offset = new Vector2(offsetX, offsetY);
 
-				Vector2 targetPos = formationCenter + offset;
+					Vector2 targetPos = formationCenter + offset;
 
-				// Move the soldier toward the target position
-				MoveSoldier(allies[i], targetPos, delta);
-				i++;
+					// Move the soldier toward the target position
+					MoveSoldier(allies[i], targetPos, delta);
+					i++;
+				}
 			}
 		}
 
