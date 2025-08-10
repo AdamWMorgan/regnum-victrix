@@ -193,18 +193,18 @@ public partial class Ally : CharacterBody2D, IUnit
 			Velocity = velocity;
 			MoveAndSlide();
 		}
-		else
-		{
-			if (inFormation)
+			else
 			{
-				BoxFormation.Instance.deRegisterAlly(this);
-				inFormation = false;
-				followPlayer = false;
+				if (inFormation)
+				{
+					BoxFormation.Instance.deRegisterAlly(this);
+					inFormation = false;
+					followPlayer = false;
+				}
+				GameManager.Instance.UnregisterAlly(this);
+				collisionShape.Disabled = true;
+				//GetParent().RemoveChild(this);
 			}
-			GameManager.Instance.UnregisterAlly(this);
-			collisionShape.Disabled = true;
-			//GetParent().RemoveChild(this);
-		}
 	}
 
 	public override void _Process(double delta)
