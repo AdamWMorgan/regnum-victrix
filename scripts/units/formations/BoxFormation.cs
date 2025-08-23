@@ -8,6 +8,7 @@ public partial class BoxFormation : Node
 	private Player player;
 	private int rowWidth = 5;
 	private float spacing = 20f;
+	private float SPEED = 80f;
 	private List<Ally> allies = new List<Ally>();
 
 	public override void _Ready()
@@ -70,9 +71,8 @@ public partial class BoxFormation : Node
 	
 	private void MoveSoldier(Node2D ally, Vector2 targetPos, double delta)
 	{
-		float speed = 80f;
 		Vector2 currentPos = ally.GlobalPosition;
-		Vector2 newPos = currentPos.MoveToward(targetPos, speed * (float)delta);
+		Vector2 newPos = currentPos.MoveToward(targetPos, SPEED * (float)delta);
 		ally.GlobalPosition = newPos;
 	}
 }
