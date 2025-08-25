@@ -46,7 +46,7 @@ public partial class BoxFormation : Node
 					// Calculate offset from center in formation
 					float offsetX = (x - (rows - 1) / 2f) * spacing;
 					float offsetY = (y - (rows - 1) / 2f) * spacing;
-					Vector2 offset = new Vector2(offsetX, offsetY);
+					Vector2 offset = new(offsetX, offsetY);
 
 					Vector2 targetPos = formationCenter + offset;
 
