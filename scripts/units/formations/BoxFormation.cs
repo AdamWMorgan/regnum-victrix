@@ -28,10 +28,8 @@ public partial class BoxFormation : Node
 		base._Process(delta);
 		if (allies.Count > 0)
 		{
-			Vector2 playerPos = player.GlobalPosition;
-
 			float distanceBehind = 100f;
-			Vector2 formationCenter = playerPos + new Vector2(-distanceBehind, 0);
+			Vector2 formationCenter = player.GlobalPosition + new Vector2(-distanceBehind, 0);
 
 			int i = 0;
 
