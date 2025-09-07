@@ -31,7 +31,6 @@ public partial class BoxFormation : Node
 			float distanceBehind = 100f;
 			Vector2 formationCenter = player.GlobalPosition + new Vector2(-distanceBehind, 0);
 
-			int i = 0;
 
 			int rows = (int) Math.Ceiling((double)allies.Count/rowWidth);
 
@@ -39,6 +38,8 @@ public partial class BoxFormation : Node
 			{
 				for (int x = 0; x < rows; x++)
 				{
+					int i = 0;
+
 					if (i >= allies.Count) break;
 
 					// Calculate offset from center in formation
