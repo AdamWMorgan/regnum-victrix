@@ -59,6 +59,7 @@ public abstract partial class ResourceNode : Node2D
 	public override void _Process(double delta)
 	{
 		levelUp(delta);
+		
 		if (capturingUnits != 0) { captureInProgress = true; } else { captureInProgress = false; }
 
 		if (!captureInProgress)
