@@ -124,16 +124,19 @@ public partial class Player : CharacterBody2D
 
 	public override void _Input(InputEvent @event)
 	{
-		base._Input(@event);
+		if(@event is InputEventKey keyEvent && keyEvent.Pressed && !keyEvent.Echo){
 
-		if (Input.IsKeyPressed(Key.Q))
-		{
-			followPlayer = true;
-		}
+			if (Input.IsKeyPressed(Key.Q))
+			{
+				GD.Print("Follow pressed!");
+				followPlayer = true;
+			}
 
-		if (Input.IsKeyPressed(Key.E))
-		{
-			followPlayer = false;
+			if (Input.IsKeyPressed(Key.E))
+			{
+				GD.Print("Go away pressed!");
+				followPlayer = false;
+			}
 		}
 	}
 

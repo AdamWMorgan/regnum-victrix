@@ -121,7 +121,6 @@ public partial class Ally : CharacterBody2D, IUnit
 						sprite.FlipH = true;
 					}
 
-					followPlayer = true;
 					if (!inFormation && BoxFormation.Instance != null)
 					{
 						BoxFormation.Instance.registerAlly(this);
@@ -131,7 +130,7 @@ public partial class Ally : CharacterBody2D, IUnit
 				else
 				{
 					BoxFormation.Instance.deRegisterAlly(this);
-					followPlayer = false;
+
 					if (this.GlobalPosition.DistanceTo(this.spawnPosition) > 5.0f)
 					{
 						Vector2 directionToSpawn = this.spawnPosition - this.GlobalPosition;
@@ -193,18 +192,18 @@ public partial class Ally : CharacterBody2D, IUnit
 			Velocity = velocity;
 			MoveAndSlide();
 		}
-			else
+		else
+		{
+			if (inFormation)
 			{
-				if (inFormation)
-				{
-					BoxFormation.Instance.deRegisterAlly(this);
-					inFormation = false;
-					followPlayer = false;
-				}
-				GameManager.Instance.UnregisterAlly(this);
-				collisionShape.Disabled = true;
-				//GetParent().RemoveChild(this);
+				BoxFormation.Instance.deRegisterAlly(this);
+				inFormation = false;
+				followPlayer = false;
 			}
+			GameManager.Instance.UnregisterAlly(this);
+			collisionShape.Disabled = true;
+			//GetParent().RemoveChild(this);
+		}
 	}
 
 	public override void _Process(double delta)
