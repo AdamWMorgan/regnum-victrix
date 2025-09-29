@@ -128,13 +128,11 @@ public partial class Player : CharacterBody2D
 
 			if (Input.IsKeyPressed(Key.Q))
 			{
-				GD.Print("Follow pressed!");
 				followPlayer = true;
 			}
 
 			if (Input.IsKeyPressed(Key.E))
 			{
-				GD.Print("Go away pressed!");
 				followPlayer = false;
 			}
 		}
