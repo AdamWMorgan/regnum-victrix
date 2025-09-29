@@ -28,9 +28,12 @@ public partial class BoxFormation : Node
 		base._Process(delta);
 		if (allies.Count > 0)
 		{
-			float distanceBehind = 120f;
-			Vector2 formationCenter = player.GlobalPosition + new Vector2(-distanceBehind, 0);
+			Vector2 playerPos = player.GlobalPosition;
 
+			float distanceBehind = 100f;
+			Vector2 formationCenter = playerPos + new Vector2(-distanceBehind, 0);
+
+			int i = 0;
 
 			int rows = (int) Math.Ceiling((double)allies.Count/rowWidth);
 
@@ -38,14 +41,12 @@ public partial class BoxFormation : Node
 			{
 				for (int x = 0; x < rows; x++)
 				{
-					int i = 0;
-
 					if (i >= allies.Count) break;
 
 					// Calculate offset from center in formation
 					float offsetX = (x - (rows - 1) / 2f) * spacing;
 					float offsetY = (y - (rows - 1) / 2f) * spacing;
-					Vector2 offset = new(offsetX, offsetY);
+					Vector2 offset = new Vector2(offsetX, offsetY);
 
 					Vector2 targetPos = formationCenter + offset;
 
