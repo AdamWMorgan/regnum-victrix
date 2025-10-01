@@ -1,8 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://coeuknkpeyvk3"]
+[gd_scene load_steps=9 format=3 uid="uid://coeuknkpeyvk3"]
 
 [ext_resource type="Script" path="res://scripts/bases/AllyBase.cs" id="1_qis78"]
 [ext_resource type="Script" path="res://scripts/units/spawners/AllySpawner.cs" id="2_64lto"]
-[ext_resource type="PackedScene" uid="uid://drtu1nxxs28rm" path="res://scenes/units/ally.tscn" id="3_ru2op"]
+[ext_resource type="PackedScene" uid="uid://drtu1nxxs28rm" path="res://scenes/units/ally.tscn" id="3_q3iyn"]
 [ext_resource type="PackedScene" uid="uid://cl8x0subioer6" path="res://scenes/capture_health.tscn" id="5_c6hof"]
 [ext_resource type="PackedScene" uid="uid://vowefb5gr84m" path="res://scenes/bases/resource_display.tscn" id="6_mlren"]
 [ext_resource type="Texture2D" uid="uid://dtpmcvbeq0v2e" path="res://game/assets/materials/roman_fort.png" id="6_wl017"]
@@ -10,16 +10,18 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jwf8q"]
 bg_color = Color(0, 0.631373, 0.976471, 1)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_acrmn"]
+size = Vector2(267, 235)
+
 [node name="AllyBase" type="Node2D" node_paths=PackedStringArray("captureProgress")]
 script = ExtResource("1_qis78")
 captureProgress = NodePath("CaptureProgress")
 
 [node name="AllySpawner" type="Node2D" parent="."]
-position = Vector2(-2, -4)
+position = Vector2(-57, -54)
 script = ExtResource("2_64lto")
-AllyScene = ExtResource("3_ru2op")
-AllySpawnCount = 10
-AllySpawnArea = Rect2(0, 0, 200, 100)
+Scene = ExtResource("3_q3iyn")
+SpawnArea = Rect2(0, 0, 200, 200)
 
 [node name="CaptureProgress" parent="." instance=ExtResource("5_c6hof")]
 position = Vector2(-1, 98)
@@ -34,3 +36,11 @@ scale = Vector2(0.5, 0.5)
 position = Vector2(-0.499997, 0.499996)
 scale = Vector2(1.46094, 1.46094)
 texture = ExtResource("6_wl017")
+
+[node name="CaptureArea" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CaptureAreaCollision" type="CollisionShape2D" parent="CaptureArea"]
+position = Vector2(1.5, 3.5)
+shape = SubResource("RectangleShape2D_acrmn")

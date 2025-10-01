@@ -5,7 +5,7 @@ using System.Linq;
 
 public partial class Ally : CharacterBody2D, IUnit
 {
-	public String ID { get; private set; }
+	public string ID { get; private set; }
 	public UnitLevel Level { get; private set; } = UnitLevel.VELITES;
 	// Reference to the Area2D node
 	[Export] public Area2D DetectionArea;
@@ -13,7 +13,7 @@ public partial class Ally : CharacterBody2D, IUnit
 	[Export] public Area2D AttackArea;
 	[Export] public CollisionShape2D collisionShape;
 	[Export] public Health health;
-	[Export] public Vector2 spawnPosition;
+	public Vector2 spawnPosition;
 	public const int ATTACK_DAMAGE = 10;
 	public const int HEALTH_REGEN_VAL = 10;
 	public bool allyAlive = true;
@@ -36,6 +36,7 @@ public partial class Ally : CharacterBody2D, IUnit
 	public const float ALLY_PLAYER_GAP = 50.0f;
 	private const string ALLY_IDLE_ANIMATION = "ally_idle_animation";
 	private const string ALLY_ATTACK_ANIMATION = "ally_attack_animation";
+	private bool inFormation = false;
 
 	public Ally()
 	{
@@ -49,6 +50,7 @@ public partial class Ally : CharacterBody2D, IUnit
 
 	public override void _Ready()
 	{
+		spawnPosition = GlobalPosition;
 		AddToGroup("Ally");
 		// Connect the body_entered and body_exited signals to the methods
 		AttackArea.BodyEntered += OnBodyEnteredAttackArea;
@@ -104,48 +106,73 @@ public partial class Ally : CharacterBody2D, IUnit
 			{
 				sprite.Play(ALLY_IDLE_ANIMATION);
 			}
-			else if (playerDetected && player.GlobalPosition.DistanceTo(GlobalPosition) > ALLY_PLAYER_GAP && followPlayer)
+			if (playerDetected)
 			{
-				// If attack animation finishes, return to idle animation
-				if (sprite.Animation == ALLY_ATTACK_ANIMATION)
+				if (player.followPlayer)
 				{
-					sprite.Play(ALLY_IDLE_ANIMATION);
-				}
+					Vector2 directionToPlayer = (player.GlobalPosition - GlobalPosition).Normalized();
 
-				Vector2 directionToPlayer = (player.GlobalPosition - GlobalPosition).Normalized();
-				velocity += directionToPlayer * SPEED;
-				if (directionToPlayer.X > 0)
-				{
-					sprite.FlipH = false;
-				}
-				else if (directionToPlayer.X < 0)
-				{
-					sprite.FlipH = true;
-				}
-			}
-			else
-			{
-				if (!followPlayer && this.GlobalPosition.DistanceTo(this.spawnPosition) > 5.0f)
-				{
-					Vector2 directionToSpawn = (this.spawnPosition - this.GlobalPosition);
-					velocity += directionToSpawn * SPEED;
-
-					if (directionToSpawn.X > 0)
+					if (directionToPlayer.X > 0)
 					{
 						sprite.FlipH = false;
 					}
-					else if (directionToSpawn.X < 0)
+					else if (directionToPlayer.X < 0)
 					{
 						sprite.FlipH = true;
 					}
+
+					if (!inFormation && BoxFormation.Instance != null)
+					{
+						BoxFormation.Instance.registerAlly(this);
+						inFormation = true;
+					}
 				}
+				else
+				{
+					BoxFormation.Instance.deRegisterAlly(this);
+
+					if (this.GlobalPosition.DistanceTo(this.spawnPosition) > 5.0f)
+					{
+						Vector2 directionToSpawn = this.spawnPosition - this.GlobalPosition;
+						velocity += directionToSpawn * SPEED;
+
+						if (directionToSpawn.X > 0)
+						{
+							sprite.FlipH = false;
+						}
+						else if (directionToSpawn.X < 0)
+						{
+							sprite.FlipH = true;
+						}
+					}
+				}
+
+				// if (player.GlobalPosition.DistanceTo(GlobalPosition) > ALLY_PLAYER_GAP && followPlayer)
+				// {
+				// 	// If attack animation finishes, return to idle animation
+				// 	if (sprite.Animation == ALLY_ATTACK_ANIMATION)
+				// 	{
+				// 		sprite.Play(ALLY_IDLE_ANIMATION);
+				// 	}
+
+				// 	Vector2 directionToPlayer = (player.GlobalPosition - GlobalPosition).Normalized();
+				// 	velocity += directionToPlayer * SPEED;
+				// 	if (directionToPlayer.X > 0)
+				// 	{
+				// 		sprite.FlipH = false;
+				// 	}
+				// 	else if (directionToPlayer.X < 0)
+				// 	{
+				// 		sprite.FlipH = true;
+				// 	}
+				// }
 			}
 
-			foreach (Ally otherAlly in nearbyAllies)
-			{
-				Vector2 moveAway = (GlobalPosition - otherAlly.GlobalPosition).Normalized();
-				velocity += moveAway * (SPEED * 0.7f); // Reduce weight so it doesn't overpower player movement
-			}
+			// foreach (Ally otherAlly in nearbyAllies)
+			// {
+			// 	Vector2 moveAway = (GlobalPosition - otherAlly.GlobalPosition).Normalized();
+			// 	velocity += moveAway * (SPEED * 0.7f); // Reduce weight so it doesn't overpower player movement
+			// }
 
 			if (velocity.Length() > SPEED)
 			{
@@ -167,6 +194,12 @@ public partial class Ally : CharacterBody2D, IUnit
 		}
 		else
 		{
+			if (inFormation)
+			{
+				BoxFormation.Instance.deRegisterAlly(this);
+				inFormation = false;
+				followPlayer = false;
+			}
 			GameManager.Instance.UnregisterAlly(this);
 			collisionShape.Disabled = true;
 			//GetParent().RemoveChild(this);
@@ -182,6 +215,7 @@ public partial class Ally : CharacterBody2D, IUnit
 		}
 		HealthRegen(delta);
 	}
+
 	public UnitLevel LevelUp()
 	{
 		this.Level = LevellingUtil<UnitLevel>.LevelUp((int)this.Level);
@@ -201,14 +235,6 @@ public partial class Ally : CharacterBody2D, IUnit
 			{
 				timeSinceLastHealthRegen += (float)delta;
 			}
-		}
-	}
-
-	public override void _Input(InputEvent @event)
-	{
-		if (Input.IsKeyPressed(Key.Q))
-		{
-			followPlayer = !followPlayer;
 		}
 	}
 

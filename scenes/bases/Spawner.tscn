@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://dhxvkaevurqak"]
+
+[ext_resource type="Script" path="res://scripts/units/spawners/Spawner.cs" id="1_nj7by"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mkd7k"]
+radius = 290.395
+
+[node name="Spawner" type="Node2D" node_paths=PackedStringArray("PlayerDetectionArea")]
+script = ExtResource("1_nj7by")
+PlayerDetectionArea = NodePath("PlayerDetectionArea")
+
+[node name="PlayerDetectionArea" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="PlayerCollision" type="CollisionShape2D" parent="PlayerDetectionArea"]
+shape = SubResource("CircleShape2D_mkd7k")

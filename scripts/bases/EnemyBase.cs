@@ -1,28 +1,23 @@
 using Godot;
 
-public partial class EnemyBase : Node2D, IBaseProvider
+public partial class EnemyBase : Base, IBaseProvider
 {
-	[Export] public CaptureProgress captureProgress;
-	public string BaseID;
-	private Base attachedBase;
-	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		base._Ready(); // Call shared logic from Base
+
 		var style = new StyleBoxFlat
 		{
 			BgColor = ColourPalette.ENEMY.ToColor()
 		};
 		captureProgress.ColourChange(style);
-		attachedBase = new Base.Builder().SetOwner(Faction.ENEMY).Build();
-		BaseID = GameManager.Instance.BaseRegister(attachedBase);
-		AddChild(attachedBase);
+
+		CurrentBaseOwner = Faction.ENEMY;
+		GameManager.Instance.BaseRegister(this); // Optional: Only if needed again
 	}
 
-	public Base GetAttachedBase(){
-		return attachedBase;
+	public Base GetAttachedBase()
+	{
+		return this;
 	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{ }
 }

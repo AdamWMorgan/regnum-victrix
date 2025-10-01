@@ -1,10 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://b5b2g1txc0hi"]
+[gd_scene load_steps=5 format=3 uid="uid://b5b2g1txc0hi"]
 
 [ext_resource type="Script" path="res://scripts/resources/WoodSource.cs" id="1_7six0"]
 [ext_resource type="PackedScene" uid="uid://cl8x0subioer6" path="res://scenes/capture_health.tscn" id="2_3jl8s"]
-[ext_resource type="Texture2D" uid="uid://de7do1oy3n4y8" path="res://game/assets/materials/tree.png" id="3_n3qji"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_vcld3"]
+[ext_resource type="Texture2D" uid="uid://c21rhegffhl8q" path="res://game/assets/materials/forest.png" id="3_m3r22"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7uh5g"]
 radius = 91.0494
@@ -16,17 +14,8 @@ captureProgress = NodePath("CaptureProgress")
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 
 [node name="CaptureProgress" parent="." instance=ExtResource("2_3jl8s")]
-position = Vector2(0, 71)
-scale = Vector2(0.4, 0.4)
-
-[node name="OwnerLabel" type="Label" parent="."]
-offset_left = -8.99998
-offset_top = 58.0
-offset_right = 33.0
-offset_bottom = 81.0
-scale = Vector2(0.413799, 0.343821)
-text = "None"
-label_settings = SubResource("LabelSettings_vcld3")
+position = Vector2(0, 56)
+scale = Vector2(0.2, 0.2)
 
 [node name="CaptureArea" type="Area2D" parent="."]
 position = Vector2(-34, 177)
@@ -40,4 +29,4 @@ shape = SubResource("CircleShape2D_7uh5g")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(1.90735e-06, 1)
 scale = Vector2(0.0987549, 0.0992945)
-texture = ExtResource("3_n3qji")
+texture = ExtResource("3_m3r22")

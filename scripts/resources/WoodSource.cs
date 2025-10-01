@@ -3,9 +3,14 @@ using System;
 
 public partial class WoodSource : ResourceNode
 {
-	public String ID { get; private set; }
-	
-	public WoodSource() : base(new Resource(ResourceType.WOOD)){
+	public string ID { get; private set; }
+	private int LEVEL_UP_THRESHOLD = 50;
+	private int nextLevelUpAt = 50;
+	private float DEFAULT_UPGRADE_CHECK = 5f;
+	private float timeSinceLastResourceLevelUpCheck = 0f;
+
+	public WoodSource() : base(new Resource(ResourceType.WOOD))
+	{
 		this.ID = Guid.NewGuid().ToString();
 	}
 
@@ -13,5 +18,23 @@ public partial class WoodSource : ResourceNode
 	public override void _Process(double delta)
 	{
 		base._Process(delta);
+	}
+		
+	public override void levelUp(double delta)
+	{
+		if (timeSinceLastResourceLevelUpCheck >= DEFAULT_UPGRADE_CHECK)
+		{
+			if (lifetimeResourceCreation >= nextLevelUpAt)
+			{
+				LevelUp();
+				GD.Print("wood level up = " + Level);
+				nextLevelUpAt += LEVEL_UP_THRESHOLD;
+			}
+			timeSinceLastResourceLevelUpCheck = 0f;
+		}
+		else
+		{
+			timeSinceLastResourceLevelUpCheck += (float)delta;
+		}
 	}
 }

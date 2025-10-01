@@ -4,6 +4,10 @@ using System;
 public partial class WaterSource : ResourceNode
 {
 	public string ID { get; private set; }
+	private int LEVEL_UP_THRESHOLD = 50;
+	private int nextLevelUpAt = 50;
+	private float DEFAULT_UPGRADE_CHECK = 5f;
+	private float timeSinceLastResourceLevelUpCheck = 0f;
 
 	public WaterSource() : base(new Resource(ResourceType.WATER))
 	{
@@ -14,5 +18,23 @@ public partial class WaterSource : ResourceNode
 	public override void _Process(double delta)
 	{
 		base._Process(delta);
+	}	
+	
+	public override void levelUp(double delta)
+	{
+		if (timeSinceLastResourceLevelUpCheck >= DEFAULT_UPGRADE_CHECK)
+		{
+			if (lifetimeResourceCreation >= nextLevelUpAt)
+			{
+				LevelUp();
+				GD.Print("water level up = " + Level);
+				nextLevelUpAt += LEVEL_UP_THRESHOLD;
+			}
+			timeSinceLastResourceLevelUpCheck = 0f;
+		}
+		else
+		{
+			timeSinceLastResourceLevelUpCheck += (float)delta;
+		}
 	}
 }

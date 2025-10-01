@@ -6,21 +6,24 @@ using System.Linq;
 public abstract partial class ResourceNode : Node2D
 {
 	[Export] public CaptureProgress captureProgress;
+	public string ID { get; private set; }
 	public Resource Resource { get; private set; }
 	public int GeneratingCapacity { get; private set; }
 	public int SendAmount { get; private set; }
 	public ResourceLevel Level { get; private set; } = ResourceLevel.ONE;
 	public Base attachedBase;
 	public Faction currentOwner;
+	public int lifetimeResourceCreation = 0;
 	// the number at which the resource should be sent to the associated base
 	private int DEFAULT_SEND_TRIGGER_CAPACITY = 50;
+	
 	private float DEFAULT_GENERATION_SPEED = 1f;
 	private float timeSinceLastGen = 0f;
 	public Area2D captureArea;
-	public Label ownerLabel;
 	private bool captureInProgress = false;
 	private float CAPTURE_SPEED = 1f;
 	private float timeSinceLastCaptureDeplete = 0f;
+	
 	private int capturingUnits = 0;
 
 	public ResourceNode(Resource resource)
@@ -37,22 +40,26 @@ public abstract partial class ResourceNode : Node2D
 		this.SendAmount = sendAmount;
 	}
 
+	public abstract void levelUp(double delta);
+
 	public override void _Ready()
 	{
+		ID = Guid.NewGuid().ToString();
 		attachedBase = CalculateClosestBase();
 		captureArea = GetNode<Area2D>("CaptureArea");
 		// Connect the body_entered and body_exited signals to the methods
 		captureArea.BodyEntered += OnBodyEnteredCaptureArea;
 		captureArea.BodyExited += OnBodyExitedCaptureArea;
-		ownerLabel = GetNode<Label>("OwnerLabel");
-		ownerLabel.Text = attachedBase.CurrentBaseOwner.ToString();
 		// initial setting of resource node ownership
 		currentOwner = attachedBase.CurrentBaseOwner;
 		SetProgressBar();
+		GameManager.Instance.RegisterResourceNode(this);
 	}
 
 	public override void _Process(double delta)
 	{
+		levelUp(delta);
+		
 		if (capturingUnits != 0) { captureInProgress = true; } else { captureInProgress = false; }
 
 		if (!captureInProgress)
@@ -60,6 +67,7 @@ public abstract partial class ResourceNode : Node2D
 			if (timeSinceLastGen > DEFAULT_GENERATION_SPEED)
 			{
 				Resource.IncrementResourceQuantity(GeneratingCapacity);
+				lifetimeResourceCreation += GeneratingCapacity;
 				timeSinceLastGen = 0.0f;
 			}
 			else
@@ -132,6 +140,7 @@ public abstract partial class ResourceNode : Node2D
 	// Called when a body enters the Area2D
 	private void OnBodyEnteredCaptureArea(Node body)
 	{
+		// TODO: Bug here somewhere where an ally can capture the base for the enemy?!
 		if ((body.IsInGroup("Player") || body.IsInGroup("Ally")) && currentOwner != Faction.ALLY)
 		{
 			capturingUnits++;
@@ -145,17 +154,18 @@ public abstract partial class ResourceNode : Node2D
 	// Called when a body exits the Area2D
 	private void OnBodyExitedCaptureArea(Node body)
 	{
+		// TODO: Bug here somewhere where an ally can capture the base for the enemy?!
 		if ((body.IsInGroup("Player") || body.IsInGroup("Ally")) && currentOwner != Faction.ALLY)
 		{
 			capturingUnits--;
 		}
-		if (body.IsInGroup("Enemy") && currentOwner != Faction.ENEMY)
+		else if (body.IsInGroup("Enemy") && currentOwner != Faction.ENEMY)
 		{
 			capturingUnits--;
 		}
 	}
 
-	private void SwitchOwnership(Faction newOwner)
+	public void SwitchOwnership(Faction newOwner)
 	{
 		// todo: also need to switch the resource nodes ownership to the nearest capturers base
 		if (newOwner == Faction.ALLY)
@@ -170,7 +180,6 @@ public abstract partial class ResourceNode : Node2D
 			UpdateStyleAfterCapture(ColourPalette.ENEMY.ToColor());
 			attachedBase = CalculateClosestBase(Faction.ENEMY);
 		}
-		ownerLabel.Text = currentOwner.ToString();
 	}
 
 	private void UpdateStyleAfterCapture(Color colour)

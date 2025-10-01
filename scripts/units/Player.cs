@@ -14,6 +14,7 @@ public partial class Player : CharacterBody2D
 	public const int HEALTH_REGEN_VAL = 10;
 
 	public bool playerAlive = true;
+	public bool followPlayer = false;
 
 	private AnimatedSprite2D sprite;
 	public List<Enemy> enemies;
@@ -120,6 +121,23 @@ public partial class Player : CharacterBody2D
 
 		HealthRegen(delta);
 	}
+
+	public override void _Input(InputEvent @event)
+	{
+		if(@event is InputEventKey keyEvent && keyEvent.Pressed && !keyEvent.Echo){
+
+			if (Input.IsKeyPressed(Key.Q))
+			{
+				followPlayer = true;
+			}
+
+			if (Input.IsKeyPressed(Key.E))
+			{
+				followPlayer = false;
+			}
+		}
+	}
+
 
 	private void HealthRegen(double delta)
 	{

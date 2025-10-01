@@ -4,8 +4,13 @@ using System;
 public partial class GoldMine : ResourceNode
 {
 	public string ID { get; private set; }
-	
-	public GoldMine() : base(new Resource(ResourceType.GOLD)){
+	private int LEVEL_UP_THRESHOLD = 50;
+	private int nextLevelUpAt = 50;
+	private float DEFAULT_UPGRADE_CHECK = 5f;
+	private float timeSinceLastResourceLevelUpCheck = 0f;
+
+	public GoldMine() : base(new Resource(ResourceType.GOLD))
+	{
 		this.ID = Guid.NewGuid().ToString();
 	}
 
@@ -13,5 +18,23 @@ public partial class GoldMine : ResourceNode
 	public override void _Process(double delta)
 	{
 		base._Process(delta);
+	}
+
+	public override void levelUp(double delta)
+	{
+		if (timeSinceLastResourceLevelUpCheck >= DEFAULT_UPGRADE_CHECK)
+		{
+			if (lifetimeResourceCreation >= nextLevelUpAt)
+			{
+				LevelUp();
+				GD.Print("gold level up = " + Level);
+				nextLevelUpAt += LEVEL_UP_THRESHOLD;
+			}
+			timeSinceLastResourceLevelUpCheck = 0f;
+		}
+		else
+		{
+			timeSinceLastResourceLevelUpCheck += (float)delta;
+		}
 	}
 }

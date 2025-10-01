@@ -17,6 +17,7 @@ config/features=PackedStringArray("4.3", "C#", "Forward Plus")
 [autoload]
 
 GameManager="*res://scripts/GameManager.cs"
+BoxFormation="*res://scripts/units/formations/BoxFormation.cs"
 
 [display]
 
