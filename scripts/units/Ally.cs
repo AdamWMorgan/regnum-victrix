@@ -31,7 +31,7 @@ public partial class Ally : CharacterBody2D, IUnit
 	private float healthRegenCooldown = 20f;
 	public AnimatedSprite2D sprite;
 	public Player player;
-	public const float SPEED = 55.0f;
+	public const float SPEED = 60.0f;
 	public const float DECELERATION = 5000.0f;
 	public const float ALLY_PLAYER_GAP = 50.0f;
 	private const string ALLY_IDLE_ANIMATION = "ally_idle_animation";
