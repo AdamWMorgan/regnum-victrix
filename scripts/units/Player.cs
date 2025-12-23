@@ -25,7 +25,7 @@ public partial class Player : CharacterBody2D
 	private readonly List<Enemy> enemiesInAttackArea = new();
 	private bool enemyInAttackArea = false;
 
-	private float attackCooldown = 0.8f;
+	private float attackCooldown = 0.7f;
 	private float timeSinceLastAttack = 0.8f;
 
 	private float timeSinceLastHealthRegen = 0f;
