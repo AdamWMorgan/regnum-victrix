@@ -28,7 +28,7 @@ public partial class Ally : CharacterBody2D, IUnit
 	private float attackCooldown = 1.2f; // Cooldown duration in seconds
 	private float timeSinceLastAttack = 1.2f; // Tracks time since the last attack
 	private float timeSinceLastHealthRegen = 0f;
-	private float healthRegenCooldown = 30f;
+	private float healthRegenCooldown = 25f;
 	public AnimatedSprite2D sprite;
 	public Player player;
 	public const float SPEED = 60.0f;
