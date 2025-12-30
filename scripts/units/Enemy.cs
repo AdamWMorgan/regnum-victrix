@@ -13,7 +13,7 @@ public partial class Enemy : CharacterBody2D, IUnit
 	[Export] public Area2D AttackArea;
 	[Export] public CollisionShape2D collisionShape;
 	[Export] public Health health;
-	public const int ATTACK_DAMAGE = 10;
+	public const int ATTACK_DAMAGE = 8;
 	public const int HEALTH_REGEN_VAL = 10;
 	private const float FAST_PROCESS_SECONDS = 0.5f;
 	public bool enemyAlive = true;
