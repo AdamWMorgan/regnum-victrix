@@ -29,7 +29,7 @@ public partial class Player : CharacterBody2D
 	private float timeSinceLastAttack = 0.8f;
 
 	private float timeSinceLastHealthRegen = 0f;
-	private float healthRegenCooldown = 20f;
+	private float healthRegenCooldown = 15f;
 
 	private Vector2 originalAttackAreaPosition;
 
