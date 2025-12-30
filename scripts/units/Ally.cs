@@ -28,14 +28,15 @@ public partial class Ally : CharacterBody2D, IUnit
 	private float attackCooldown = 1.2f; // Cooldown duration in seconds
 	private float timeSinceLastAttack = 1.2f; // Tracks time since the last attack
 	private float timeSinceLastHealthRegen = 0f;
-	private float healthRegenCooldown = 30f;
+	private float healthRegenCooldown = 25f;
 	public AnimatedSprite2D sprite;
 	public Player player;
 	public const float SPEED = 60.0f;
 	public const float DECELERATION = 5000.0f;
-	public const float ALLY_PLAYER_GAP = 50.0f;
+	public const float ALLY_PLAYER_GAP = 45.0f;
 	private const string ALLY_IDLE_ANIMATION = "ally_idle_animation";
 	private const string ALLY_ATTACK_ANIMATION = "ally_attack_animation";
+	private const string PLAYER_NODE_PATH = "/root/Main/Player";
 	private bool inFormation = false;
 
 	public Ally()
@@ -60,7 +61,7 @@ public partial class Ally : CharacterBody2D, IUnit
 		PlayerDetectionArea.BodyEntered += OnBodyEnteredPlayerDetectionArea;
 		PlayerDetectionArea.BodyExited += OnBodyExitedPlayerDetectionArea;
 		sprite = GetNode<AnimatedSprite2D>("AllySprite");
-		player = GetNode<Player>("/root/Main/Player");
+		player = GetNode<Player>(PLAYER_NODE_PATH);
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -312,7 +313,6 @@ public partial class Ally : CharacterBody2D, IUnit
 		}
 	}
 
-	// Function to handle the attack logic
 	private void AttackPlayer(Node node)
 	{
 		// Todo: need to improve this so that it's only after the 

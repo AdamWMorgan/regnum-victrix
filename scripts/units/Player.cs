@@ -10,7 +10,7 @@ public partial class Player : CharacterBody2D
 
 	public const float SPEED = 100.0f;
 	public const float DECELERATION = 5000.0f;
-	public const int ATTACK_DAMAGE = 30;
+	public const int ATTACK_DAMAGE = 35;
 	public const int HEALTH_REGEN_VAL = 10;
 
 	public bool playerAlive = true;
@@ -29,7 +29,7 @@ public partial class Player : CharacterBody2D
 	private float timeSinceLastAttack = 0.8f;
 
 	private float timeSinceLastHealthRegen = 0f;
-	private float healthRegenCooldown = 20f;
+	private float healthRegenCooldown = 15f;
 
 	private Vector2 originalAttackAreaPosition;
 
@@ -155,8 +155,8 @@ public partial class Player : CharacterBody2D
 
 	public PlayerLevel LevelUp()
 	{
-		this.Level = LevellingUtil<PlayerLevel>.LevelUp((int)this.Level);
-		return this.Level;
+		Level = LevellingUtil<PlayerLevel>.LevelUp((int) Level);
+		return Level;
 	}
 
 	private void OnBodyEntered(Node body)

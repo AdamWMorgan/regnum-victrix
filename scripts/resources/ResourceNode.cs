@@ -21,7 +21,7 @@ public abstract partial class ResourceNode : Node2D
 	private float timeSinceLastGen = 0f;
 	public Area2D captureArea;
 	private bool captureInProgress = false;
-	private float CAPTURE_SPEED = 1f;
+	private float CAPTURE_SPEED = 2f;
 	private float timeSinceLastCaptureDeplete = 0f;
 	
 	private int capturingUnits = 0;
