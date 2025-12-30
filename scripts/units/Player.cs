@@ -155,8 +155,8 @@ public partial class Player : CharacterBody2D
 
 	public PlayerLevel LevelUp()
 	{
-		this.Level = LevellingUtil<PlayerLevel>.LevelUp((int)this.Level);
-		return this.Level;
+		Level = LevellingUtil<PlayerLevel>.LevelUp((int) Level);
+		return Level;
 	}
 
 	private void OnBodyEntered(Node body)
