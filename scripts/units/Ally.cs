@@ -36,6 +36,7 @@ public partial class Ally : CharacterBody2D, IUnit
 	public const float ALLY_PLAYER_GAP = 45.0f;
 	private const string ALLY_IDLE_ANIMATION = "ally_idle_animation";
 	private const string ALLY_ATTACK_ANIMATION = "ally_attack_animation";
+	private const string PLAYER_NODE_PATH = "/root/Main/Player";
 	private bool inFormation = false;
 
 	public Ally()
@@ -60,7 +61,7 @@ public partial class Ally : CharacterBody2D, IUnit
 		PlayerDetectionArea.BodyEntered += OnBodyEnteredPlayerDetectionArea;
 		PlayerDetectionArea.BodyExited += OnBodyExitedPlayerDetectionArea;
 		sprite = GetNode<AnimatedSprite2D>("AllySprite");
-		player = GetNode<Player>("/root/Main/Player");
+		player = GetNode<Player>(PLAYER_NODE_PATH);
 	}
 
 	public override void _PhysicsProcess(double delta)
