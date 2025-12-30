@@ -313,7 +313,6 @@ public partial class Ally : CharacterBody2D, IUnit
 		}
 	}
 
-	// Function to handle the attack logic
 	private void AttackPlayer(Node node)
 	{
 		// Todo: need to improve this so that it's only after the 
