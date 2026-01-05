@@ -130,7 +130,12 @@ public partial class Ally : CharacterBody2D, IUnit
 				}
 				else
 				{
-					BoxFormation.Instance.deRegisterAlly(this);
+					if (inFormation)
+					{
+						BoxFormation.Instance.deRegisterAlly(this);
+						inFormation = false;
+						followPlayer = false;
+					}
 
 					if (this.GlobalPosition.DistanceTo(this.spawnPosition) > 5.0f)
 					{
