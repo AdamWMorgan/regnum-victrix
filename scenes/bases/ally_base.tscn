@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://coeuknkpeyvk3"]
+[gd_scene load_steps=10 format=3 uid="uid://coeuknkpeyvk3"]
 
 [ext_resource type="Script" path="res://scripts/bases/AllyBase.cs" id="1_qis78"]
 [ext_resource type="Script" path="res://scripts/units/spawners/AllySpawner.cs" id="2_64lto"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cl8x0subioer6" path="res://scenes/capture_health.tscn" id="5_c6hof"]
 [ext_resource type="PackedScene" uid="uid://vowefb5gr84m" path="res://scenes/bases/resource_display.tscn" id="6_mlren"]
 [ext_resource type="Texture2D" uid="uid://dtpmcvbeq0v2e" path="res://game/assets/materials/roman_fort.png" id="6_wl017"]
+[ext_resource type="PackedScene" uid="uid://cyafbmm2qw6yo" path="res://scenes/controls/BaseManagement.tscn" id="7_nabop"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jwf8q"]
 bg_color = Color(0, 0.631373, 0.976471, 1)
@@ -44,3 +45,9 @@ collision_mask = 2
 [node name="CaptureAreaCollision" type="CollisionShape2D" parent="CaptureArea"]
 position = Vector2(1.5, 3.5)
 shape = SubResource("RectangleShape2D_acrmn")
+
+[node name="BaseManagementWindow" parent="." instance=ExtResource("7_nabop")]
+offset_left = 53.0
+offset_top = 84.0
+offset_right = 53.0
+offset_bottom = 84.0
