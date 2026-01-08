@@ -8,6 +8,7 @@ public partial class GameManager : Node
 	public List<Ally> AllAllies { get; private set; } = new List<Ally>();
 	public List<Base> AllBases { get; set; } = new List<Base>();
 	public List<ResourceNode> ResourceNodes { get; set; } = new List<ResourceNode>();
+	public GameConfig gameConfig {get; set;}
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -18,10 +19,13 @@ public partial class GameManager : Node
 			return;
 		}
 		Instance = this;
+
+		gameConfig = ConfigLoader.Load();
 	}
 
 	public override void _Process(double delta)
 	{
+		GD.Print("Game config = " + gameConfig.BaseLevelConfigPanel.BaseUpgrade[0].Amount);
 	}
 
 	// Registering
