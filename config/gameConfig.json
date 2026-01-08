@@ -1,6 +1,7 @@
 {
     "BaseLevelConfigPanel":{
         "Multiplier": 1.5,
+        "Max": 5,
         "TroopUpgrade":[
             {
                 "ResourceType": "WHEAT",
