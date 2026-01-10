@@ -38,9 +38,6 @@ public partial class BaseManagement : Control
 			baseUpgradeContainer.AddChild(baseHBox);
 		}
 
-
-		// need to add all of this logic for base upgrade, as well as looping through the values to build up
-		// the hbox with the prices. This price definition will need to come from some higher level rule conifg.
 		troopUpgradeContainer = GetNode<PanelContainer>(BUTTON_PATH + "TroopUpgradeContainer");
 		HBoxContainer troopHBox = new();
 
