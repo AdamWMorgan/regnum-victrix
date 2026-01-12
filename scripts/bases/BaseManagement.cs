@@ -4,6 +4,8 @@ using System.Runtime.CompilerServices;
 
 public partial class BaseManagement : Control
 {
+	private double REFRESH_RATE = 5.0;
+	private double _timeAccumulator = 0.0;
 	public string BUTTON_PATH = "BaseManagementPanel/VBoxContainer/";
 	public string ASSET_PATH_FORMAT = "res://game/assets/materials/{0}.png";
 	public Base _base;
@@ -25,12 +27,22 @@ public partial class BaseManagement : Control
 
 		BaseUpgradeContainerSetup();
 		TroopUpgradeContainerSetup();
+
+		//Initial check whilst setting up container
+		BaseUpgradeCheck();
+		TroopUpgradeCheck();
 	}
 
 	public override void _Process(double delta)
-	{
-		BaseUpgradeCheck();
-		TroopUpgradeCheck();
+	{	
+		_timeAccumulator += delta;
+
+		if (_timeAccumulator >= REFRESH_RATE)
+		{
+			_timeAccumulator = 0;
+			BaseUpgradeCheck();
+			TroopUpgradeCheck();
+		}
 	}
 
 	private void OnBaseUpgradeClicked()
@@ -43,11 +55,11 @@ public partial class BaseManagement : Control
 		GD.Print("OnTroopUpgradeClicked!");
 	}
 
-// Todo: resource type should really be mapped to enum in model
+	// Todo: resource type should really be mapped to enum in model
 	private int RetrieveResourceQuantity(string resourceType)
 	{
-		Resource resource = _base.Resources.Find(res => res.Type.ToString() == resourceType);
-		return resource.Quantity;
+	    Resource resource = _base.Resources.Find(res => res.Type.ToString() == resourceType);
+	    return resource != null ? resource.Quantity : 0;
 	}
 
 	private void BaseUpgradeContainerSetup()
