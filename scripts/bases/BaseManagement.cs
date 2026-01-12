@@ -99,11 +99,20 @@ public partial class BaseManagement : Control
 			}
 		}
 
-		GD.Print("Base Upgrade ready = " + baseUpgradeReady);
+		if (baseUpgradeReady)
+		{
+			baseUpgradeBtn.Disabled = false;
+			baseUpgradeContainer.Modulate = new Color(1, 1, 1, 1);
+		}
+		else
+		{
+			baseUpgradeBtn.Disabled = true;
+			baseUpgradeContainer.Modulate = new Color(0.6f, 0.6f, 0.6f, 0.8f);
+		}
 
 		var troopUpgradeReady = false;
 
-		foreach(var troopUpgradeItem in _gameConfig.BaseLevelConfigPanel.BaseUpgrade)
+		foreach(var troopUpgradeItem in _gameConfig.BaseLevelConfigPanel.TroopUpgrade)
 		{
 			if(RetrieveResourceQuantity(troopUpgradeItem.ResourceType) >= troopUpgradeItem.Amount)
 			{
@@ -116,7 +125,16 @@ public partial class BaseManagement : Control
 			}
 		}
 
-		GD.Print("Troop Upgrade ready = " + troopUpgradeReady);
+		if (troopUpgradeReady)
+		{
+			troopUpgradeBtn.Disabled = false;
+			troopUpgradeContainer.Modulate = new Color(1, 1, 1, 1);
+		}
+		else
+		{
+			troopUpgradeBtn.Disabled = true;
+			troopUpgradeContainer.Modulate = new Color(0.6f, 0.6f, 0.6f, 0.8f);
+		}
 	}
 
 	private void OnBaseUpgradeClicked()
