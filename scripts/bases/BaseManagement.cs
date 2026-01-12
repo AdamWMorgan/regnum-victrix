@@ -12,19 +12,20 @@ public partial class BaseManagement : Control
 	public PanelContainer troopUpgradeContainer;
 	private HBoxContainer baseHBox;
 	private HBoxContainer troopHBox;
+	private Button baseUpgradeBtn = new();
+	private Button troopUpgradeBtn = new();
+	private GameConfig _gameConfig;
 
 	public override void _Ready()
 	{
 		_base = GetParent<Base>();
 
-		GD.Print(_base.Level);
-		
 		baseUpgradeContainer = GetNode<PanelContainer>(BUTTON_PATH + "BaseUpgradeContainer");
 		baseHBox = new();
 
-		var GameConfig = GameManager.Instance.GameConfig;
+		_gameConfig = GameManager.Instance.GameConfig;
 
-		foreach(var baseUpgrade in GameConfig.BaseLevelConfigPanel.BaseUpgrade)
+		foreach(var baseUpgrade in _gameConfig.BaseLevelConfigPanel.BaseUpgrade)
 		{
 			var icon = new TextureRect
 			{
@@ -38,7 +39,6 @@ public partial class BaseManagement : Control
 
 			baseHBox.AddChild(icon);
 			baseHBox.AddChild(label);
-			var baseUpgradeBtn = new Button();
 			baseUpgradeBtn.Text = "";
 			baseUpgradeBtn.Flat = true;
 			baseUpgradeBtn.SizeFlagsHorizontal = SizeFlags.ExpandFill;
@@ -54,7 +54,7 @@ public partial class BaseManagement : Control
 		troopUpgradeContainer = GetNode<PanelContainer>(BUTTON_PATH + "TroopUpgradeContainer");
 		troopHBox = new();
 
-		foreach(var troopUpgrade in GameConfig.BaseLevelConfigPanel.TroopUpgrade)
+		foreach(var troopUpgrade in _gameConfig.BaseLevelConfigPanel.TroopUpgrade)
 		{
 			var icon = new TextureRect
 			{
@@ -69,7 +69,6 @@ public partial class BaseManagement : Control
 			troopHBox.AddChild(icon);
 			troopHBox.AddChild(label);
 
-			var troopUpgradeBtn = new Button();
 			troopUpgradeBtn.Text = "";
 			troopUpgradeBtn.Flat = true;
 			troopUpgradeBtn.SizeFlagsHorizontal = SizeFlags.ExpandFill;
@@ -85,6 +84,39 @@ public partial class BaseManagement : Control
 
 	public override void _Process(double delta)
 	{
+		var baseUpgradeReady = false;
+
+		foreach(var baseUpgradeItem in _gameConfig.BaseLevelConfigPanel.BaseUpgrade)
+		{
+			if(RetrieveResourceQuantity(baseUpgradeItem.ResourceType) >= baseUpgradeItem.Amount)
+			{
+				baseUpgradeReady = true;
+			}
+			else
+			{
+				baseUpgradeReady = false;
+				break;
+			}
+		}
+
+		GD.Print("Base Upgrade ready = " + baseUpgradeReady);
+
+		var troopUpgradeReady = false;
+
+		foreach(var troopUpgradeItem in _gameConfig.BaseLevelConfigPanel.BaseUpgrade)
+		{
+			if(RetrieveResourceQuantity(troopUpgradeItem.ResourceType) >= troopUpgradeItem.Amount)
+			{
+				troopUpgradeReady = true;
+			}
+			else
+			{
+				troopUpgradeReady = false;
+				break;
+			}
+		}
+
+		GD.Print("Troop Upgrade ready = " + troopUpgradeReady);
 	}
 
 	private void OnBaseUpgradeClicked()
@@ -95,5 +127,12 @@ public partial class BaseManagement : Control
 	private void OnTroopUpgradeClicked()
 	{
 		GD.Print("OnTroopUpgradeClicked!");
+	}
+
+// Todo: resource type should really be mapped to enum in model
+	private int RetrieveResourceQuantity(string resourceType)
+	{
+		Resource resource = _base.Resources.Find(res => res.Type.ToString() == resourceType);
+		return resource.Quantity;
 	}
 }

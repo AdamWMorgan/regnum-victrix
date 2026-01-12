@@ -15,9 +15,9 @@ public abstract partial class ResourceNode : Node2D
 	public Faction currentOwner;
 	public int lifetimeResourceCreation = 0;
 	// the number at which the resource should be sent to the associated base
-	private int DEFAULT_SEND_TRIGGER_CAPACITY = 200;
+	private int DEFAULT_SEND_TRIGGER_CAPACITY = 50;
 	
-	private float DEFAULT_GENERATION_SPEED = 1f;
+	private float DEFAULT_GENERATION_SPEED = 0.8f;
 	private float timeSinceLastGen = 0f;
 	public Area2D captureArea;
 	private bool captureInProgress = false;
