@@ -15,15 +15,46 @@ public partial class BaseManagement : Control
 	private Button baseUpgradeBtn = new();
 	private Button troopUpgradeBtn = new();
 	private GameConfig _gameConfig;
+	private Color _enableColour = new(1, 1, 1, 1);
+	private Color _disableColour = new(0.6f, 0.6f, 0.6f, 0.8f);
 
 	public override void _Ready()
 	{
 		_base = GetParent<Base>();
+		_gameConfig = GameManager.Instance.GameConfig;
 
+		BaseUpgradeContainerSetup();
+		TroopUpgradeContainerSetup();
+	}
+
+	public override void _Process(double delta)
+	{
+		BaseUpgradeCheck();
+		TroopUpgradeCheck();
+	}
+
+	private void OnBaseUpgradeClicked()
+	{
+		GD.Print("OnBaseUpgradeClicked!");
+	}	
+	
+	private void OnTroopUpgradeClicked()
+	{
+		GD.Print("OnTroopUpgradeClicked!");
+	}
+
+// Todo: resource type should really be mapped to enum in model
+	private int RetrieveResourceQuantity(string resourceType)
+	{
+		Resource resource = _base.Resources.Find(res => res.Type.ToString() == resourceType);
+		return resource.Quantity;
+	}
+
+	private void BaseUpgradeContainerSetup()
+	{
+		
 		baseUpgradeContainer = GetNode<PanelContainer>(BUTTON_PATH + "BaseUpgradeContainer");
 		baseHBox = new();
-
-		_gameConfig = GameManager.Instance.GameConfig;
 
 		foreach(var baseUpgrade in _gameConfig.BaseLevelConfigPanel.BaseUpgrade)
 		{
@@ -50,7 +81,10 @@ public partial class BaseManagement : Control
 			baseUpgradeContainer.AddChild(baseHBox);
 			baseUpgradeContainer.AddChild(baseUpgradeBtn);
 		}
-
+	}
+	
+	private void TroopUpgradeContainerSetup()
+	{
 		troopUpgradeContainer = GetNode<PanelContainer>(BUTTON_PATH + "TroopUpgradeContainer");
 		troopHBox = new();
 
@@ -82,7 +116,7 @@ public partial class BaseManagement : Control
 		}
 	}
 
-	public override void _Process(double delta)
+	private void BaseUpgradeCheck()
 	{
 		var baseUpgradeReady = false;
 
@@ -102,14 +136,17 @@ public partial class BaseManagement : Control
 		if (baseUpgradeReady)
 		{
 			baseUpgradeBtn.Disabled = false;
-			baseUpgradeContainer.Modulate = new Color(1, 1, 1, 1);
+			baseUpgradeContainer.Modulate = _enableColour;
 		}
 		else
 		{
 			baseUpgradeBtn.Disabled = true;
-			baseUpgradeContainer.Modulate = new Color(0.6f, 0.6f, 0.6f, 0.8f);
+			baseUpgradeContainer.Modulate = _disableColour;
 		}
+	}
 
+	private void TroopUpgradeCheck()
+	{
 		var troopUpgradeReady = false;
 
 		foreach(var troopUpgradeItem in _gameConfig.BaseLevelConfigPanel.TroopUpgrade)
@@ -128,29 +165,12 @@ public partial class BaseManagement : Control
 		if (troopUpgradeReady)
 		{
 			troopUpgradeBtn.Disabled = false;
-			troopUpgradeContainer.Modulate = new Color(1, 1, 1, 1);
+			troopUpgradeContainer.Modulate = _enableColour;
 		}
 		else
 		{
 			troopUpgradeBtn.Disabled = true;
-			troopUpgradeContainer.Modulate = new Color(0.6f, 0.6f, 0.6f, 0.8f);
+			troopUpgradeContainer.Modulate = _disableColour;
 		}
-	}
-
-	private void OnBaseUpgradeClicked()
-	{
-		GD.Print("OnBaseUpgradeClicked!");
-	}	
-	
-	private void OnTroopUpgradeClicked()
-	{
-		GD.Print("OnTroopUpgradeClicked!");
-	}
-
-// Todo: resource type should really be mapped to enum in model
-	private int RetrieveResourceQuantity(string resourceType)
-	{
-		Resource resource = _base.Resources.Find(res => res.Type.ToString() == resourceType);
-		return resource.Quantity;
 	}
 }
