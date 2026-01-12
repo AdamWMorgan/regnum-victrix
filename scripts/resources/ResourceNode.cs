@@ -29,7 +29,7 @@ public abstract partial class ResourceNode : Node2D
 	public ResourceNode(Resource resource)
 	{
 		this.Resource = resource;
-		this.GeneratingCapacity = 1;
+		this.GeneratingCapacity = 10;
 		this.SendAmount = DEFAULT_SEND_TRIGGER_CAPACITY;
 	}
 
