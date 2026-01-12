@@ -58,8 +58,8 @@ public partial class BaseManagement : Control
 	// Todo: resource type should really be mapped to enum in model
 	private int RetrieveResourceQuantity(string resourceType)
 	{
-	    Resource resource = _base.Resources.Find(res => res.Type.ToString() == resourceType);
-	    return resource != null ? resource.Quantity : 0;
+		Resource resource = _base.Resources.Find(res => res.Type.ToString() == resourceType);
+		return resource != null ? resource.Quantity : 0;
 	}
 
 	private void BaseUpgradeContainerSetup()
