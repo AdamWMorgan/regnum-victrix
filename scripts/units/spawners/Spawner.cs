@@ -8,7 +8,7 @@ public partial class Spawner : Node2D
 	[Export] public int SpawnCount { get; set; } = 10;
 	[Export] public Rect2 SpawnArea { get; set; }
 	[Export] public float MinSpawnDistance { get; set; } = 0.3f;
-	[Export] public float MaxSpawnDistance { get; set; } = 0.5f;
+	[Export] public float MaxSpawnDistance { get; set; } = 0.7f;
 	[Export] public Faction spawnerFaction { get; set; } = Faction.ENEMY;
 	[Export] public Area2D PlayerDetectionArea;
 
