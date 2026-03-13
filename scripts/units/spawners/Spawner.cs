@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public partial class Spawner : Node2D
 {
 	[Export] public PackedScene Scene { get; set; }
-	[Export] public int SpawnCount { get; set; } = 12;
+	[Export] public int SpawnCount { get; set; } = 10;
 	[Export] public Rect2 SpawnArea { get; set; }
 	[Export] public float MinSpawnDistance { get; set; } = 0.3f;
 	[Export] public float MaxSpawnDistance { get; set; } = 0.6f;
