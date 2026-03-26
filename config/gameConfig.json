@@ -1,0 +1,34 @@
+{
+    "BaseLevelConfigPanel":{
+        "Multiplier": 1.5,
+        "Max": 5,
+        "TroopUpgrade":[
+            {
+                "ResourceType": "WHEAT",
+                "Amount": 500
+            },
+            {
+                "ResourceType": "IRON",
+                "Amount": 500
+            },
+            {
+                "ResourceType": "GOLD",
+                "Amount": 100
+            }
+        ],
+        "BaseUpgrade":[
+            {
+                "ResourceType": "WOOD",
+                "Amount": 0
+            },
+            {
+                "ResourceType": "IRON",
+                "Amount": 250
+            },
+            {
+                "ResourceType": "GOLD",
+                "Amount": 0
+            }
+        ]
+    }
+}

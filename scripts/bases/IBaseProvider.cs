@@ -1,3 +1,3 @@
 public interface IBaseProvider{
-    Base GetAttachedBase();
+	Base GetAttachedBase();
 }

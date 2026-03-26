@@ -55,4 +55,4 @@ position = Vector2(170, -420)
 position = Vector2(-222, 792)
 
 [node name="WheatSource" parent="." instance=ExtResource("11_i2esp")]
-position = Vector2(453, 631)
+position = Vector2(668, 465)
