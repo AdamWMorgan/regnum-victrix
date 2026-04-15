@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dunxqo17c10wb"]
+[gd_scene load_steps=10 format=3 uid="uid://dunxqo17c10wb"]
 
 [ext_resource type="Script" path="res://scripts/bases/EnemyBase.cs" id="1_nge4g"]
 [ext_resource type="Script" path="res://scripts/units/spawners/EnemySpawner.cs" id="2_10y7k"]
@@ -10,6 +10,9 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p1pge"]
 bg_color = Color(0.737255, 0, 0.0666667, 1)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_enemy_collision"]
+radius = 88.1009
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_e80jy"]
 radius = 148.0
 
@@ -19,10 +22,10 @@ script = ExtResource("1_nge4g")
 captureProgress = NodePath("CaptureProgress")
 
 [node name="EnemySpawner" type="Node2D" parent="."]
-position = Vector2(-99, -79)
+position = Vector2(-200, -200)
 script = ExtResource("2_10y7k")
 Scene = ExtResource("3_v701h")
-SpawnArea = Rect2(0, 0, 200, 200)
+SpawnArea = Rect2(0, 0, 400, 400)
 
 [node name="CaptureProgress" parent="." instance=ExtResource("5_u41cl")]
 position = Vector2(0, 105)
@@ -36,6 +39,15 @@ scale = Vector2(0.5, 0.5)
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, 1)
 texture = ExtResource("6_e32vj")
+
+[node name="BaseCollisionBody" type="StaticBody2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+
+[node name="BaseCollisionShape" type="CollisionShape2D" parent="BaseCollisionBody"]
+position = Vector2(0, -7)
+scale = Vector2(1, 0.711632)
+shape = SubResource("CircleShape2D_enemy_collision")
 
 [node name="CaptureArea" type="Area2D" parent="."]
 collision_layer = 2

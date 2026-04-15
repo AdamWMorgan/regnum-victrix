@@ -7,6 +7,9 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_7uh5g"]
 radius = 91.0494
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_collision"]
+radius = 100.0
+
 [node name="WoodSource" type="Node2D" node_paths=PackedStringArray("captureProgress")]
 script = ExtResource("1_7six0")
 captureProgress = NodePath("CaptureProgress")
@@ -16,6 +19,14 @@ captureProgress = NodePath("CaptureProgress")
 [node name="CaptureProgress" parent="." instance=ExtResource("2_3jl8s")]
 position = Vector2(0, 56)
 scale = Vector2(0.2, 0.2)
+
+[node name="ResourceCollisionBody" type="StaticBody2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+
+[node name="ResourceCollisionShape" type="CollisionShape2D" parent="ResourceCollisionBody"]
+position = Vector2(-34, 177)
+shape = SubResource("CircleShape2D_collision")
 
 [node name="CaptureArea" type="Area2D" parent="."]
 position = Vector2(-34, 177)

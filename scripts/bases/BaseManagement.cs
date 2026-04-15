@@ -15,7 +15,6 @@ public partial class BaseManagement : Control
 	private Button troopUpgradeBtn;
 	private GameConfig _gameConfig;
 	
-	// Colors - Stardew Valley inspired warm palette
 	private Color _panelBg = new Color(0.95f, 0.92f, 0.85f, 1); // Cream
 	private Color _titleBarBg = new Color(0.8f, 0.7f, 0.5f, 1); // Warm gold
 	private Color _accentBaseGreen = new Color(0.6f, 0.8f, 0.5f, 1); // Sage green
