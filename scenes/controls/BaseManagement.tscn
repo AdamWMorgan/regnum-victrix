@@ -17,38 +17,74 @@ grow_vertical = 2
 script = ExtResource("1_2805g")
 
 [node name="BaseManagementDisplayBtn" type="Button" parent="."]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 0
-offset_left = -1.0
-offset_top = -1.0
-offset_right = 23.0
-offset_bottom = 30.0
+offset_top = 17.0
+offset_right = 32.0
+offset_bottom = 49.0
+scale = Vector2(0.428571, 0.421053)
 text = "+"
 script = ExtResource("1_mjtgn")
 
 [node name="BaseManagementPanel" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(280, 200)
 layout_mode = 0
-offset_left = 46.0
-offset_top = 4.0
-offset_right = 231.0
-offset_bottom = 137.0
+offset_left = -43.0
+offset_top = 38.0
+offset_right = 237.0
+offset_bottom = 242.0
+scale = Vector2(0.361953, 0.477424)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="BaseManagementPanel"]
-layout_direction = 1
+[node name="MainContainer" type="VBoxContainer" parent="BaseManagementPanel"]
 layout_mode = 2
-alignment = 1
+theme_override_constants/separation = 0
 
-[node name="BaseUpgradeLbl" type="Label" parent="BaseManagementPanel/VBoxContainer"]
+[node name="TitleBar" type="PanelContainer" parent="BaseManagementPanel/MainContainer"]
 layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="BaseManagementPanel/MainContainer/TitleBar"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Base Management"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ContentContainer" type="VBoxContainer" parent="BaseManagementPanel/MainContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="BaseUpgradeSection" type="VBoxContainer" parent="BaseManagementPanel/MainContainer/ContentContainer"]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="BaseUpgradeLabel" type="Label" parent="BaseManagementPanel/MainContainer/ContentContainer/BaseUpgradeSection"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_font_sizes/font_size = 12
 text = "Upgrade Base"
 horizontal_alignment = 1
 
-[node name="BaseUpgradeContainer" type="PanelContainer" parent="BaseManagementPanel/VBoxContainer"]
+[node name="BaseUpgradeContainer" type="PanelContainer" parent="BaseManagementPanel/MainContainer/ContentContainer/BaseUpgradeSection"]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 
-[node name="TroopUpgradeLbl" type="Label" parent="BaseManagementPanel/VBoxContainer"]
+[node name="Separator1" type="HSeparator" parent="BaseManagementPanel/MainContainer/ContentContainer"]
 layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="TroopUpgradeSection" type="VBoxContainer" parent="BaseManagementPanel/MainContainer/ContentContainer"]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="TroopUpgradeLabel" type="Label" parent="BaseManagementPanel/MainContainer/ContentContainer/TroopUpgradeSection"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_font_sizes/font_size = 12
 text = "Upgrade Troops"
 horizontal_alignment = 1
 
-[node name="TroopUpgradeContainer" type="PanelContainer" parent="BaseManagementPanel/VBoxContainer"]
+[node name="TroopUpgradeContainer" type="PanelContainer" parent="BaseManagementPanel/MainContainer/ContentContainer/TroopUpgradeSection"]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
