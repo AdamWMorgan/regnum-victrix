@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://coeuknkpeyvk3"]
+[gd_scene load_steps=11 format=3 uid="uid://coeuknkpeyvk3"]
 
 [ext_resource type="Script" path="res://scripts/bases/AllyBase.cs" id="1_qis78"]
 [ext_resource type="Script" path="res://scripts/units/spawners/AllySpawner.cs" id="2_64lto"]
@@ -11,6 +11,9 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jwf8q"]
 bg_color = Color(0, 0.631373, 0.976471, 1)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_base_collision"]
+size = Vector2(150, 126)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_acrmn"]
 size = Vector2(267, 235)
 
@@ -19,10 +22,10 @@ script = ExtResource("1_qis78")
 captureProgress = NodePath("CaptureProgress")
 
 [node name="AllySpawner" type="Node2D" parent="."]
-position = Vector2(-57, -54)
+position = Vector2(-150, -180)
 script = ExtResource("2_64lto")
 Scene = ExtResource("3_q3iyn")
-SpawnArea = Rect2(0, 0, 200, 200)
+SpawnArea = Rect2(0, 0, 300, 360)
 
 [node name="CaptureProgress" parent="." instance=ExtResource("5_c6hof")]
 position = Vector2(-1, 98)
@@ -37,6 +40,14 @@ scale = Vector2(0.5, 0.5)
 position = Vector2(-0.499997, 0.499996)
 scale = Vector2(1.46094, 1.46094)
 texture = ExtResource("6_wl017")
+
+[node name="BaseCollisionBody" type="StaticBody2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+
+[node name="BaseCollisionShape" type="CollisionShape2D" parent="BaseCollisionBody"]
+position = Vector2(-1, -5)
+shape = SubResource("RectangleShape2D_base_collision")
 
 [node name="CaptureArea" type="Area2D" parent="."]
 collision_layer = 2
