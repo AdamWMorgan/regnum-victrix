@@ -1,14 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://b5b2g1txc0hi"]
+[gd_scene load_steps=6 format=3 uid="uid://b5b2g1txc0hi"]
 
 [ext_resource type="Script" path="res://scripts/resources/WoodSource.cs" id="1_7six0"]
 [ext_resource type="PackedScene" uid="uid://cl8x0subioer6" path="res://scenes/capture_health.tscn" id="2_3jl8s"]
 [ext_resource type="Texture2D" uid="uid://c21rhegffhl8q" path="res://game/assets/materials/forest.png" id="3_m3r22"]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_collision"]
+radius = 34.3657
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_7uh5g"]
 radius = 91.0494
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_collision"]
-radius = 100.0
 
 [node name="WoodSource" type="Node2D" node_paths=PackedStringArray("captureProgress")]
 script = ExtResource("1_7six0")
@@ -25,7 +25,7 @@ collision_layer = 2
 collision_mask = 0
 
 [node name="ResourceCollisionShape" type="CollisionShape2D" parent="ResourceCollisionBody"]
-position = Vector2(-34, 177)
+position = Vector2(0, 7)
 shape = SubResource("CircleShape2D_collision")
 
 [node name="CaptureArea" type="Area2D" parent="."]
