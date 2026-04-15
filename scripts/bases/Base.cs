@@ -96,6 +96,28 @@ public abstract partial class Base : Node2D
 		return resource.Quantity;
 	}
 
+	public bool SpendResources(Dictionary<ResourceType, int> resourceCosts)
+	{
+		// Check if we have enough resources
+		foreach (var kvp in resourceCosts)
+		{
+			Resource resource = Resources.Find(res => res.Type == kvp.Key);
+			if (resource == null || resource.Quantity < kvp.Value)
+			{
+				return false; // Not enough resources
+			}
+		}
+
+		// Deduct resources
+		foreach (var kvp in resourceCosts)
+		{
+			Resource resource = Resources.Find(res => res.Type == kvp.Key);
+			resource.Quantity -= kvp.Value;
+		}
+
+		return true; // Successfully spent resources
+	}
+
 	public BaseLevel LevelUp()
 	{
 		this.Level = LevellingUtil<BaseLevel>.LevelUp((int)this.Level);
