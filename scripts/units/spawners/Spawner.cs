@@ -31,7 +31,7 @@ public partial class Spawner : Node2D
 
 	public override void _Draw()
 	{
-		DrawRect(SpawnArea, new Color(1, 1, 0, 0.4f), false);
+		// DrawRect(SpawnArea, new Color(1, 1, 0, 0.4f), false); -- USEFUL FOR DEBUGGING SPAWN AREA
 	}
 
 	private void DeferredCheck()
