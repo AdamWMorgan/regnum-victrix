@@ -3,7 +3,7 @@ using System;
 
 public partial class ResourceStats : RichTextLabel
 {
-	private double REFRESH_RATE = 5.0;
+	private double REFRESH_RATE = 2.0;
 	private double _timeAccumulator = 0.0;
 
 	public override void _Ready()
