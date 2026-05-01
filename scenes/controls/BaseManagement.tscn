@@ -22,17 +22,17 @@ layout_mode = 0
 offset_top = 17.0
 offset_right = 32.0
 offset_bottom = 49.0
-scale = Vector2(0.428571, 0.421053)
+scale = Vector2(0.26671, 0.284396)
 text = "+"
 script = ExtResource("1_mjtgn")
 
 [node name="BaseManagementPanel" type="PanelContainer" parent="."]
 custom_minimum_size = Vector2(280, 200)
 layout_mode = 0
-offset_left = -43.0
-offset_top = 38.0
-offset_right = 237.0
-offset_bottom = 242.0
+offset_left = 11.0
+offset_top = 22.0
+offset_right = 291.0
+offset_bottom = 226.0
 scale = Vector2(0.361953, 0.477424)
 
 [node name="MainContainer" type="VBoxContainer" parent="BaseManagementPanel"]
@@ -64,6 +64,7 @@ theme_override_colors/font_color = Color(0.2, 0.2, 0.2, 1)
 theme_override_font_sizes/font_size = 12
 text = "Upgrade Base"
 horizontal_alignment = 1
+clip_text = true
 
 [node name="BaseUpgradeContainer" type="PanelContainer" parent="BaseManagementPanel/MainContainer/ContentContainer/BaseUpgradeSection"]
 custom_minimum_size = Vector2(0, 40)

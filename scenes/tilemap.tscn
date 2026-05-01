@@ -52,7 +52,7 @@ position = Vector2(818, 12)
 position = Vector2(170, -420)
 
 [node name="WoodSource" parent="." instance=ExtResource("10_arwwv")]
-position = Vector2(-222, 792)
+position = Vector2(-232, 752)
 
 [node name="WheatSource" parent="." instance=ExtResource("11_i2esp")]
 position = Vector2(668, 465)

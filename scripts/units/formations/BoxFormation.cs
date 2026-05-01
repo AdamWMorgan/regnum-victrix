@@ -30,7 +30,7 @@ public partial class BoxFormation : Node
 		{
 			Vector2 playerPos = player.GlobalPosition;
 
-			float distanceBehind = 100f;
+			float distanceBehind = 120f;
 			Vector2 formationCenter = playerPos + new Vector2(-distanceBehind, 0);
 
 			int i = 0;
