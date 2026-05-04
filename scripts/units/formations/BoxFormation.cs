@@ -61,13 +61,11 @@ public partial class BoxFormation : Node
 
 	public void registerAlly(Ally ally)
 	{
-		GD.Print("Register to formation");
 		allies.Add(ally);
 	}
 
 	public void deRegisterAlly(Ally ally)
 	{
-		GD.Print("De-register from formation");
 		allies.Remove(ally);
 	}
 	
