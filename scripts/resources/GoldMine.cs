@@ -4,9 +4,9 @@ using System;
 public partial class GoldMine : ResourceNode
 {
 	public string ID { get; private set; }
-	private int LEVEL_UP_THRESHOLD = 50;
-	private int nextLevelUpAt = 50;
-	private float DEFAULT_UPGRADE_CHECK = 5f;
+	private int LEVEL_UP_THRESHOLD = 500;
+	private int nextLevelUpAt = 500;
+	private float DEFAULT_UPGRADE_CHECK = 100f;
 	private float timeSinceLastResourceLevelUpCheck = 0f;
 
 	public GoldMine() : base(new Resource(ResourceType.GOLD))
