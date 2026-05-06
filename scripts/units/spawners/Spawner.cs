@@ -10,7 +10,6 @@ public partial class Spawner : Node2D
 	[Export] public float MinSpawnDistance { get; set; } = 0.3f;
 	[Export] public float MaxSpawnDistance { get; set; } = 0.6f;
 	[Export] public Faction spawnerFaction { get; set; } = Faction.ENEMY;
-	[Export] public Area2D PlayerDetectionArea;
 
 	public string baseId;
 	private List<Vector2> _spawnedPositions = new();
@@ -36,16 +35,6 @@ public partial class Spawner : Node2D
 
 	private void DeferredCheck()
 	{
-		if (PlayerDetectionArea != null)
-		{
-			PlayerDetectionArea.BodyEntered += OnBodyEnteredDetectionArea;
-			PlayerDetectionArea.BodyExited += OnBodyExitedDetectionArea;
-		}
-		else
-		{
-			GD.PrintErr("PlayerDetectionArea is not set or missing in the scene!");
-		}
-
 		Node parent = GetParent();
 
 		if (spawnerFaction == Faction.ENEMY && parent is EnemyBase enemyBase)
@@ -114,22 +103,6 @@ public partial class Spawner : Node2D
 			}
 		}
 		return false;
-	}
-
-	private void OnBodyEnteredDetectionArea(Node body)
-	{
-		if (body.IsInGroup("Player"))
-		{
-			GD.Print("in area");
-		}
-	}
-
-	private void OnBodyExitedDetectionArea(Node body)
-	{
-		if (body.IsInGroup("Player"))
-		{
-			GD.Print("out area");
-		}
 	}
 	
 }

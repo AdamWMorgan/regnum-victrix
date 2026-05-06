@@ -4,9 +4,9 @@ using System;
 public partial class WoodSource : ResourceNode
 {
 	public string ID { get; private set; }
-	private int LEVEL_UP_THRESHOLD = 50;
-	private int nextLevelUpAt = 50;
-	private float DEFAULT_UPGRADE_CHECK = 5f;
+	private int LEVEL_UP_THRESHOLD = 250;
+	private int nextLevelUpAt = 250;
+	private float DEFAULT_UPGRADE_CHECK = 50f;
 	private float timeSinceLastResourceLevelUpCheck = 0f;
 
 	public WoodSource() : base(new Resource(ResourceType.WOOD))

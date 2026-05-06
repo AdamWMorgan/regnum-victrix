@@ -4,9 +4,9 @@ using System;
 public partial class WheatSource : ResourceNode
 {
 	public string ID { get; private set; }
-	private int LEVEL_UP_THRESHOLD = 50;
-	private int nextLevelUpAt = 50;
-	private float DEFAULT_UPGRADE_CHECK = 5f;
+	private int LEVEL_UP_THRESHOLD = 200;
+	private int nextLevelUpAt = 200;
+	private float DEFAULT_UPGRADE_CHECK = 100f;
 	private float timeSinceLastResourceLevelUpCheck = 0f;
 
 	public WheatSource() : base(new Resource(ResourceType.WHEAT))
